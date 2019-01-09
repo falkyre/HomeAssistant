@@ -10,6 +10,15 @@
     # When Home Assistant starts.
     - platform: homeassistant
       event: start
+    
+    # When it's too late.
+    - platform: time
+      at: '21:30:00'
+
+    # When night mode is enables.
+    - platform: state
+      entity_id: input_boolean.night_mode
+      to: 'on'
 
     # When night mode is changed.
     - platform: state

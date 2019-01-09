@@ -42,9 +42,6 @@
     - condition: state
       entity_id: binary_sensor.garage_door
       state: 'on'
-    - condition: state
-      entity_id: input_boolean.quiet_mode
-      state: 'off'
     - service: notify.text
       data:
         message: "Garage Door Opened"
