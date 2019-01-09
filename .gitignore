@@ -26,6 +26,14 @@ plex.conf
 sabnzbd.conf
 secrets.yaml
 
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+._*
+# Icon?
+Thumbs.db
+
 !.github
 !.gitignore
 !.gitkeep
