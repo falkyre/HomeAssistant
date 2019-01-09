@@ -45,7 +45,7 @@
     - condition: state
       entity_id: input_boolean.quiet_mode
       state: 'off'
-    - service: notify.text
+    - service: notify.sound
       data:
         message: "Front Door Opened"
         data: {"icon":"https://goo.gl/xeetdy"}
