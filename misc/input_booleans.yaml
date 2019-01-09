@@ -1,0 +1,53 @@
+#
+# Input booleans
+#
+# @link https://home-assistant.io/components/input_boolean/
+#
+
+
+#
+# Modes
+#
+low_mode:
+  name: Low power mode
+  icon: mdi:weather-sunset-down
+
+nap_mode:
+  name: Nap mode
+  icon: mdi:sleep
+
+night_mode:
+  name: Night mode
+  icon: mdi:weather-night
+
+quiet_mode:
+  name: Quiet mode
+  icon: mdi:volume-mute
+
+scene_mode:
+  name: Scene mode
+  icon: mdi:looks
+
+
+#
+# Security
+#
+door_test:
+  name: Door test
+  icon: mdi:door-open
+
+leak_test:
+  name: Leak test
+  icon: mdi:pipe-leak
+
+motion_test:
+  name: Motion test
+  icon: mdi:run
+
+tamper_detected:
+  name: Tamper detected
+  icon: mdi:security-home
+
+windows_open:
+  name: Windows are open
+  icon: mdi:window-open

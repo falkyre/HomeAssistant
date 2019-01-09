@@ -1,0 +1,33 @@
+#
+# Database recorder
+#
+# Limit the number of tracked entities and length of history.
+#
+# @link https://home-assistant.io/components/recorder/
+#
+purge_interval: 2
+purge_keep_days: 5
+include:
+  domains:
+    - device_tracker
+    - automation
+  entities:
+    - binary_sensor.front_door
+    - binary_sensor.garage_door
+    - binary_sensor.furnancepump_leak
+    
+    - sensor.acurite5n1_humidity
+    - sensor.acurite5n1_temperature
+    - sensor.acurite5n1_windspeed
+
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+
+    - sensor.door_status
+    - sensor.leak_status
+    - sensor.motion_status
+
+exclude:
+  domains:
+    - switch

@@ -1,0 +1,24 @@
+
+#
+# Speedtest.net network speed testing
+#
+# Actual performance is limited by the hosts NIC throughout.
+#
+# @link https://home-assistant.io/components/sensor.speedtest/
+#
+- platform: speedtest
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+  hour:
+    - 0
+    - 3
+    - 6
+    - 9
+    - 12
+    - 15
+    - 18
+    - 21
+  minute:
+    - 15

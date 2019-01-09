@@ -1,0 +1,24 @@
+#
+# Group notification
+#
+# All notifications are sent to groups to mimimize hard-coding notification
+# services throughout the code base.
+#
+# @link https://home-assistant.io/components/notify.group/
+#
+- platform: group
+  name: Sound
+  services:
+    - service: join
+
+- platform: group
+  name: Speech
+  services:
+    - service: fully_kiosk
+    # - service: join
+
+- platform: group
+  name: Text
+  services:
+    - service: join
+      

@@ -1,0 +1,18 @@
+esphomeyaml:
+  name: wx_esp32_01
+  platform: ESP32
+  board: wemosbat
+
+wifi:
+  ssid: 'lightningG'
+  password: '69deedbeef'
+
+mqtt:
+  broker: '192.168.100.157'
+  username: 'falkyre'
+  password: '0n3cl1ck'
+
+# Enable logging
+logger:
+
+ota:

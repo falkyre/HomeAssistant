@@ -1,0 +1,35 @@
+#
+# Zones
+#
+# @link https://home-assistant.io/components/zone/
+#
+
+
+#
+# Home zone
+#
+- name: Home
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  radius: 150
+  icon: mdi:home-heart
+
+
+#
+# Parents
+#
+- name: Parents
+  latitude: !secret zone_parents_latitude
+  longitude: !secret zone_parents_longitude
+  radius: 150
+  icon: mdi:home-outline
+
+
+#
+# Work zone
+#
+- name: Work
+  latitude: !secret zone_work_latitude
+  longitude: !secret zone_work_longitude
+  radius: 500
+  icon: mdi:worker

@@ -1,0 +1,10 @@
+#
+# Pushover notification service for cellphones and tablets
+#
+# @link https://pushover.net/
+# @link https://home-assistant.io/components/notify.pushover/
+#
+- platform: joaoapps_join
+  name: Join
+  api_key: !secret join_api_key
+  device_names:  !secret join_device_names

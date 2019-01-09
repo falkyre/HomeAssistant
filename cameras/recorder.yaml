@@ -1,0 +1,49 @@
+#
+# Database recorder
+#
+# Limit the number of tracked entities and length of history.
+#
+# @link https://home-assistant.io/components/recorder/
+#
+purge_interval: 2
+purge_keep_days: 5
+include:
+  domains:
+    - device_tracker
+  entities:
+    - binary_sensor.front_door
+    - binary_sensor.garage_door
+    - binary_sensor.furnancepump_leak
+
+    - input_boolean.low_mode
+    - input_boolean.nap_mode
+    - input_boolean.night_mode
+    - input_boolean.quiet_mode
+    - input_boolean.scene_mode
+
+    - sensor.average_humidity
+    - sensor.average_humidity_friendly
+    - sensor.average_temperature
+    - sensor.bedroom_humidity
+    - sensor.bedroom_luminance
+    - sensor.bedroom_temperature
+    - sensor.outside_humidity
+    - sensor.outside_temperature
+
+    - sensor.acurite5n1_windspeed
+    - sensor.acurite5n1_humidity
+    - sensor.acurite5n1_winddir
+    - sensor.acurite5n1_temperature
+
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+
+    - sensor.door_status
+    - sensor.leak_status
+    - sensor.motion_status
+
+
+exclude:
+  domains:
+    - switch

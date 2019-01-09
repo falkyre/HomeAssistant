@@ -1,0 +1,60 @@
+#
+# View
+#
+default_view:
+  view: yes
+  icon: mdi:home-assistant
+  entities:
+    - group.notifications
+    - group.wallpaper
+    - group.now
+    - group.actions
+    - group.security
+    - group.presence
+
+
+#
+# Groups
+#
+climate:
+  name: Climate Control
+  entities:
+    - sensor.average_temperature
+    - sensor.average_humidity_friendly
+    - switch.dehumidifier
+    - sensor.radon_friendly
+
+notifications:
+  name: Notifications
+  entities:
+    - persistent_notification.security
+    - persistent_notification.humidity
+
+now:
+  name: " "
+  entities:
+    - sensor.date_friendly
+    - sensor.time_friendly
+    - sensor.sun_state
+
+presence:
+  name: Presence
+  control: hidden
+  entities:
+    - device_tracker.bryce
+    - device_tracker.danielle
+    - device_tracker.dominique
+    - device_tracker.sean_oneplus3
+
+security:
+  name: Security Status
+  control: hidden
+  entities:
+    - sensor.door_status
+    - sensor.leak_status
+    - sensor.motion_status
+wallpaper:
+  name: " "
+  entities:
+    - camera.bing_wallpaper
+    - sensor.bing_wallpaper

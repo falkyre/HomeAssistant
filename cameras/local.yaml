@@ -1,0 +1,20 @@
+  - platform: mjpeg
+    mjpeg_url: http://192.168.100.69:8000/++video?cameraNum=0&auth=ZmFsa3lyZTowbjNjbDFjaw==
+    still_image_url: http://192.168.100.69:8000/++image?cameraNum=0&auth=ZmFsa3lyZTowbjNjbDFjaw==
+    name: Office
+  - platform: mjpeg
+    mjpeg_url: http://192.168.100.69:8000/++video?cameraNum=1&auth=ZmFsa3lyZTowbjNjbDFjaw==
+    still_image_url: http://192.168.100.69:8000/++image?cameraNum=1&auth=ZmFsa3lyZTowbjNjbDFjaw==
+    name: Living Room
+  - platform: mjpeg
+    mjpeg_url: http://192.168.100.69:8000/++video?cameraNum=2&auth=ZmFsa3lyZTowbjNjbDFjaw==
+    still_image_url: http://192.168.100.69:8000/++image?cameraNum=2&auth=ZmFsa3lyZTowbjNjbDFjaw==
+    name: Garage
+  - platform: mjpeg
+    mjpeg_url: http://192.168.100.110:8083/axis-cgi/mjpg/video.cgi?cameraId=2099093512&USERNAME=admin
+    still_image_url: http://192.168.100.110:8083/axis-cgi/jpg/image.cgi?cameraId=2099093512&USERNAME=admin
+    name: Backyard
+  - platform: mjpeg
+    mjpeg_url: http://192.168.100.110:8083/axis-cgi/mjpg/video.cgi?cameraId=667189478&USERNAME=admin
+    still_image_url: http://192.168.100.110:8083/axis-cgi/jpg/image.cgi?cameraId=667189478&USERNAME=admin
+    name: Basement

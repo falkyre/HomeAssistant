@@ -1,0 +1,66 @@
+#
+# Bing daily wallpaper
+#
+# @see /appdaemon/dashboards/Main.dash
+# @see /groups/default.yaml
+# @see /sensors/camera.yaml
+#
+# @link https://bing.com
+# @link https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US
+#
+- platform: generic
+  name: Bing Wallpaper
+  limit_refetch_to_url_change: true
+  content_type: image/jpg
+  still_image_url: >-
+    {% set images = state_attr('sensor.bing_wallpaper', 'images') %}
+
+    {% if images is iterable and images[0].urlbase %}
+      {% set path = images[0].urlbase %}
+
+      https://www.bing.com{{ path }}_800x600.jpg
+    {% else %}
+      {% set port = states('sensor.server_port') | int(8123) %}
+
+      http://127.0.0.1:{{ port }}/local/images/wallpaper-1.jpg
+    {% endif %}
+
+
+#
+# NASA's Astronomy picture of the day
+#
+# Supports images and YouTube thumbnails, but does not handle Vimeo images as
+# that would require an extra REST query.
+#
+# @see /appdaemon/dashboards/Main.dash
+# @see /sensors/camera.yaml
+#
+# @link https://api.nasa.gov/api.html#apod
+# @link https://apod.nasa.gov
+#
+- platform: generic
+  name: Astronomy Picture of the Day
+  limit_refetch_to_url_change: true
+  content_type: image/jpg
+  still_image_url: >-
+    {% set image = None %}
+    {% set url = state_attr('sensor.apod', 'url') %}
+
+    {% if url != None %}
+      {% if state_attr('sensor.apod', 'media_type') == 'video' %}
+        {% if 'youtube.com' in url %}
+          {% set video = url.split('/')[4].split('?')[0] %}
+          {% set image = 'https://img.youtube.com/vi/' + video + '/hqdefault.jpg' %}
+        {% endif %}
+      {% else %}
+        {% set image = url %}
+      {% endif %}
+    {% endif %}
+
+    {% if image == None %}
+      {% set port = states('sensor.server_port') | int(8123) %}
+
+      {% set image = 'http://127.0.0.1:' ~ port ~ '/local/images/wallpaper-2.jpg' %}
+    {% endif %}
+
+    {{ image }}

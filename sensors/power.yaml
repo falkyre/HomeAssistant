@@ -1,0 +1,171 @@
+#
+# AcuRite battery monitoring
+#
+# This device only has two power state: `OK` (1) and `low` (0). If no signal is
+# received we assume that the battery is dead.
+#
+# @see /rtl4332mqtt/rtl2mqtt.sh
+#
+# @link https://www.acurite.com/indoor-temperature-sensor-and-humidity-gauge.html
+# @link https://home-assistant.io/components/mqtt/
+#
+- platform: mqtt
+  name: AcuRite 5n1 Battery
+  state_topic: "home/Acurite_5n1_sensor/1104"
+  unit_of_measurement: '%'
+  value_template: >-
+    {% set battery_level = value_json.battery %}
+
+    {% if battery_level == "OK" %}
+      100
+    {% else %}
+      10
+    {% endif %}
+
+- platform: mqtt
+  name: AcuRite Lightning Detector Battery
+  state_topic: "home/Acurite_Lightning_6045M/3"
+  unit_of_measurement: '%'
+  value_template: >-
+    {% set battery_level = value_json.battery %}
+
+    {% if battery_level == "OK" %}
+      100
+    {% else %}
+      10
+    {% endif %}
+
+
+
+#
+# Fully Browser kiosk battery monitoring
+#
+# Licensed application running in kiosk mode on an Acer B3-A40 Android tablet.
+#
+# @link https://github.com/daemondazz/homeassistant-displays
+#
+- platform: template
+  sensors:
+    kiosk_battery:
+      friendly_name: Kiosk battery
+      unit_of_measurement: '%'
+      value_template: >-
+        {% set battery_level = state_attr('display.kiosk', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {{ battery_level | round }}
+        {% else %}
+          unknown
+        {% endif %}
+
+      icon_template: >-
+        {% set battery_level = state_attr('display.kiosk', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {% set battery_round = (battery_level / 10) | int * 10 %}
+
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-outline
+          {% endif %}
+        {% else %}
+          mdi:battery-unknown
+        {% endif %}
+
+
+#
+# ZWave battery monitoring
+#
+# @link https://aeotec.com/z-wave-door-window-sensor
+# @link https://aeotec.com/z-wave-sensor
+#
+- platform: template
+  sensors:
+    front_door_sensor_battery:
+      friendly_name: Front Door Sensor Battery
+      unit_of_measurement: '%'
+      value_template: >-
+        {% set battery_level = state_attr('zwave.ecolink_doorwindow_sensor', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {{ battery_level | round }}
+        {% else %}
+          unknown
+        {% endif %}
+      icon_template: >-
+        {% set battery_level = state_attr('zwave.front_door', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {% set battery_round = (battery_level / 10) | int * 10 %}
+
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-outline
+          {% endif %}
+        {% else %}
+          mdi:battery-unknown
+        {% endif %}
+        
+    garage_door_sensor_battery:
+      friendly_name: Garage Door Sensor Battery
+      unit_of_measurement: '%'
+      value_template: >-
+        {% set battery_level = state_attr('zwave.ecolink_doorwindow_sensor_2', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {{ battery_level | round }}
+        {% else %}
+          unknown
+        {% endif %}
+      icon_template: >-
+        {% set battery_level = state_attr('zwave.front_door', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {% set battery_round = (battery_level / 10) | int * 10 %}
+
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-outline
+          {% endif %}
+        {% else %}
+          mdi:battery-unknown
+        {% endif %}
+
+    furnace_leak_sensor_battery:
+      friendly_name: Furnace Leak Sensor Battery
+      unit_of_measurement: '%'
+      value_template: >-
+        {% set battery_level = state_attr('zwave.dome_leak_sensor_2', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {{ battery_level | round }}
+        {% else %}
+          unknown
+        {% endif %}
+      icon_template: >-
+        {% set battery_level = state_attr('zwave.kitchen_leak_sensor', 'battery_level') %}
+
+        {% if battery_level != None %}
+          {% set battery_round = (battery_level / 10) | int * 10 %}
+
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-outline
+          {% endif %}
+        {% else %}
+          mdi:battery-unknown
+        {% endif %}
+
+    

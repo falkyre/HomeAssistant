@@ -1,0 +1,55 @@
+#
+# Variables
+#
+# @see /custom_components/varyable.py
+#
+# @link https://github.com/rogro82/hass-variables
+#
+
+
+#
+# Nanoleaf Aurora effect and brightness
+#
+aurora_brightness:
+  value: False
+  restore: True
+
+aurora_effect:
+  value: False
+  restore: True
+
+
+#
+# Bed underglow lights effect
+#
+bed_effect:
+  value: False
+  restore: True
+  attributes:
+    uuid: ''
+
+
+#
+# Ceiling wash lights effect
+#
+ceiling_effect:
+  value: False
+  restore: True
+  attributes:
+    uuid: ''
+
+
+#
+# Lightpack effect
+#
+lightpack_effect:
+  value: False
+  restore: True
+
+
+#
+# Perimeter tamper detection
+#
+tamper_detected:
+  value: False
+  restore: False

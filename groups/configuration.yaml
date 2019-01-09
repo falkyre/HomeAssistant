@@ -1,0 +1,54 @@
+#
+# View
+#
+configuration_view:
+  view: yes
+  name: Configuration
+  icon: mdi:settings
+  entities:
+    - group.configuration
+    - group.automations
+    - group.automations_devices
+    - group.automations_notifications
+    # - group.counters
+
+
+#
+# Groups
+#
+
+automations:
+  name: Automations
+  control: hidden
+  entities:
+    - automation.theme_auto
+
+automations_devices:
+  name: Devices Automations
+  control: hidden
+  entities:
+    - automation.kiosk_auto
+    - automation.kiosk_low_power
+
+automations_notifications:
+  name: Notifications Automations
+  control: hidden
+  entities:
+    - automation.daily_greeting
+    - automation.door_notify
+    - automation.door_notify_reset
+    - automation.front_door_notify
+    - automation.humidity_notify
+    - automation.update_notify
+
+configuration:
+  name: Configuration Switches
+  control: hidden
+  entities:
+    - input_boolean.door_test
+    - sensor.door_status
+    - input_boolean.leak_test
+    - sensor.leak_status
+    - input_boolean.motion_test
+    - sensor.motion_status
+    - input_boolean.smoke_test

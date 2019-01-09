@@ -1,0 +1,33 @@
+#
+# Device trackers
+#
+# @link https://home-assistant.io/components/device_tracker/
+#
+
+
+#
+# Bluetooth
+#
+# Disabled until deemed useful or not.
+#
+# https://home-assistant.io/components/device_tracker.bluetooth_tracker/
+#
+#- platform: bluetooth_tracker
+
+
+#
+# namp tracker
+#
+# https://www.home-assistant.io/components/device_tracker.nmap_tracker/
+#
+- platform: nmap_tracker
+  hosts:
+   192.168.100.100-253
+  home_interval: 10
+  interval_seconds: 60
+  conside_home: 0:10
+  new_device_defaults:
+   track_new_devices: false
+   hide_if_away: false
+- platform: googlehome
+  host: 192.168.100.121

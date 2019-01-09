@@ -1,0 +1,40 @@
+#
+# Invisible groups
+#
+# These are used in automations and scripts in order to reduce redundancy and
+# ease maintenance.
+#
+
+door_sensors:
+  name: Doors sensors
+  entities:
+    - binary_sensor.front_door
+    - binary_sensor.garage_door
+    - input_boolean.door_test
+
+
+leak_sensors:
+  name: Leak sensors
+  entities:
+    - binary_sensor.furnancepump_leak
+    - input_boolean.leak_test
+
+lifx_lights:
+  name: LIFX Lights
+  entities:
+    - light.mancavecouch
+    - light.mancavedoor
+    - light.mancavestairs
+
+motion_sensors:
+  name: Motion sensors
+  entities:
+    - binary_sensor.kiosk_motion_auto
+    - input_boolean.motion_test
+
+motion_sensors_critical:
+  name: Motion sensors
+  entities:
+    # - binary_sensor.front_door # Sensor reliability issues.
+    - binary_sensor.kiosk_motion_auto
+    - input_boolean.motion_test

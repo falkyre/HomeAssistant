@@ -1,0 +1,700 @@
+#
+# Dark Sky weather
+#
+# @link https://home-assistant.io/components/sensor.darksky/
+#
+- platform: darksky
+  api_key: !secret darksky_api
+  forecast:
+    - 0
+    - 1
+    - 2
+  monitored_conditions:
+    - summary
+    - minutely_summary
+    - hourly_summary
+    - daily_summary
+    - icon
+    - uv_index
+    - ozone
+    - temperature
+    - temperature_high
+    - temperature_low
+    - apparent_temperature
+    - apparent_temperature_high
+    - humidity
+    - wind_speed
+    - wind_bearing
+    - precip_probability
+
+
+#
+# Outside temperature and humidity
+#
+# Information is rounded to integers, because decimal points here are not useful
+# for human consumption ...and because the hyper-local temperature is likely off
+# by a few degrees anyway. This isn't a laboratory after all!
+#
+- platform: template
+  sensors:
+    outside_temperature:
+      friendly_name: Temperature
+      icon_template: mdi:thermometer
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ states('sensor.dark_sky_temperature') | round }}
+
+    outside_humidity:
+      friendly_name: Humidity
+      icon_template: mdi:water-percent
+      unit_of_measurement: '%'
+      value_template: >-
+        {{ states('sensor.dark_sky_humidity') | round }}
+
+
+#
+# Friedly weather report
+#
+# These add "Feels like X˚" to the apparent reading if any, to make this data
+# easier to consume.
+#
+- platform: template
+  sensors:
+    feels_like:
+      friendly_name: Feels Like
+      value_template: >-
+        {% set temperature = states('sensor.outside_temperature') | round %}
+        {% set apparent = states('sensor.dark_sky_apparent_temperature') | round %}
+
+        {% if apparent != 'unknown' and apparent != temperature %}
+          Feels like {{ apparent }}˚
+        {% endif %}
+
+    feels_like_1:
+      friendly_name: Feels Like
+      value_template: >-
+        {% set temperature = states('sensor.dark_sky_daytime_high_temperature_1') | round %}
+        {% set apparent = states('sensor.dark_sky_daytime_high_apparent_temperature_1') | round %}
+
+        {% if apparent != 'unknown' and apparent != temperature %}
+          Will feel like {{ apparent }}˚
+        {% endif %}
+
+    feels_like_2:
+      friendly_name: Feels Like
+      value_template: >-
+        {% set temperature = states('sensor.dark_sky_daytime_high_temperature_2') | round %}
+        {% set apparent = states('sensor.dark_sky_daytime_high_apparent_temperature_2') | round %}
+
+        {% if apparent != 'unknown' and apparent != temperature %}
+          Will feel like {{ apparent }}˚
+        {% endif %}
+
+    weather_summary:
+      friendly_name: Weather Summary
+      value_template: >-
+        {% if states('sensor.dark_sky_temperature') != 'unknown' %}
+          {{ states('sensor.dark_sky_temperature') | round }}˚
+        {%- endif -%}
+        {%- if states('sensor.dark_sky_summary') != 'unknown' -%}
+          {{ ' ' ~ states('sensor.dark_sky_summary') }}.
+        {%- endif %}
+
+    weather_details:
+      friendly_name: Weather Details
+      value_template: >-
+        {% set temperature = states('sensor.dark_sky_temperature') | round %}
+        {% set apparent = states('sensor.dark_sky_apparent_temperature') | round %}
+        {% set summary = states('sensor.dark_sky_minutely_summary') %}
+
+        {% if summary == 'unknown' %}
+          {% set summary = '' %}
+        {% endif %}
+
+        {% if apparent != 'unknown' and apparent != temperature %}
+          Feels like {{ apparent }}˚. {{ summary }}
+        {% else %}
+          {{ summary }}
+        {% endif %}
+
+
+#
+# Chances of precipitation
+#
+# These templates improve the reading comprehension about the chances of rain.
+#
+# @see /appdaemon/dashboards/Weather.dash
+#
+- platform: template
+  sensors:
+    precip_probability:
+      friendly_name: Probability of Precipitation
+      value_template: >-
+        {% set precip = states('sensor.dark_sky_precip_probability') | int(-1) %}
+
+        {% if precip < 0 %}
+          unknown
+        {% elif precip > 0 %}
+          {{ precip }} %
+        {% else %}
+          —
+        {% endif %}
+
+    precip_probability_friendly:
+      friendly_name: Probability of Precipitation
+      value_template: >-
+        {% set precip = states('sensor.dark_sky_precip_probability') | int(-1) %}
+
+        {% if precip < 0 %}
+          unknown
+        {% elif precip > 0 %}
+          precip: {{ precip }} %
+        {% else %}
+          no precipitation
+        {% endif %}
+
+    precip_probability_1:
+      friendly_name: Probability of Precipitation
+      value_template: >-
+        {% set precip = states('sensor.dark_sky_precip_probability_1') | int(-1) %}
+
+        {% if precip < 0 %}
+          unknown
+        {% elif precip > 0 %}
+          {{ precip }} %
+        {% else %}
+          —
+        {% endif %}
+
+    precip_probability_friendly_1:
+      friendly_name: Probability of Precipitation
+      value_template: >-
+        {% set precip = states('sensor.dark_sky_precip_probability_1') | int(-1) %}
+
+        {% if precip < 0 %}
+          unknown
+        {% elif precip > 0 %}
+          precip: {{ precip }} %
+        {% else %}
+          no precipitation
+        {% endif %}
+
+    precip_probability_2:
+      friendly_name: Probability of Precipitation
+      value_template: >-
+        {% set precip = states('sensor.dark_sky_precip_probability_2') | int(-1) %}
+
+        {% if precip < 0 %}
+          unknown
+        {% elif precip > 0 %}
+          {{ precip }} %
+        {% else %}
+          —
+        {% endif %}
+
+    precip_probability_friendly_2:
+      friendly_name: Probability of Precipitation
+      value_template: >-
+        {% set precip = states('sensor.dark_sky_precip_probability_2') | int(-1) %}
+
+        {% if precip < 0 %}
+          unknown
+        {% elif precip > 0 %}
+          precip: {{ precip }} %
+        {% else %}
+          no precipitation
+        {% endif %}
+
+
+#
+# Friendly low temperatures
+#
+# Makes temperature readings easier to understand by rounding them and adding
+# strings.
+#
+# @see /appdaemon/dashboards/Weather.dash
+#
+- platform: template
+  sensors:
+    weather_low:
+      friendly_name: Low Temperature
+      value_template: >-
+        {{ states('sensor.dark_sky_overnight_low_temperature_0') | round }}
+
+    weather_low_friendly:
+      friendly_name: Low Temperature
+      value_template: >-
+        {% set temp = states('sensor.dark_sky_overnight_low_temperature_0') | round %}
+
+        low: {{ temp }}˚
+
+    weather_low_1:
+      friendly_name: Low Temperature
+      value_template: >-
+        {{ states('sensor.dark_sky_overnight_low_temperature_1') | round }}
+
+    weather_low_1_friendly:
+      friendly_name: Low Temperature
+      value_template: >-
+        {% set temp = states('sensor.dark_sky_overnight_low_temperature_1') | round %}
+
+        low: {{ temp }}˚
+
+    weather_low_2:
+      friendly_name: Low Temperature
+      value_template: >-
+        {{ states('sensor.dark_sky_overnight_low_temperature_2') | round }}
+
+    weather_low_2_friendly:
+      friendly_name: Low Temperature
+      value_template: >-
+        {% set temp = states('sensor.dark_sky_overnight_low_temperature_2') | round %}
+
+        low: {{ temp }}˚
+
+
+#
+# Friendly icon equivalents
+#
+# Turns icon names into words.
+#
+- platform: template
+  sensors:
+    weather_icon_friendly:
+      friendly_name: Weather
+      value_template: >-
+        {% set icon = states('sensor.dark_sky_icon') %}
+
+        {% if icon == 'clear-day' or icon == 'clear-night' %}
+          Clear
+        {% elif icon == 'rain' %}
+          Rain
+        {% elif icon == 'rain' %}
+          Rain
+        {% elif icon == 'snow' %}
+          Snow
+        {% elif icon == 'sleet' %}
+          Sleet
+        {% elif icon == 'wind' %}
+          Windy
+        {% elif icon == 'fog' %}
+          Fog
+        {% elif icon == 'cloudy' %}
+          Cloudy
+        {% elif icon == 'partly-cloudy-day' or icon == 'partly-cloudy-night' %}
+          Partly Cloudy
+        {% else %}
+          unknown
+        {% endif %}
+
+    weather_icon_friendly_1:
+      friendly_name: Weather 1
+      value_template: >-
+        {% set icon = states('sensor.dark_sky_icon_1') %}
+
+        {% if icon == 'clear-day' or icon == 'clear-night' %}
+          Clear
+        {% elif icon == 'rain' %}
+          Rain
+        {% elif icon == 'rain' %}
+          Rain
+        {% elif icon == 'snow' %}
+          Snow
+        {% elif icon == 'sleet' %}
+          Sleet
+        {% elif icon == 'wind' %}
+          Windy
+        {% elif icon == 'fog' %}
+          Fog
+        {% elif icon == 'cloudy' %}
+          Cloudy
+        {% elif icon == 'partly-cloudy-day' or icon == 'partly-cloudy-night' %}
+          Partly Cloudy
+        {% else %}
+          unknown
+        {% endif %}
+
+    weather_icon_friendly_2:
+      friendly_name: Weather 2
+      value_template: >-
+        {% set icon = states('sensor.dark_sky_icon_2') %}
+
+        {% if icon == 'clear-day' or icon == 'clear-night' %}
+          Clear
+        {% elif icon == 'rain' %}
+          Rain
+        {% elif icon == 'rain' %}
+          Rain
+        {% elif icon == 'snow' %}
+          Snow
+        {% elif icon == 'sleet' %}
+          Sleet
+        {% elif icon == 'wind' %}
+          Windy
+        {% elif icon == 'fog' %}
+          Fog
+        {% elif icon == 'cloudy' %}
+          Cloudy
+        {% elif icon == 'partly-cloudy-day' or icon == 'partly-cloudy-night' %}
+          Partly Cloudy
+        {% else %}
+          unknown
+        {% endif %}
+
+
+#
+# Wind speed
+#
+# The default readings of meters per second is precise, but isn't something
+# common mortals use in everyday life. Give me kilometers and wind strenght,
+# now *that* I can relate to!
+#
+# @see /customize.yaml
+#
+# @link https://en.wikipedia.org/wiki/Beaufort_scale
+#
+- platform: template
+  sensors:
+    wind_speed:
+      friendly_name: Wind Speed
+      unit_of_measurement: 'km/h'
+      friendly_name_template: >-
+        {{ states('sensor.wind_scale_friendly') }}
+      icon_template: >-
+        {% set speed = (states('sensor.dark_sky_wind_speed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 39 %}
+          mdi:weather-windy
+        {% elif speed >= 0 %}
+          mdi:airballoon
+        {% else %}
+          mdi:cloud-question
+        {% endif %}
+      value_template: >-
+        {% set speed = (states('sensor.dark_sky_wind_speed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 0 %}
+          {{ speed | round }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    wind_scale_friendly:
+      friendly_name: Wind Scale
+      icon_template: >-
+        {% set speed = (states('sensor.dark_sky_wind_speed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 39 %}
+          mdi:weather-windy
+        {% elif speed >= 0 %}
+          mdi:airballoon
+        {% else %}
+          mdi:cloud-question
+        {% endif %}
+      value_template: >-
+        {% set speed = (states('sensor.dark_sky_wind_speed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 118 %}
+          Hurricane force
+        {% elif speed >= 103 %}
+          Violent storm
+        {% elif speed >= 89 %}
+          Storm
+        {% elif speed >= 75 %}
+          Strong gale
+        {% elif speed >= 62 %}
+          Fresh gale
+        {% elif speed >= 50 %}
+          High wind
+        {% elif speed >= 39 %}
+          Strong breeze
+        {% elif speed >= 29 %}
+          Fresh breeze
+        {% elif speed >= 20 %}
+          Moderate breeze
+        {% elif speed >= 12 %}
+          Gentle breeze
+        {% elif speed >= 6 %}
+          Light breeze
+        {% elif speed >= 1 %}
+          Light air
+        {% elif speed >= 0 %}
+          Calm
+        {% elif speed < 0 %}
+          unknown
+        {% endif %}
+
+
+#
+# Wind direction
+#
+# Wind provenance in degrees is great for computers, but pointless for humans.
+# Cardinal points make more sense to humans.
+#
+# @see /customize.yaml
+#
+# @link http://www.themethodology.net/2013/12/how-to-convert-degrees-to-cardinal.html
+# @link https://stackoverflow.com/questions/7490660/converting-wind-direction-in-angles-to-text-words
+#
+- platform: template
+  sensors:
+    wind_bearing_cardinal:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.dark_sky_wind_bearing') | int(-1) %}
+        {% set directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 45) | int %}
+
+          {{ directions[(val % 8)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    wind_bearing_cardinal_friendly:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.dark_sky_wind_bearing') | int(-1) %}
+        {% set directions = [
+          'North',
+          'Northeast',
+          'East',
+          'Southeast',
+          'South',
+          'Southwest',
+          'West',
+          'Northwest'
+        ] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 45) | int %}
+
+          {{ directions[(val % 8)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    wind_bearing_cardinal_16:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.dark_sky_wind_bearing') | int(-1) %}
+        {% set directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 22.5 + 0.5) | int %}
+
+          {{ directions[(val % 16)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    wind_bearing_cardinal_16_friendly:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.dark_sky_wind_bearing') | int(-1) %}
+        {% set directions = [
+          'North',
+          'North-Northeast',
+          'Northeast',
+          'East-Northeast',
+          'East',
+          'East-Southeast',
+          'Southeast',
+          'South-Southeast',
+          'South',
+          'South-Southwest',
+          'Southwest',
+          'West-Southwest',
+          'West',
+          'West-Northwest',
+          'Northwest',
+          'North-Northwest'
+        ] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 22.5 + 0.5) | int %}
+
+          {{ directions[(val % 16)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+#
+# Wind speed - from PWS
+#
+# The default readings of meters per second is precise, but isn't something
+# common mortals use in everyday life. Give me kilometers and wind strenght,
+# now *that* I can relate to!
+#
+# @see /customize.yaml
+#
+# @link https://en.wikipedia.org/wiki/Beaufort_scale
+#
+- platform: template
+  sensors:
+    pws_wind_speed:
+      friendly_name: Wind Speed
+      unit_of_measurement: 'km/h'
+      friendly_name_template: >-
+        {{ states('sensor.pws_wind_scale_friendly') }}
+      icon_template: >-
+        {% set speed = (states('sensor.acurite5n1_windspeed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 39 %}
+          mdi:weather-windy
+        {% elif speed >= 0 %}
+          mdi:airballoon
+        {% else %}
+          mdi:cloud-question
+        {% endif %}
+      value_template: >-
+        {% set speed = (states('sensor.acurite5n1_windspeed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 0 %}
+          {{ speed | round }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    pws_wind_scale_friendly:
+      friendly_name: Wind Scale
+      icon_template: >-
+        {% set speed = (states('sensor.acurite5n1_windspeed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 39 %}
+          mdi:weather-windy
+        {% elif speed >= 0 %}
+          mdi:airballoon
+        {% else %}
+          mdi:cloud-question
+        {% endif %}
+      value_template: >-
+        {% set speed = (states('sensor.acurite5n1_windspeed')|float(-1) * 3600 / 1000) %}
+
+        {% if speed >= 118 %}
+          Hurricane force
+        {% elif speed >= 103 %}
+          Violent storm
+        {% elif speed >= 89 %}
+          Storm
+        {% elif speed >= 75 %}
+          Strong gale
+        {% elif speed >= 62 %}
+          Fresh gale
+        {% elif speed >= 50 %}
+          High wind
+        {% elif speed >= 39 %}
+          Strong breeze
+        {% elif speed >= 29 %}
+          Fresh breeze
+        {% elif speed >= 20 %}
+          Moderate breeze
+        {% elif speed >= 12 %}
+          Gentle breeze
+        {% elif speed >= 6 %}
+          Light breeze
+        {% elif speed >= 1 %}
+          Light air
+        {% elif speed >= 0 %}
+          Calm
+        {% elif speed < 0 %}
+          unknown
+        {% endif %}
+
+
+#
+# Wind direction - from PWS
+#
+# Wind provenance in degrees is great for computers, but pointless for humans.
+# Cardinal points make more sense to humans.
+#
+# @see /customize.yaml
+#
+# @link http://www.themethodology.net/2013/12/how-to-convert-degrees-to-cardinal.html
+# @link https://stackoverflow.com/questions/7490660/converting-wind-direction-in-angles-to-text-words
+#
+- platform: template
+  sensors:
+    pws_wind_bearing_cardinal:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.acurite5n1_winddir') | int(-1) %}
+        {% set directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 45) | int %}
+
+          {{ directions[(val % 8)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    pws_wind_bearing_cardinal_friendly:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.acurite5n1_winddir') | int(-1) %}
+        {% set directions = [
+          'North',
+          'Northeast',
+          'East',
+          'Southeast',
+          'South',
+          'Southwest',
+          'West',
+          'Northwest'
+        ] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 45) | int %}
+
+          {{ directions[(val % 8)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    pws_wind_bearing_cardinal_16:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.acurite5n1_winddir') | int(-1) %}
+        {% set directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 22.5 + 0.5) | int %}
+
+          {{ directions[(val % 16)] }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    pws_wind_bearing_cardinal_16_friendly:
+      friendly_name: Wind Bearing
+      value_template: >-
+        {% set degrees = states('sensor.acurite5n1_winddir') | int(-1) %}
+        {% set directions = [
+          'North',
+          'North-Northeast',
+          'Northeast',
+          'East-Northeast',
+          'East',
+          'East-Southeast',
+          'Southeast',
+          'South-Southeast',
+          'South',
+          'South-Southwest',
+          'Southwest',
+          'West-Southwest',
+          'West',
+          'West-Northwest',
+          'Northwest',
+          'North-Northwest'
+        ] %}
+
+        {% if degrees >= 0 %}
+          {% set val = (degrees / 22.5 + 0.5) | int %}
+
+          {{ directions[(val % 16)] }}
+        {% else %}
+          unknown
+        {% endif %}
+

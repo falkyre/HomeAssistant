@@ -1,0 +1,64 @@
+#
+# View
+#
+status_view:
+  view: yes
+  name: Status
+  icon: mdi:server
+  entities:
+    - group.system
+    - group.network
+    - group.battery
+    - group.temperature
+    - group.humidity
+    - group.devices
+
+
+#
+# Groups
+#
+battery:
+  name: Battery Levels
+  entities:
+    # - sensor.bedroom_multisensor_battery # USB-powered
+    - sensor.front_door_sensor_battery
+    - sensor.garage_door_sensor_battery
+    - sensor.furnace_leak_sensor_battery
+    - sensor.acurite_5n1_battery
+    - sensor.acurite_lightning_detector_battery
+    - sensor.kiosk_battery
+    
+
+humidity:
+  name: Humidity
+  entities:
+    - sensor.average_humidity
+    - sensor.hline_dashed
+
+network:
+  name: Network
+  icon: mdi:home-assistant
+  entities:
+    - sensor.speedtest_ping
+    - sensor.speedtest_upload
+    - sensor.speedtest_download
+
+system:
+  name: System
+  icon: mdi:home-assistant
+  entities:
+    - updater.updater
+    - sensor.ipv4_address_eth0
+    - sensor.uptime_friendly
+    - sensor.uptime_host
+    - sensor.cpu_temp
+    - sensor.processor_use
+    - sensor.memory_use_percent
+    - sensor.disk_use_percent
+    - sensor.database_size
+    - sensor.log_size
+
+temperature:
+  name: Temperature
+  entities:
+    - sensor.average_temperature
