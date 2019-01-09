@@ -42,9 +42,6 @@
     - condition: state
       entity_id: binary_sensor.front_door
       state: 'on'
-    - condition: state
-      entity_id: input_boolean.quiet_mode
-      state: 'off'
     - service: notify.join
       data:
         message: "Front Door Opened"
