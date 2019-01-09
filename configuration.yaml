@@ -1,0 +1,351 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret zone_home_elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: !secret homeassistant_time_zone
+  # Customization file
+  customize_glob: !include customize_glob.yaml
+  customize: !include customize.yaml
+  whitelist_external_dirs:
+    - !secret homeassistant_whitelist_config
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Add logger in to see why restart fails
+logger:
+  default: warning
+  logs:
+    homeassistant.components.media_player.plex: fatal # When Plex is offline.
+    custom_components.media_player.ps4: debug
+    custom_components: debug
+    pyupdate: debug
+
+#
+# Enable the official UI
+#
+# @link https://home-assistant.io/components/frontend/
+#
+frontend:
+  # javascript_version: latest
+  extra_html_url:
+    - /local/custom_ui/state-card-custom-ui.html
+    - /local/custom_ui/state-card-hline.html
+    - /local/custom_ui/state-card-value_only.html
+  extra_html_url_es5:
+    - /local/custom_ui/state-card-custom-ui-es5.html
+    - /local/custom_ui/state-card-hline.html
+    - /local/custom_ui/state-card-value_only.html
+  themes: !include_dir_named themes/
+
+#
+# Atomations
+#
+# @link https://home-assistant.io/components/automation/
+#
+automation: !include_dir_merge_list automations/
+
+
+#
+# Binary sensors
+#
+# @link https://home-assistant.io/components/binary_sensor/
+#
+binary_sensor: !include misc/binary_sensors.yaml
+
+
+#
+# Cameras
+#
+# @link https://home-assistant.io/components/camera/
+#
+camera: !include_dir_merge_list cameras/
+
+#
+# Displays
+#
+# @see /custom_components/display/
+#
+# @link https://github.com/daemondazz/homeassistant-displays
+#
+display: !include misc/displays.yaml
+
+
+# Enables configuration UI
+config:
+
+#
+# Enable the custom UI menus
+#customizer:
+#  custom_ui: local
+#  hide_attributes:
+#    - node_id
+#    - value_index
+
+#
+# lovelace - set storage to ui-lovelace.yaml so we can use custom components
+#
+lovelace:
+  mode: yaml
+
+# 
+# lovelace custom_updater components
+#
+custom_updater:
+  show_installable: true
+  track:
+    - cards
+  card_urls:
+    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
+    
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  #base_url: https://falkyre.duckdns.org:8123
+  #ssl_certificate: /ssl/fullchain.pem
+  #ssl_key: /ssl/privkey.pem
+  api_password: !secret http_pass
+  
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+  ignore:
+    - google_cast
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+#
+# Database recorder
+#
+# Limit the number of tracked entities and length of history.
+#
+# @link https://home-assistant.io/components/recorder/
+#
+recorder: !include misc/recorder.yaml
+
+  
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+#
+# Input booleans
+#
+# @link https://home-assistant.io/components/input_boolean/
+#
+input_boolean: !include misc/input_booleans.yaml
+
+#
+# Variables
+#
+# @see /custom_components/variable.py
+#
+# @link https://github.com/rogro82/hass-variables
+#
+variable: !include misc/variables.yaml
+
+#
+# Zones
+#
+# @link https://home-assistant.io/components/zone/
+#
+zone: !include misc/zones.yaml
+
+
+#cast:
+#  media_player:
+#    - host: 192.168.100.104
+#    - host: 192.168.100.151
+#    - host: 192.168.100.109
+    
+#
+# Sensors
+#
+# @link https://home-assistant.io/components/sensor/
+#
+sensor: !include_dir_merge_list sensors/
+
+
+
+# Text to speech
+tts:
+  - platform: google
+    base_url: http://192.168.100.157:8123
+    cache: true
+    cache_dir: /config/tts
+    time_memory: 300
+
+# Cloud
+cloud:
+#
+# Combine entities into groups and organize UI
+#
+# @link https://home-assistant.io/components/group/
+#
+group: !include_dir_merge_named groups/
+
+#
+# Scripts
+#
+# @link https://home-assistant.io/components/script/
+#
+script: !include_dir_named scripts/
+
+#
+# Shell commands
+#
+# @link https://home-assistant.io/components/shell_command/
+#
+shell_command: !include misc/shell_commands.yaml
+
+#
+# Device trackers
+#
+# @link https://home-assistant.io/components/device_tracker/
+#
+device_tracker: !include misc/device_trackers.yaml
+ 
+  
+    
+nest:
+  structure:
+    - Home
+  client_id:  !secret nest_clientid
+  client_secret: !secret nest_secret
+
+cover:
+  - platform: myq
+    username: !secret myc_user
+    password: !secret myc_pass
+    type: chamberlain
+    
+#weather:
+#    - platform: darksky
+#      api_key: !secret darksky_api
+#
+# Media players
+#
+# @link https://home-assistant.io/components/media_player/
+#
+media_player: !include misc/media_players.yaml
+
+#
+# Switches
+#
+# @link https://home-assistant.io/components/switch/
+#
+switch: !include_dir_merge_list switches/
+
+tuya:
+  username: !secret tuya_user
+  password: !secret tuya_pass
+  country_code: +1
+
+sonoff:
+  email: !secret sonoff_username
+  password: !secret sonoff_password
+  scan_interval: 60
+  grace_period: 600
+  api_region: 'us'
+   
+sabnzbd:
+  api_key: !secret sabnzbd_api_key
+  host: 192.168.100.69
+  port: 8085
+  sensors:
+    - current_status
+    - speed
+    - queue_remaining
+    - queue_count
+  
+#
+# ZWave integration
+#
+# @link https://home-assistant.io/docs/z-wave/adding/
+# @link https://home-assistant.io/docs/z-wave/
+# @link https://home-assistant.io/components/zwave/
+#
+#
+# Notification services
+#
+# @link https://home-assistant.io/components/notify/
+#
+notify: !include_dir_merge_list notifications/
+
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+  
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+
+weblink:
+  entities:
+    - name: Portainer
+      icon: mdi:docker
+      url: http://192.168.100.157:9000
+
+#
+# Side Panels
+#
+
+panel_iframe:
+  configurator:
+    title: 00 - Configurator
+    icon: mdi:wrench
+    url: http://192.168.100.157:3218
+  terminal:
+    title: 02 - Terminal
+    icon: mdi:console
+    url: http://192.168.100.157:7681
+  influxdb:
+    title: 03 - InfluxDB
+    icon: mdi:chart-areaspline
+    url: http://192.168.100.157:8888
+  logviewer:
+    title: 01 - Log Viewer
+    icon: mdi:filter
+    url: http://192.168.100.157:4277
+  grafana:
+    title: 04 - Grafana
+    icon: mdi:chart-timeline
+    url: http://192.168.100.157:3000
+  ide:
+    title: 00 - IDE
+    icon: mdi:code-braces
+    url: http://192.168.100.157:8321
+panel_custom:
+  - name: zwavegraph2
+    sidebar_title: Z-Wave Graph
+    sidebar_icon: mdi:access-point-network
+    url_path: zwave
+    

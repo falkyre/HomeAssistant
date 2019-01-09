@@ -1,0 +1,220 @@
+#
+# Automations
+#
+automation.daily_greeting:
+  icon: mdi:human-greeting
+automation.door_notify:
+  extra_data_template:
+  - >-
+    var e = 'counter.door_notify';
+    if (entities[e] === undefined || entities[e].state === 'unknown') return null;
+    var max = entities[e].attributes['initial'],
+        left = entities[e].state,
+        name = entities[e].attributes['friendly_name'];
+    if (left == max) return null;
+    return max - left + '/' + max + ' ' + name.toLowerCase() + ' sent.'
+  - >-
+    if(!attributes.last_triggered)return null;
+    var t,s=(new Date()-new Date(attributes.last_triggered))/1e3;
+    return(
+    (t=Math.floor(s/86400))?t+(t>1?" days":" day"):
+    (t=Math.floor(s/3600))?t+(t>1?" hours":" hour"):
+    (t=Math.floor(s/60))?t+(t>1?" minutes":" minute"):
+    (t=Math.floor(s))!==1?t+" seconds":" second"
+    )+" ago";
+automation.humidity_notify:
+  icon: mdi:water-percent
+  
+automation.front_door_notify:
+  icon: mdi:door-open
+
+automation.update_notify:
+  icon: mdi:cloud-upload
+
+#
+# Input booleans
+#
+input_boolean.door_test:
+  confirm_controls_show_lock: true
+input_boolean.leak_test:
+  confirm_controls_show_lock: true
+input_boolean.motion_test:
+  confirm_controls_show_lock: true
+input_boolean.smoke_test:
+  confirm_controls_show_lock: true
+input_boolean.tamper_detected:
+  confirm_controls_show_lock: true
+  templates:
+    theme: >-
+      return state == 'on'
+      ? 'card-critical'
+      : null;
+
+#
+# Sensors: Miscellaneous
+#
+sensor.bing_wallpaper:
+  custom_ui_state_card: state-card-value_only
+sensor.door_status:
+  templates:
+    theme: >-
+      return state != 'Closed' ? 'card-warning'
+      : null;
+sensor.leak_status:
+  templates:
+    theme: >-
+      return state != 'Clear' ? 'card-critical'
+      : null;
+sensor.motion_status:
+  templates:
+    theme: >-
+      return state != 'Clear' ? 'card-warning'
+      : null;
+#
+# Sensors: Climate
+#
+sensor.average_humidity:
+  friendly_name: Average
+sensor.average_humidity_friendly:
+  extra_badge:
+    entity_id: sensor.average_humidity
+  templates:
+    theme: >-
+      var e = 'sensor.average_humidity',
+          v = entities[e] !== undefined && parseInt(entities[e].state);
+      return v > 55 || v < 30 ? 'card-critical'
+      : v > 50 || v < 35 ? 'card-warning'
+      : null;
+sensor.average_temperature:
+  friendly_name: Average
+  
+binary_sensor.front_door:
+    friendly_name: Front Door
+    device_class: door
+binary_sensor.garage_door:
+    friendly_name: Garage Door
+    device_class: door
+binary_sensor.furnancepump_leak:
+    friendly_name: Furnance Pump
+    device_class: moisture
+    
+#
+# Sensors: System
+#
+sensor.processor_use:
+  friendly_name: CPU Load
+  icon: mdi:chip
+  extra_data_template: >-
+    var a = 'sensor.average_load',
+        b = 'sensor.cpu_cores',
+        c = (entities[a] !== undefined && entities[a].state != 'unknown')
+            ? entities[a].state : null,
+        d = (entities[b] !== undefined && entities[b].state != 'unknown')
+            ? '(' + entities[b].state + ' cores)' : null;
+    return c && d ? c + ' ' + d
+    : c || d;
+sensor.disk_use_percent:
+  extra_data_template: >-
+    var e = 'sensor.disk_free_home';
+    return entities[e] !== undefined && entities[e].state != 'unknown'
+    ? Math.round(parseFloat(entities[e].state)) + ' ' +
+      entities[e].attributes['unit_of_measurement'] + ' available'
+    : null;
+sensor.ipv4_address_eth0:
+  friendly_name: Local IP Address
+sensor.memory_use_percent:
+  extra_data_template: >-
+    var e = 'sensor.memory_free';
+    return entities[e] !== undefined && entities[e].state != 'unknown'
+    ? Math.round(parseFloat(entities[e].state)) + ' ' +
+      entities[e].attributes['unit_of_measurement'] + ' available'
+    : null;
+sensor.speedtest_download:
+  friendly_name: Downspeed
+  icon: mdi:download-network
+  show_last_changed: true
+sensor.speedtest_ping:
+  friendly_name: Ping
+  icon: mdi:timer
+  show_last_changed: true
+sensor.speedtest_upload:
+  friendly_name: Upspeed
+  icon: mdi:upload-network
+  show_last_changed: true
+sensor.uptime_os:
+  icon: mdi:pi
+
+#
+# Updater
+#
+updater.updater:
+  custom_ui_state_card: state-card-custom-ui
+  extra_data_template: >-
+    var e = 'sensor.current_version';
+    return entities[e] !== undefined && entities[e].state != 'unknown'
+    ? 'Current version: ' + entities[e].state
+    : null;
+
+#
+# Cameras
+#
+camera.bing_wallpaper:
+  hide_control: true
+camera.environment_canada_rain:
+  friendly_name: "Radar: Rain"
+  hide_control: true
+camera.environment_canada_snow:
+  friendly_name: "Radar: Snow"
+  hide_control: true
+camera.noaa_geocolor:
+  friendly_name: "Satellite: Geocolor"
+  hide_control: true
+camera.noaa_water_vapour:
+  friendly_name: "Satellite: Water Vapour"
+  hide_control: true
+  
+#
+# Displays
+#
+display.kiosk:
+  icon: mdi:tablet
+
+
+# Sensors: Weather
+#
+sensor.dark_sky_minutely_summary:
+  custom_ui_state_card: state-card-value_only
+sensor.dark_sky_daily_summary:
+  friendly_name: Weekly Forecast
+  hide_control: true
+  custom_ui_state_card: state-card-value_only
+sensor.dark_sky_hourly_summary:
+  friendly_name: 24h Summary
+  custom_ui_state_card: state-card-value_only
+sensor.dark_sky_summary:
+  friendly_name: " "
+  extra_data_template: >-
+    var e = 'sensor.outside_temperature';
+    return entities[e] !== undefined && entities[e].state != 'unknown'
+    ? entities[e].state + entities[e].attributes['unit_of_measurement']
+    : null;
+  theme: card-secondary-title
+sensor.outside_humidity:
+  friendly_name: Outside
+sensor.outside_temperature:
+  friendly_name: Outside
+sensor.weather_details:
+  custom_ui_state_card: state-card-value_only
+sensor.wind_speed:
+  extra_badge:
+    entity_id: sensor.wind_bearing_cardinal
+  templates:
+    theme: >-
+      var v = parseInt(state);
+      return v >= 89 ? 'card-critical'
+      : v >= 39 ? 'card-warning'
+      : null;
+
+
+
+

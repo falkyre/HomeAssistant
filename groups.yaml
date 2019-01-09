@@ -1,0 +1,68 @@
+internet_speed:
+  name: Internet Speed
+  entities:
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
+    
+host_system_group:
+  name: Host System
+  entities:
+    - sensor.processor_use
+    - sensor.memory_use_percent
+    - sensor.disk_use_percent_config
+    - sensor.network_in_eth0
+    - sensor.network_out_eth0
+    - sensor.last_boot
+camera_group:
+  name: Cameras
+  icon: mdi:cctv
+  view: yes
+  entities:
+    - camera.office
+    - camera.living_room
+    - camera.garage
+    - camera.Backyard
+    - camera.Basement
+ 
+sab_group:
+  name: SABnzbd
+  entities:
+    - sensor.sabnzbd_left
+    - sensor.sabnzbd_queue_count
+    - sensor.sabnzbd_speed
+    - sensor.sabnzbd_status
+    
+internet_view:
+  name: Internet
+  icon: mdi:google-chrome
+  view: yes
+  entities:
+    - group.internet_speed
+    - group.sab_group
+
+sean:
+  name: Sean
+  entities:
+    - device_tracker.Sean_bluetooth
+    - device_tracker.sean_oneplus3
+family:
+  name: Family
+  icon: mdi:account-multiple
+  view: yes
+  entities:
+    - group.sean
+    - device_tracker.Bryce
+    - device_tracker.Danielle
+    - device_tracker.Dominique
+
+weatherstation:
+  name: Weather Station
+  icon: mdi:weather-lightning-rainy
+  view: yes
+  entities:
+    - sensor.acurite5n1_temperature
+    - sensor.acurite5n1_humidity
+    - sensor.acurite5n1_winddir
+    - sensor.acurite5n1_windspeed
+    - weather.dark_sky

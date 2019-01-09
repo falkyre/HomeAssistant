@@ -1,0 +1,262 @@
+title: Home Assistant
+
+resources:
+  - url: /local/tracker-card.js?v=0
+    type: js
+  - url: /local/mini-media-player-bundle.js?v=0.9.8
+    type: module
+    
+views:
+  - badges:
+      - binary_sensor.main_thermostat_online
+      - binary_sensor.basement_nest_protect_online
+      - binary_sensor.main_thermostat_fan
+      - binary_sensor.home_away
+      - binary_sensor.front_door
+      - binary_sensor.garage_door
+      - binary_sensor.furnancepump_leak
+      - sensor.dark_sky_summary
+      - sensor.dark_sky_temperature
+      - sensor.dark_sky_dew_point
+      - sensor.dark_sky_icon
+      - sensor.dark_sky_apparent_temperature
+      - sensor.basement_nest_protect_battery_health
+      - sensor.main_thermostat_humidity
+      - sensor.main_thermostat_temperature
+      - sensor.hallway_nest_protect_battery_health
+      - sun.sun
+    cards:
+      - entity: climate.main
+        type: thermostat
+      - entities:
+          - cover.garage
+        title: Cover
+        type: entities
+      - entities:
+          - entity: zwave.aeotec_zw090_zstick_gen5_us
+          - entity: zwave.aeotec_zw117_range_extender_6
+          - entity: zwave.ecolink_doorwindow_sensor
+          - entity: zwave.ecolink_doorwindow_sensor_2
+          - entity: zwave.dome_leak_sensor_2
+        show_header_toggle: false
+        title: Z-Wave
+        type: entities
+      - entities:
+          - weblink.portainer
+        show_header_toggle: false
+        title: Weblink
+        type: entities
+    icon: 'mdi:home-assistant'
+    path: default_view
+    theme: normal
+    title: Home
+  - badges: []
+    cards:
+      - entities:
+          - camera.office
+          - camera.living_room
+          - camera.garage
+          - camera.backyard
+          - camera.basement
+        title: Camera
+        type: entities
+    icon: 'mdi:cctv'
+    path: camera_group
+    title: Cameras
+  - badges: []
+    cards:
+      - entities:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.speedtest_ping
+        title: Internet Speed
+        type: entities
+      - entities:
+          - sensor.sabnzbd_left
+          - sensor.sabnzbd_queue_count
+          - sensor.sabnzbd_speed
+          - sensor.sabnzbd_status
+        title: SABnzbd
+        type: entities
+    icon: 'mdi:google-chrome'
+    path: internet_view
+    title: Internet
+  - badges:
+      - device_tracker.bryce
+      - device_tracker.danielle
+      - device_tracker.dominique
+    cards:
+      - entities:
+          - device_tracker.sean_bluetooth
+          - device_tracker.sean_oneplus3
+        show_header_toggle: false
+        title: Sean
+        type: entities
+    icon: 'mdi:account-multiple'
+    path: family
+    title: Family
+  - badges:
+      - sensor.acurite5n1_temperature
+      - sensor.acurite5n1_humidity
+      - sensor.pws_wind_speed
+      - sensor.pws_wind_bearing_cardinal_16
+    cards:
+      - cards:
+          - entity: sensor.acurite5n1_temperature
+            graph: line
+            type: sensor
+          - entity: sensor.acurite5n1_humidity
+            graph: line
+            type: sensor
+        type: horizontal-stack
+      - entity: sensor.dark_sky_daily_summary
+        type: sensor
+      - cards:
+          - entity: camera.environment_canada_snow_3
+            type: picture-entity
+          - entity: camera.environment_canada_snow_2
+            type: picture-entity
+          - entity: camera.environment_canada_snow
+            type: picture-entity
+        type: horizontal-stack
+      - cards:
+          - entity: camera.environment_canada_rain
+            type: picture-entity
+          - entity: camera.environment_canada_rain_2
+            type: picture-entity
+          - entity: camera.environment_canada_rain
+            type: picture-entity
+        type: horizontal-stack
+      - aspect_ratio: 100%
+        type: iframe
+        url: 'https://embed.windy.com/embed2.html'
+    icon: 'mdi:weather-lightning-rainy'
+    path: weatherstation
+    title: Weather Station
+  - badges:
+      - binary_sensor.furnancepump_leak
+      - binary_sensor.front_door
+      - binary_sensor.garage_door
+      - cover.garage
+      - automation.door_notify
+      - automation.front_door_notify
+      - automation.door_notify_reset
+    cards: []
+    icon: 'mdi:access-point-network'
+    title: Z-Wave
+  - badges: []
+    cards:
+      - entities:
+          - entity: media_player.castit
+          - entity: media_player.den_speaker
+          - entity: media_player.den_tv
+          - entity: media_player.recast
+          - entity: media_player.mancave4k
+          - entity: media_player.ps4_sean
+          - entity: media_player.kodi_kodimancavelocal
+          - entity: remote.harmony_hub
+        type: entities
+      - entity: media_player.ps4_sean
+        type: media-control
+      - entity: media_player.kodi_kodilocal
+        type: media-control
+      - entity: media_player.mancave4k
+        type: media-control
+      - entity: media_player.den_speaker
+        type: media-control
+      - entity: media_player.castit
+        type: media-control
+      - entity: media_player.kodi_kodimancavelocal
+        type: media-control
+      - entity: media_player.den_tv
+        type: media-control
+      - type: conditional
+        conditions:
+          - entity: media_player.recast
+            state_not: unavailable
+        card:
+          type: media-control
+          entity: media_player.recast
+    icon: 'mdi:remote'
+    title: Media Players
+  - badges:
+      - group.all_lights
+      - group.all_switches
+    cards:
+      - entities:
+          - entity: light.07200118b4e62d21cb06
+          - entity: light.07200118bcddc2e54b1b
+          - entity: light.60818528dc4f2235ce22
+          - entity: light.mancavecouch
+          - entity: light.mancavedoor
+          - entity: light.mancavestairs
+        title: Lights
+        type: entities
+      - cards:
+          - entity: switch.jersey
+            type: entity-button
+          - entity: switch.powermeter
+            type: entity-button
+          - entity: switch.christmastree
+            type: entity-button
+        type: horizontal-stack
+    icon: 'mdi:lightbulb'
+    title: Lights/Switches
+  - badges: []
+    cards:
+      - cards:
+          - entity: sensor.processor_use
+            severity:
+              green: 0
+              red: 85
+              yellow: 45
+            type: gauge
+            unit: '%'
+          - entity: sensor.memory_use_percent
+            severity:
+              green: 0
+              red: 85
+              yellow: 45
+            type: gauge
+            unit: '%'
+        type: horizontal-stack
+      - entities:
+          - sensor.ipv4_address_eth0
+          - sensor.uptime_friendly
+          - sensor.uptime_host
+          - sensor.processor_use
+          - sensor.memory_use_percent
+          - sensor.disk_use_percent
+          - sensor.database_size
+          - sensor.log_size
+        show_header_toggle: true
+        title: System
+        type: entities
+      - entities:
+          - sensor.speedtest_ping
+          - sensor.speedtest_upload
+          - sensor.speedtest_download
+        show_header_toggle: true
+        title: Network
+        type: entities
+      - entities:
+          - sensor.front_door_sensor_battery
+          - sensor.garage_door_sensor_battery
+          - sensor.furnace_leak_sensor_battery
+          - sensor.acurite_5n1_battery
+          - sensor.acurite_lightning_detector_battery
+          - sensor.kiosk_battery
+        show_header_toggle: true
+        title: Battery Levels
+        type: entities
+    icon: 'mdi:desktop-classic'
+    theme: normal
+    title: System
+  - title: Automations
+    icon: mdi:home-automation
+    cards:
+      type: custom:tracker-card
+      title:
+      trackers:
+      - sensor.custom_card_tracker
+      - sensor.custom_component_tracker

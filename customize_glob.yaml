@@ -1,0 +1,51 @@
+#
+# Global
+#
+"*.*":
+  custom_ui_state_card: state-card-custom-ui
+
+
+#
+# Automations
+#
+automation.*:
+  extra_data_template: >-
+    if(!attributes.last_triggered)return null;
+    var t,s=(new Date()-new Date(attributes.last_triggered))/1e3;
+    return(
+    (t=Math.floor(s/86400))?t+(t>1?" days":" day"):
+    (t=Math.floor(s/3600))?t+(t>1?" hours":" hour"):
+    (t=Math.floor(s/60))?t+(t>1?" minutes":" minute"):
+    (t=Math.floor(s))!==1?t+" seconds":" second"
+    )+" ago";
+automation.motion_*:
+  icon: mdi:run
+
+
+#
+# Input Booleans
+#
+input_boolean.*:
+  show_last_changed: true
+
+
+#
+# Sensors
+#
+sensor.*_battery:
+  templates:
+    theme: >-
+      var v = parseInt(state);
+      return v <= 5 ? 'card-critical'
+      : v <= 10 ? 'card-warning'
+      : null;
+sensor.*_humidity:
+  device_class: humidity
+sensor.hline_*:
+  custom_ui_state_card: state-card-hline
+sensor.hline_dashed*:
+  config:
+    width: 90
+    height: 0
+    backgroundcolor: inherit
+    bordertop: '1px dashed silver'
