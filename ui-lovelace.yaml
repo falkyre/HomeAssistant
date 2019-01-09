@@ -156,6 +156,11 @@ views:
           - entity: media_player.kodi_kodimancavelocal
           - entity: remote.harmony_hub
         type: entities
+      - type: custom:mini-media-player
+        entity: media_player.mancave4k
+        icon: mdi:router-wireless
+        artwork_border: true
+        show_source: true
       - entity: media_player.ps4_sean
         type: media-control
       - entity: media_player.kodi_kodilocal
