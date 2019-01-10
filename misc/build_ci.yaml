@@ -33,7 +33,7 @@ build_ci:
 
   sensor:
     - platform: rest
-      resource: hhttps://travis-ci.org/falkyre/HomeAssistant/builds
+      resource: https://travis-ci.org/falkyre/HomeAssistant/builds
       headers:
         Accept: application/vnd.travis-ci.2+json
       value_template: "{{ value_json.builds[0].state }}"
