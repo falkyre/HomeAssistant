@@ -42,7 +42,7 @@
     - condition: state
       entity_id: binary_sensor.garage_door
       state: 'on'
-    - service: notify.text
+    - service: notify.join
       data:
         message: "Garage Door Opened"
         data: {"icon":"https://goo.gl/xeetdy"}
