@@ -211,11 +211,11 @@ views:
         title: Lights
         type: entities
       - cards:
-          - entity: switch.jersey
+          - entity:  switch.sonoff_1000119693
             type: entity-button
-          - entity: switch.powermeter
+          - entity: switch.sonoff_100033210b
             type: entity-button
-          - entity: switch.christmastree
+          - entity:  switch.sonoff_100040b77c
             type: entity-button
         type: horizontal-stack
     icon: 'mdi:lightbulb'
