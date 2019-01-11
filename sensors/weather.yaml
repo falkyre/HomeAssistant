@@ -26,6 +26,7 @@
     - wind_speed
     - wind_bearing
     - precip_probability
+    - dew_point
 
 
 #
