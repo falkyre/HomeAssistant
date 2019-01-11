@@ -156,6 +156,23 @@ views:
           - entity: media_player.kodi_kodimancavelocal
           - entity: remote.harmony_hub
         type: entities
+      - type: entities
+        title: Google
+        entities:
+          - entity: media_player.castit
+            type: custom:mini-media-player
+            group: true
+          - entity: media_player.den_tv
+            type: custom:mini-media-player
+            group: true
+          - entity: media_player.recast
+            type: custom:mini-media-player
+            group: true
+          - entity: media_player.den_speaker
+            type: custom:mini-media-player
+            hide_controls: true
+            show_tts: google
+            group: true         
       - type: custom:mini-media-player
         entity: media_player.mancave4k
         icon: mdi:router-wireless
@@ -163,25 +180,15 @@ views:
         show_source: true
       - entity: media_player.ps4_sean
         type: media-control
-      - entity: media_player.kodi_kodilocal
-        type: media-control
-      - entity: media_player.mancave4k
-        type: media-control
-      - entity: media_player.den_speaker
-        type: media-control
-      - entity: media_player.castit
-        type: media-control
-      - entity: media_player.kodi_kodimancavelocal
-        type: media-control
-      - entity: media_player.den_tv
-        type: media-control
-      - type: conditional
-        conditions:
-          - entity: media_player.recast
-            state_not: unavailable
-        card:
-          type: media-control
-          entity: media_player.recast
+      - type: entities
+        title: Google
+        entities:
+          - entity: media_player.kodi_kodilocal
+            type: custom:mini-media-player
+            group: true
+          - entity: media_player.kodi_kodimancavelocal
+            type: custom:mini-media-player
+            group: true
     icon: 'mdi:remote'
     title: Media Players
   - badges:
@@ -262,11 +269,3 @@ views:
     icon: 'mdi:desktop-classic'
     theme: normal
     title: System
-  - title: Automations
-    icon: mdi:home-automation
-    cards:
-      type: custom:tracker-card
-      title:
-      trackers:
-      - sensor.custom_card_tracker
-      - sensor.custom_component_tracker
