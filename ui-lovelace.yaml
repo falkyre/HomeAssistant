@@ -4,8 +4,10 @@ resources:
   - url: /local/tracker-card.js?v=0
     type: js
   - url: /local/mini-media-player-bundle.js?v=0.9.8
-    type: module
-    
+    type: js
+  - url: /local/button-card.js
+    type: js
+
 views:
   - badges:
       - binary_sensor.main_thermostat_online

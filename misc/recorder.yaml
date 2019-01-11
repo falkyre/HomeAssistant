@@ -27,6 +27,10 @@ include:
     - sensor.door_status
     - sensor.leak_status
     - sensor.motion_status
+    
+    - sensor.sonoff_100033210b_current
+    - sensor.sonoff_100033210b_power
+    - sensor.sonoff_100033210b_voltage
 
 exclude:
   domains:
