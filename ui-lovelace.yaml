@@ -7,6 +7,8 @@ resources:
     type: module
   - url: /local/button-card.js
     type: module
+  - url: /local/ext-weblink.js?v=0
+    type: js
 
 views:
   - badges:
@@ -43,11 +45,14 @@ views:
         show_header_toggle: false
         title: Z-Wave
         type: entities
-      - entities:
-          - weblink.portainer
+      - type: entities
+        title: Portainer
         show_header_toggle: false
-        title: Weblink
-        type: entities
+        entities:
+          - type: custom:ext-weblink
+            name: Portainer
+            url: http://192.168.100.157:9000
+            icon: mdi:home-assistant
     icon: 'mdi:home-assistant'
     path: default_view
     theme: normal
