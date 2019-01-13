@@ -1,7 +1,0 @@
-- alias: 'Misc: Update config if travis build is successfull'
-  trigger:
-    platform: state
-    entity_id: sensor.homeassistant_last_build_state
-    to: 'passed'
-  action:
-    - service: script.get_latest_config

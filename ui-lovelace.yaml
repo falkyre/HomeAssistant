@@ -1,12 +1,12 @@
 title: Home Assistant
 
 resources:
-  - url: /local/tracker-card.js?v=0
+  - url: /local/tracker-card.js?v=0.1.5
     type: js
   - url: /local/mini-media-player-bundle.js?v=0.9.8
-    type: js
+    type: module
   - url: /local/button-card.js
-    type: js
+    type: module
 
 views:
   - badges:
@@ -213,12 +213,27 @@ views:
         title: Lights
         type: entities
       - cards:
-          - entity:  switch.sonoff_1000119693
-            type: entity-button
-          - entity: switch.sonoff_100033210b
-            type: entity-button
-          - entity:  switch.sonoff_100040b77c
-            type: entity-button
+          - type: "custom:button-card"
+            entity: switch.sonoff_1000119693
+            icon: mdi:tshirt-crew
+            color: auto
+            action: toggle
+            name: Jersey
+            show_state: true         
+          - type: "custom:button-card"
+            entity: switch.sonoff_100033210b
+            icon: mdi:speedometer
+            color: auto
+            action: more_info
+            show_state: true
+            name: Powermeter
+          - type: "custom:button-card"
+            entity: switch.sonoff_100040b77c
+            icon: mdi:pine-tree
+            color: auto
+            action: toggle
+            name: Christmas Tree
+            show_state: true   
         type: horizontal-stack
     icon: 'mdi:lightbulb'
     title: Lights/Switches
