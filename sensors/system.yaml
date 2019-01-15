@@ -305,14 +305,14 @@
       icon_template: mdi:database
       unit_of_measurement: 'MiB'
       value_template: >-
-        {{ states('sensor.homeassistant_v2db') | round }}
+        {{ states('sensor.home_assistant_v2_db') | round }}
 
     log_size:
       friendly_name: Log Size
       icon_template: mdi:history
       unit_of_measurement: 'KiB'
       value_template: >-
-        {% set size = state_attr('sensor.homeassistantlog', 'bytes') %}
+        {% set size = state_attr('sensor.home_assistant_log', 'bytes') %}
 
         {% if size != None %}
           {{ (size / 1024) | round }}
