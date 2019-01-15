@@ -240,6 +240,14 @@ views:
             name: Christmas Tree
             show_state: true   
         type: horizontal-stack
+      - type: history-graph
+        title: 'Powermeter'
+        refresh_interval: 30
+        entities:
+          - sensor.sonoff_100033210b_power
+          - sensor.sonoff_100033210b_current
+          - sensor.sonoff_100033210b_voltage
+    
     icon: 'mdi:lightbulb'
     title: Lights/Switches
   - badges: []
