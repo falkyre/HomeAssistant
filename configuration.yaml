@@ -25,8 +25,8 @@ logger:
   logs:
     homeassistant.components.media_player.plex: fatal # When Plex is offline.
     custom_components.media_player.ps4: debug
-    custom_components: debug
-    pyupdate: debug
+    #custom_components: debug
+    #pyupdate: debug
 
 #
 # Enable the official UI
