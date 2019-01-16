@@ -5,7 +5,7 @@ resources:
     type: js
   - url: /local/mini-media-player-bundle.js?v=0.9.8
     type: module
-  - url: /local/button-card.js?v=0.0.3
+  - url: /local/button-card.js?v=1.0.3
     type: module
   - url: /local/ext-weblink.js?v=0
     type: js
