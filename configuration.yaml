@@ -99,7 +99,7 @@ lovelace:
 # lovelace custom_updater components
 #
 custom_updater:
-  show_installable: true
+  show_installable: false
   track:
     - cards
     - components
