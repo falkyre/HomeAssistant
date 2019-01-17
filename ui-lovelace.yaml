@@ -142,7 +142,7 @@ views:
         type: horizontal-stack
       - aspect_ratio: 100%
         type: iframe
-        url: 'https://embed.windy.com/embed2.html'
+        url: 'https://embed.windy.com/embed2.html?lat=50.293&lon=-97.597&zoom=7&level=surface&overlay=wind&menu=&message=&marker=&calendar=&pressure=true&type=map&location=coordinates&detail=&detailLat=50.293&detailLon=-97.597&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1'
     icon: 'mdi:weather-lightning-rainy'
     path: weatherstation
     title: Weather Station
