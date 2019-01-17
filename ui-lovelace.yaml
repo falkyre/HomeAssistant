@@ -5,7 +5,7 @@ resources:
     type: js
   - url: /local/mini-media-player-bundle.js?v=0.9.8
     type: module
-  - url: /local/button-card.js?v=0.0.3
+  - url: /local/button-card.js?v=1.0.7
     type: module
   - url: /local/ext-weblink.js?v=0
     type: js
@@ -212,6 +212,7 @@ views:
           - entity: light.07200118b4e62d21cb06
           - entity: light.07200118bcddc2e54b1b
           - entity: light.60818528dc4f2235ce22
+          - entity: light.mancavetv
           - entity: light.mancavecouch
           - entity: light.mancavedoor
           - entity: light.mancavestairs
