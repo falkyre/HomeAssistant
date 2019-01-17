@@ -21,6 +21,15 @@
     {% else %}
       10
     {% endif %}
+  icon_template: >-
+    {% set battery_level = value_json.battery %}
+
+    {% if battery_level == "OK" %}
+      mdi:battery
+    {% else %}
+      mdi:battery-outline
+    {% endif %}
+    
 
 - platform: mqtt
   name: AcuRite Lightning Detector Battery
@@ -33,6 +42,14 @@
       100
     {% else %}
       10
+    {% endif %}
+  icon_template: >-
+    {% set battery_level = value_json.battery %}
+
+    {% if battery_level == "OK" %}
+      mdi:battery
+    {% else %}
+      mdi:battery-outline
     {% endif %}
 
 
@@ -96,7 +113,7 @@
           unknown
         {% endif %}
       icon_template: >-
-        {% set battery_level = state_attr('zwave.front_door', 'battery_level') %}
+        {% set battery_level = state_attr('zwave.ecolink_doorwindow_sensor', 'battery_level') %}
 
         {% if battery_level != None %}
           {% set battery_round = (battery_level / 10) | int * 10 %}
@@ -124,7 +141,7 @@
           unknown
         {% endif %}
       icon_template: >-
-        {% set battery_level = state_attr('zwave.front_door', 'battery_level') %}
+        {% set battery_level = state_attr('zwave.ecolink_doorwindow_sensor_2', 'battery_level') %}
 
         {% if battery_level != None %}
           {% set battery_round = (battery_level / 10) | int * 10 %}
@@ -152,7 +169,7 @@
           unknown
         {% endif %}
       icon_template: >-
-        {% set battery_level = state_attr('zwave.kitchen_leak_sensor', 'battery_level') %}
+        {% set battery_level = state_attr('zwave.dome_leak_sensor_2', 'battery_level') %}
 
         {% if battery_level != None %}
           {% set battery_round = (battery_level / 10) | int * 10 %}

@@ -290,16 +290,7 @@ views:
         show_header_toggle: true
         title: Network
         type: entities
-      - entities:
-          - sensor.front_door_sensor_battery
-          - sensor.garage_door_sensor_battery
-          - sensor.furnace_leak_sensor_battery
-          - sensor.acurite_5n1_battery
-          - sensor.acurite_lightning_detector_battery
-          - sensor.kiosk_battery
-        show_header_toggle: true
-        title: Battery Levels
-        type: entities
+
       - type: custom:monster-card
         card:
           type: entities
