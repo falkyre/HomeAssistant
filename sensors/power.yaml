@@ -13,6 +13,7 @@
   name: AcuRite 5n1 Battery
   state_topic: "home/Acurite_5n1_sensor/1104"
   unit_of_measurement: '%'
+  device_class: battery
   value_template: >-
     {% set battery_level = value_json.battery %}
 
@@ -35,6 +36,7 @@
   name: AcuRite Lightning Detector Battery
   state_topic: "home/Acurite_Lightning_6045M/3"
   unit_of_measurement: '%'
+  device_class: battery
   value_template: >-
     {% set battery_level = value_json.battery %}
 
