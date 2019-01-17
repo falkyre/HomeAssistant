@@ -11,6 +11,10 @@ resources:
     type: js
   - url: /local/monster-card.js?v=1
     type: js
+  - url: /local/lovelace-fullykiosk.js
+    type: js
+  - url: /local/kiosk-config.js
+    type: js
 
 views:
   - badges:
