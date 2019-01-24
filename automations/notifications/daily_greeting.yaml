@@ -76,11 +76,6 @@
           endif -%}
           A {{ states('sensor.wind_scale_friendly') | lower }} is blowing from the {{ states('sensor.wind_bearing_cardinal_friendly') }}.
 
-          Air quality is {{ states('sensor.aqi_friendly') | lower }}
-          {%- if is_state('sun.sun', 'above_horizon') -%}
-            , UV index is {{ states('sensor.uv_friendly') | lower }}
-          {%- endif %} and the sun {{ states('sensor.sun_state_friendly') }}.
-
           Have a nice day!
 
           {{ states('sensor.good_vibes') }}
