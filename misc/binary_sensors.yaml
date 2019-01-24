@@ -38,6 +38,6 @@
 #      value_template: >-
 #        {{ is_state('binary_sensor.kiosk_motion', 'on')
 #           and (180 >= as_timestamp(now()) - as_timestamp(states.binary_sensor.kiosk_motion.last_changed)) }}
-- platform: mqtt
-  name: dashboard_motion  
-  state_topic: home/kioskmotion
+#- platform: mqtt
+#  name: dashboard_motion  
+#  state_topic: home/kioskmotion
