@@ -5,11 +5,11 @@ resources:
     type: js
   - url: /local/mini-media-player-bundle.js?v=0.9.8
     type: module
-  - url: /local/button-card.js?v=0.0.4
+  - url: /local/button-card.js?v=0.0.5
     type: module
-  - url: /local/ext-weblink.js?v=0
+  - url: /local/ext-weblink.js?v=0.3.2
     type: js
-  - url: /local/monster-card.js?v=1
+  - url: /local/monster-card.js?v=0.2.3
     type: js
   - url: /local/lovelace-fullykiosk.js
     type: js
