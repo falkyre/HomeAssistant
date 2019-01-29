@@ -166,9 +166,19 @@ views:
           - entity: media_player.recast
           - entity: media_player.mancave4k
           - entity: media_player.ps4_sean
+          - entity: media_player.ps4_bryce
+          - entity: media_player.spotify
           - entity: media_player.kodi_kodimancavelocal
           - entity: remote.harmony_hub
         type: entities
+      - type: custom:mini-media-player
+        entity: media_player.spotify
+        icon: mdi:spotify
+        artwork_border: true
+        show_source: true
+        power_color: true
+        artwork: cover
+        show_progress: true
       - type: entities
         title: Google
         entities:
@@ -197,8 +207,6 @@ views:
         icon: mdi:router-wireless
         artwork_border: true
         show_source: true
-      - entity: media_player.ps4_sean
-        type: media-control
       - type: entities
         title: Kodi
         entities:
@@ -208,11 +216,16 @@ views:
           - entity: media_player.kodi_kodimancavelocal
             type: custom:mini-media-player
             group: true
+      - entity: media_player.ps4_sean
+        type: media-control
+      - entity: media_player.ps4_bryce
+        type: media-control
+      
     icon: 'mdi:remote'
     title: Media Players
   - badges:
       - group.all_lights
-      - group.all_switches
+      - group.all_switcheshassio 
     cards:
       - entities:
           - entity: light.07200118b4e62d21cb06

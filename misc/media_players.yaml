@@ -38,15 +38,12 @@
   
 
 - platform: ps4
-    #host: http://192.168.100.157:3031
   host: 192.168.100.102
-  local_store: None
   name: PS4 Sean
-    #filename: '.ps4-wake.credentials.json'
-#  - platform: ps4
-#    host: http://192.168.100.157:3031
-#    host: 192.168.100.130
-#    local_store: None
-#    name: PS4 Bryce
-    #filename: '.ps4-wake.credentials_bryce.json'
+- platform: ps4
+  host: 192.168.100.130
+  name: PS4 Bryce
 
+- platform: spotify
+  client_id: !secret spotify_client
+  client_secret: !secret spotify_secret
