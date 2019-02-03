@@ -31,7 +31,10 @@ include:
     - sensor.sonoff_100033210b_current
     - sensor.sonoff_100033210b_power
     - sensor.sonoff_100033210b_voltage
-
+    - sensor.sonoff_10003cc46c_current
+    - sensor.sonoff_10003cc46c_power
+    - sensor.sonoff_10003cc46c_voltage
+    
 exclude:
   domains:
     - switch

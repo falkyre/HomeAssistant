@@ -138,3 +138,12 @@ scene:
     - Gaming
     - Movie
     - Romantic
+
+washing_machine_status:
+    name: Washing Machine Status
+    options:
+      - Idle
+      - Running
+      - Finishing
+      - Clean
+    initial: Idle
