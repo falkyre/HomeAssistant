@@ -214,5 +214,6 @@ sensor.wind_speed:
       return v >= 89 ? 'card-critical'
       : v >= 39 ? 'card-warning'
       : null;
-
+sensor.washing_machine_status:
+  icon: mdi:washing-machine
 
