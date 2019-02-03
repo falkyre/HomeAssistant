@@ -1,7 +1,7 @@
 title: Home Assistant
 
 resources:
-  - url: /local/tracker-card.js?v=0.1.5
+  - url: /local/tracker-card.js?v=0.2.0
     type: js
   - url: /local/mini-media-player-bundle.js?v=0.9.8
     type: module
@@ -225,7 +225,7 @@ views:
     title: Media Players
   - badges:
       - group.all_lights
-      - group.all_switcheshassio 
+      - group.all_switches 
     cards:
       - entities:
           - entity: light.07200118b4e62d21cb06
@@ -246,13 +246,6 @@ views:
             name: Jersey
             show_state: true         
           - type: "custom:button-card"
-            entity: switch.sonoff_100033210b
-            icon: mdi:speedometer
-            color: auto
-            action: more_info
-            show_state: true
-            name: Powermeter
-          - type: "custom:button-card"
             entity: switch.sonoff_100040b77c
             icon: mdi:pine-tree
             color: auto
@@ -261,12 +254,21 @@ views:
             show_state: true   
         type: horizontal-stack
       - type: history-graph
-        title: 'Powermeter'
+        title: 'Power'
         refresh_interval: 30
         entities:
           - sensor.sonoff_100033210b_power
-          - sensor.sonoff_100033210b_current
-          - sensor.sonoff_100033210b_voltage
+          - sensor.sonoff_10003cc46c_power
+          
+      - type: entities
+        title: Washing Machine
+        show_header_toggle: false
+        entities:
+          - entity: sensor.washing_machine_status
+          - entity: switch.sonoff_10003cc46c
+            name: Washing Machine Power Override
+          - entity: sensor.sonoff_10003cc46c_power
+            name: Washing Machine Power
     
     icon: 'mdi:lightbulb'
     title: Lights/Switches
