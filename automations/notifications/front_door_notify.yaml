@@ -15,6 +15,11 @@
     # When the front door sensor senses openness or closure.
     - platform: state
       entity_id: binary_sensor.front_door
+      
+  condition:
+    - condition: time
+      after: '08:00:00'
+      before: '23:00:00'
 
   action:
     # Flash some smart lights, in case one didn't hear a door opening/closing.

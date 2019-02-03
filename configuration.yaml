@@ -161,6 +161,14 @@ sun:
 input_boolean: !include misc/input_booleans.yaml
 
 #
+# Lists of selectable values
+#
+# @link https://home-assistant.io/components/input_select/
+#
+input_select: !include misc/input_selects.yaml
+
+
+#
 # Variables
 #
 # @see /custom_components/variable.py
