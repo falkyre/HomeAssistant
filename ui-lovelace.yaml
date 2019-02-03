@@ -261,9 +261,14 @@ views:
           - sensor.sonoff_10003cc46c_power
           
       - type: entities
-        title: Input select
+        title: Washing Machine
+        show_header_toggle: false
         entities:
-          - input_select.washing_machine_status
+          - entity: sensor.washing_machine_status
+          - entity: switch.sonoff_10003cc46c
+            name: Washing Machine Power Override
+          - entity: sensor.sonoff_10003cc46c_power
+            name: Washing Machine Power
     
     icon: 'mdi:lightbulb'
     title: Lights/Switches
