@@ -1,9 +1,9 @@
 title: Home Assistant
 
 resources:
-  - url: /local/tracker-card.js?v=0.2.0
+  - url: /local/tracker-card.js?v=0.3.0
     type: js
-  - url: /local/mini-media-player-bundle.js?v=0.9.8
+  - url: /local/mini-media-player-bundle.js?v=1.0.0
     type: module
   - url: /local/button-card.js?v=0.0.5
     type: module
