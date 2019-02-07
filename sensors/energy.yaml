@@ -2,12 +2,12 @@
 # Get kWh for power switches
 #
 - platform: integration
-    source: sensor.sonoff_100033210b_power
-    name: energy_spent_freezer
-    unit_prefix: k
-    round: 2
+  source: sensor.sonoff_100033210b_power
+  name: energy_spent_freezer
+  unit_prefix: k
+  round: 2
 - platform: integration
-    source: sensor.sonoff_10003cc46c_power
-    name: energy_spent_washer
-    unit_prefix: k
-    round: 2
+  source: sensor.sonoff_10003cc46c_power
+  name: energy_spent_washer
+  unit_prefix: k
+  round: 2
