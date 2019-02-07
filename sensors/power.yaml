@@ -58,6 +58,7 @@
   state_topic: "home/nas/UPSBattery"
   unit_of_measurement: '%'
   device_class: battery
+  value_template: "{{ value_json.UPSBattery }}"
 
 #
 # Fully Browser kiosk battery monitoring
