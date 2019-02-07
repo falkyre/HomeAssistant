@@ -62,7 +62,6 @@
 - platform: mqtt
   name: WDPR4100 UPS Status
   state_topic: "home/nas/UPSStatus"
-  device_class: power
 
 #
 # Fully Browser kiosk battery monitoring
