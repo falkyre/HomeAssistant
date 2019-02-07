@@ -59,10 +59,6 @@
   unit_of_measurement: '%'
   device_class: battery
 
-- platform: mqtt
-  name: WDPR4100 UPS Status
-  state_topic: "home/nas/UPSStatus"
-
 #
 # Fully Browser kiosk battery monitoring
 #

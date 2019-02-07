@@ -41,3 +41,7 @@
 #- platform: mqtt
 #  name: dashboard_motion  
 #  state_topic: home/kioskmotion
+- platform: mqtt
+  name: WDPR4100 UPS Status
+  state_topic: "home/nas/UPSStatus"
+  device_class: power
