@@ -320,42 +320,6 @@
           unknown
         {% endif %}
         
-# WD PR4100 NAS - SNMP UPS Battery
--  platform: snmp
-   host: 192.168.100.3
-   name: UPS Battery
-   version: 2c
-   scan_interval: 120
-   accept_errors: true
-   baseoid: 1.3.6.1.4.1.5127.1.1.1.10.1.11.1.5
-   
-# WD PR4100 NAS - SNMP UPS Status
--  platform: snmp
-   host: 192.168.100.3
-   name: UPS Status
-   version: 2c
-   scan_interval: 120
-   accept_errors: true
-   baseoid: 1.3.6.1.4.1.5127.1.1.1.10.1.11.1.6
-   
-# WD PR4100 NAS - SNMP NAS Temperature
--  platform: snmp
-   host: 192.168.100.3
-   name: NAS Temperature
-   version: 2c
-   scan_interval: 120
-   accept_errors: true
-   baseoid: 1.3.6.1.4.1.5127.1.1.1.10.1.7
-
-# WD PR4100 NAS - SNMP NAS Fan
--  platform: snmp
-   host: 192.168.100.3
-   name: NAS Fan
-   version: 2c
-   scan_interval: 120
-   accept_errors: true
-   baseoid: 1.3.6.1.4.1.5127.1.1.1.10.1.8
-   
 
    
    
