@@ -328,22 +328,22 @@
 - platform: mqtt
   name: nas_hostname
   state_topic: "home/nas"
-  value_template: value_template: "{{ value_json.Hostname }}"
+  value_template: "{{ value_json.Hostname }}"
   
 - platform: mqtt
   name: nas_firmware
   state_topic: "home/nas"
-  value_template: value_template: "{{ value_json.Firmware }}"
+  value_template: "{{ value_json.Firmware }}"
 
 - platform: mqtt
   name: nas_raidsize
   state_topic: "home/nas"
-  value_template: value_template: "{{ value_json.RaidSize }}"
+  value_template: "{{ value_json.RaidSize }}"
 
 - platform: mqtt
   name: nas_raidfree
   state_topic: "home/nas"
-  value_template: value_template: "{{ value_json.RaidFree }}"
+  value_template: "{{ value_json.RaidFree }}"
 
 
    

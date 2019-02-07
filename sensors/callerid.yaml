@@ -1,0 +1,8 @@
+#
+# CallerID from mqtt, provides last caller info
+#
+- platform: mqtt
+  name: callerid
+  state_topic: "home/CallerID"
+  value_template: "{{ value_json.name}}"
+
