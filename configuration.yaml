@@ -18,7 +18,7 @@ homeassistant:
 
 # Show links to resources in log and frontend
 #introduction:
-
+system_health:
 # Add logger in to see why restart fails
 logger:
   default: warning

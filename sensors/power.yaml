@@ -22,14 +22,14 @@
     {% else %}
       10
     {% endif %}
-  icon_template: >-
-    {% set battery_level = value_json.battery %}
+  #icon_template: >-
+   # {% set battery_level = value_json.battery %}
 
-    {% if battery_level == "OK" %}
-      mdi:battery
-    {% else %}
-      mdi:battery-outline
-    {% endif %}
+    #{% if battery_level == "OK" %}
+     # mdi:battery
+    #{% else %}
+     # mdi:battery-outline
+    #{% endif %}
     
 
 - platform: mqtt
@@ -45,14 +45,14 @@
     {% else %}
       10
     {% endif %}
-  icon_template: >-
-    {% set battery_level = value_json.battery %}
+  #icon_template: >-
+   # {% set battery_level = value_json.battery %}
 
-    {% if battery_level == "OK" %}
-      mdi:battery
-    {% else %}
-      mdi:battery-outline
-    {% endif %}
+    #{% if battery_level == "OK" %}
+     # mdi:battery
+    #{% else %}
+     # mdi:battery-outline
+    #{% endif %}
 
 
 
