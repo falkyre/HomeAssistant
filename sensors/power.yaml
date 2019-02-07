@@ -53,8 +53,16 @@
     #{% else %}
      # mdi:battery-outline
     #{% endif %}
+- platform: mqtt
+  name: WDPR4100 UPS Battery
+  state_topic: "home/nas/UPSBattery"
+  unit_of_measurement: '%'
+  device_class: battery
 
-
+- platform: mqtt
+  name: WDPR4100 UPS Status
+  state_topic: "home/nas/UPSStatus"
+  device_class: power
 
 #
 # Fully Browser kiosk battery monitoring
