@@ -48,5 +48,5 @@
   #value_template: "{{ value_json.UPSStatus }}"
   value_template: >-
     {% if value_json.UPSStatus == 'On Line' %}
-      true
+      On
     {% endif %}
