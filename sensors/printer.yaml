@@ -1,0 +1,31 @@
+# Get printer info from MQTT which is pushed from using the ink program on the linux server
+- platform: mqtt
+  name: printer_name
+  state_topic: "home/printer"
+  value_template: value_template: "{{ value_json.PrinterName }}"
+  
+# Get color levels
+- platform: mqtt
+  name: printer_black
+  state_topic: "home/printer"
+  value_template: value_template: "{{ value_json.Black }}"
+  
+- platform: mqtt
+  name: printer_photoblack
+  state_topic: "home/printer"
+  value_template: value_template: "{{ value_json.Photoblack }}"
+
+- platform: mqtt
+  name: printer_yellow
+  state_topic: "home/printer"
+  value_template: value_template: "{{ value_json.Yellow }}"
+
+- platform: mqtt
+  name: printer_magenta
+  state_topic: "home/printer"
+  value_template: value_template: "{{ value_json.Magenta }}"  
+
+- platform: mqtt
+  name: printer_cyan
+  state_topic: "home/printer"
+  value_template: value_template: "{{ value_json.Cyan }}"
