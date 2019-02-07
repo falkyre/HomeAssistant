@@ -43,6 +43,6 @@
 #  state_topic: home/kioskmotion
 - platform: mqtt
   name: WDPR4100 UPS Status
-  state_topic: "home/nas/UPSStatus"
+  state_topic: "home/nas"
   device_class: power
   value_template: "{{ value_json.UPSStatus }}"
