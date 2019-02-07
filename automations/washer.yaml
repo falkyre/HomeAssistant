@@ -73,6 +73,25 @@
         entity_id: input_select.washing_machine_status
         option: Clean
 
+- alias: Set washing machine idle after timeout
+  trigger:
+    - platform: state
+      entity_id: input_select.washing_machine_status
+      to: Clean
+      for:
+        minutes: 30
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.washing_machine_status
+        state: Clean
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.washing_machine_status
+        option: Idle
+
 
 - alias: Send alert when washing machine is finished
   trigger:
