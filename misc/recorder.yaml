@@ -34,7 +34,8 @@ include:
     - sensor.sonoff_10003cc46c_current
     - sensor.sonoff_10003cc46c_power
     - sensor.sonoff_10003cc46c_voltage
-    
+    - sensor.energy_spent_washer
+    - sensor.energy_spent_freezer
 exclude:
   domains:
     - switch
