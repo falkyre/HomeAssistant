@@ -48,6 +48,28 @@
       data:
         entity_id: input_select.washing_machine_status
         option: Finishing
+        
+# Check to see if the washer is in Fresh Hold state.  This would be after finishing 
+
+- alias: Set washing machine freshhold when power stays between 6 and 14
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sonoff_10003cc46c_power
+      below: 14
+      above: 6
+      for:
+        minutes: 10
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.washing_machine_status
+        state: Finishing
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.washing_machine_status
+        option: FreshHold
 
 # Wait 8 minutes for us to be in the Finishing state before we
 # decide the washing machine has finished. This way, if the 
