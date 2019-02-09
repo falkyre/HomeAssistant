@@ -259,6 +259,8 @@ views:
         entities:
           - sensor.sonoff_100033210b_power
           - sensor.sonoff_10003cc46c_power
+          - sensor.energy_spent_washer
+          - sensor.energy_spent_freezer
           
       - type: entities
         title: Washing Machine
@@ -269,6 +271,8 @@ views:
             name: Washing Machine Power Override
           - entity: sensor.sonoff_10003cc46c_power
             name: Washing Machine Power
+          - entity: sensor.energy_spent_washer
+            name: Washing Machine Energy Used
     
     icon: 'mdi:lightbulb'
     title: Lights/Switches
