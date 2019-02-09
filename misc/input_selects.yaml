@@ -12,4 +12,5 @@ washing_machine_status:
       - Running
       - Finishing
       - Clean
+      - FreshHold
     initial: Idle
