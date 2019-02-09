@@ -35,6 +35,7 @@ views:
       - sensor.main_thermostat_temperature
       - sensor.hallway_nest_protect_battery_health
       - sun.sun
+      - updater.updater
     cards:
       - entity: climate.main
         type: thermostat
@@ -306,6 +307,20 @@ views:
         show_header_toggle: true
         title: System
         type: entities
+      - type: custom:monster-card
+        card:
+          type: entities
+          title: Printer
+        filter:
+          include:
+            - entity_id: sensor.printer*
+      - type: custom:monster-card
+        card:
+          type: entities
+          title: NAS
+        filter:
+          include:
+            - entity_id: sensor.nas_*
       - entities:
           - sensor.speedtest_ping
           - sensor.speedtest_upload
