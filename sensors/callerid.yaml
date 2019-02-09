@@ -5,4 +5,8 @@
   name: callerid
   state_topic: "home/CallerID"
   value_template: "{{ value_json.name}}"
+- platform: mqtt
+  name: callerid_recv
+  state_topic: "home/CallerID"
+  value_template: "{{ value_json.date}}"
 
