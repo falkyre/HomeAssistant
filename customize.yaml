@@ -217,3 +217,38 @@ sensor.wind_speed:
 sensor.washing_machine_status:
   icon: mdi:washing-machine
 
+sensor.nas_hostname:
+  friendly_name: Name
+  icon: mdi:nas
+sensor.nas_firmware:
+  friendly_name: Version
+sensor.nas_raidsize:
+  friendly_name: Size
+  icon: mdi:harddisk
+sensor.nas_raidsize:
+  friendly_name: Free
+  icon: mdi:harddisk
+sensor.callerid:
+  friendly_name: Call From
+  icon: mdi:phone-log
+sensor.callerid_recv:
+  friendly_name: When
+  icon: mdi:calendar-range
+sensor.printer_name:
+  friendly_name: Model
+  icon: mdi:printer
+sensor.printer_black:
+  friendly_name: Black
+  icon: mdi:palette-advanced
+sensor.printer_cyan:
+  friendly_name: Cyan
+  icon: mdi:palette-advanced
+sensor.printer_magenta:
+  friendly_name: Magenta
+  icon: mdi:palette-advanced
+sensor.printer_yellow:
+  friendly_name: Yellow
+  icon: mdi:palette-advanced
+sensor.printer_photoblack:
+  friendly_name: PhotoBlack
+  icon: mdi:palette-advanced  
