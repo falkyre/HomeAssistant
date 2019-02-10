@@ -225,7 +225,7 @@ sensor.nas_firmware:
 sensor.nas_raidsize:
   friendly_name: Size
   icon: mdi:harddisk
-sensor.nas_raidsize:
+sensor.nas_raidfree:
   friendly_name: Free
   icon: mdi:harddisk
 sensor.callerid:
