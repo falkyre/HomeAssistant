@@ -52,6 +52,12 @@ views:
         show_header_toggle: false
         title: Z-Wave
         type: entities
+      - entities:
+          - entity: sensor.callerid
+          - entity: sensor_callerid_recv
+        show_header_toggle: false
+        title: Last Call
+        type: entities
       - type: entities
         title: Portainer
         show_header_toggle: false
@@ -313,7 +319,7 @@ views:
           title: Printer
         filter:
           include:
-            - entitty_id: sensor.printer_name
+            - entity_id: sensor.printer_name
             - entity_id: sensor.printer*
       - type: custom:monster-card
         card:
@@ -321,7 +327,7 @@ views:
           title: NAS
         filter:
           include:
-            - entitty_id: sensor:nas_hostname
+            - entity_id: sensor:nas_hostname
             - entity_id: sensor.nas_*
       - entities:
           - sensor.speedtest_ping
