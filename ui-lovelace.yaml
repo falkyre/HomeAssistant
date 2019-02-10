@@ -54,9 +54,9 @@ views:
         type: entities
       - entities:
           - entity: sensor.callerid
-          - entity: sensor_callerid_recv
+          - entity: sensor.callerid_recv
         show_header_toggle: false
-        title: Last Call
+        title: Last Phone Call
         type: entities
       - type: entities
         title: Portainer
