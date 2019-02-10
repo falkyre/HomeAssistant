@@ -56,7 +56,7 @@
 - platform: mqtt
   name: WDPR4100 UPS Battery
   state_topic: "home/nas"
-  #unit_of_measurement: '%'
+  unit_of_measurement: '%'
   device_class: battery
   value_template: "{{ value_json.UPSBattery }}"
 

@@ -327,7 +327,7 @@ views:
           title: NAS
         filter:
           include:
-            - entity_id: sensor:nas_hostname
+            - entity_id: sensor.nas_hostname
             - entity_id: sensor.nas_*
       - entities:
           - sensor.speedtest_ping
