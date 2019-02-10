@@ -240,15 +240,25 @@ sensor.printer_name:
 sensor.printer_black:
   friendly_name: Black
   icon: mdi:palette-advanced
+  unit_of_measurement: '%'
+  device_class: battery
 sensor.printer_cyan:
   friendly_name: Cyan
   icon: mdi:palette-advanced
+  unit_of_measurement: '%'
+  device_class: battery
 sensor.printer_magenta:
   friendly_name: Magenta
   icon: mdi:palette-advanced
+  unit_of_measurement: '%'
+  device_class: battery
 sensor.printer_yellow:
   friendly_name: Yellow
   icon: mdi:palette-advanced
+  unit_of_measurement: '%'
+  device_class: battery
 sensor.printer_photoblack:
   friendly_name: PhotoBlack
   icon: mdi:palette-advanced  
+  unit_of_measurement: '%'
+  device_class: battery
