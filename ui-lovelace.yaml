@@ -313,6 +313,7 @@ views:
           title: Printer
         filter:
           include:
+            - entitty_id: sensor.printer_name
             - entity_id: sensor.printer*
       - type: custom:monster-card
         card:
@@ -320,6 +321,7 @@ views:
           title: NAS
         filter:
           include:
+            - entitty_id: sensor:nas_hostname
             - entity_id: sensor.nas_*
       - entities:
           - sensor.speedtest_ping
