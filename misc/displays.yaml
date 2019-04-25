@@ -22,8 +22,8 @@
 #
 # @link https://www.ozerov.de/fully-kiosk-browser/#rest
 #
-- platform: fully_kiosk
-  name: Kiosk
-  host: !secret fully_kiosk_host
-  port: !secret fully_kiosk_port
-  password: !secret fully_kiosk_password
+#- platform: fully_kiosk
+#  name: Kiosk
+#  host: !secret fully_kiosk_host
+#  port: !secret fully_kiosk_port
+#  password: !secret fully_kiosk_password

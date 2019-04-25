@@ -1,11 +1,11 @@
 title: Home Assistant
 
 resources:
-  - url: /local/tracker-card.js?v=0.3.0
+  - url: /local/tracker-card.js?v=1.2.6
     type: js
-  - url: /local/mini-media-player-bundle.js?v=1.0.0
+  - url: /local/mini-media-player-bundle.js?v=1.0.2
     type: module
-  - url: /local/button-card.js?v=0.0.5
+  - url: /local/button-card.js?v=0.0.6
     type: module
   - url: /local/ext-weblink.js?v=0.3.2
     type: js
@@ -58,14 +58,6 @@ views:
         show_header_toggle: false
         title: Last Phone Call
         type: entities
-      - type: entities
-        title: Portainer
-        show_header_toggle: false
-        entities:
-          - type: custom:ext-weblink
-            name: Portainer
-            url: http://192.168.100.157:9000
-            icon: mdi:home-assistant
     icon: 'mdi:home-assistant'
     path: default_view
     theme: normal

@@ -24,7 +24,6 @@ logger:
   default: warning
   logs:
     homeassistant.components.media_player.plex: fatal # When Plex is offline.
-    custom_components.media_player.ps4: debug
     #custom_components: debug
     #pyupdate: debug
 
@@ -46,7 +45,7 @@ frontend:
   themes: !include_dir_named themes/
 
 #
-# Atomations
+# Automations
 #
 # @link https://home-assistant.io/components/automation/
 #
@@ -112,7 +111,7 @@ http:
   #base_url: https://falkyre.duckdns.org:8123
   #ssl_certificate: /ssl/fullchain.pem
   #ssl_key: /ssl/privkey.pem
-  api_password: !secret http_pass
+  #api_password: !secret http_pass
   
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -202,7 +201,8 @@ sensor: !include_dir_merge_list sensors/
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
     base_url: http://192.168.100.157:8123
     cache: true
     cache_dir: /config/tts
@@ -236,9 +236,7 @@ shell_command: !include misc/shell_commands.yaml
 #
 # @link https://home-assistant.io/components/device_tracker/
 #
-device_tracker: !include misc/device_trackers.yaml
- 
-  
+device_tracker: !include misc/device_trackers.yaml  
     
 nest:
   structure:
@@ -303,56 +301,26 @@ sabnzbd:
 #
 # @link https://home-assistant.io/components/notify/
 #
+joaoapps_join:
+  - name: Join
+    device_id: !secret join_device_id
+    api_key: !secret join_api_key
+
 notify: !include_dir_merge_list notifications/
 
 zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
-  
-influxdb:
-  host: a0d7b954-influxdb
-  port: 8086
-  database: homeassistant
-  username: !secret influxdb_username
-  password: !secret influxdb_password
-  max_retries: 3
-  default_measurement: state
-
-weblink:
-  entities:
-    - name: Portainer
-      icon: mdi:docker
-      url: http://192.168.100.157:9000
 
 #
 # Side Panels
 #
 
 panel_iframe:
-  configurator:
-    title: 00 - Configurator
-    icon: mdi:wrench
-    url: http://192.168.100.157:3218
-  terminal:
-    title: 02 - Terminal
-    icon: mdi:console
-    url: http://192.168.100.157:7681
-  influxdb:
-    title: 03 - InfluxDB
-    icon: mdi:chart-areaspline
-    url: http://192.168.100.157:8888
-  logviewer:
-    title: 01 - Log Viewer
-    icon: mdi:filter
-    url: http://192.168.100.157:4277
   grafana:
     title: 04 - Grafana
     icon: mdi:chart-timeline
     url: http://192.168.100.157:3000
-  ide:
-    title: 00 - IDE
-    icon: mdi:code-braces
-    url: http://192.168.100.157:8321
 panel_custom:
   - name: zwavegraph2
     sidebar_title: Z-Wave Graph

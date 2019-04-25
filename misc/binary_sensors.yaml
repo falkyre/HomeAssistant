@@ -41,12 +41,12 @@
 #- platform: mqtt
 #  name: dashboard_motion  
 #  state_topic: home/kioskmotion
-- platform: mqtt
-  name: WDPR4100 UPS Status
-  state_topic: "home/nas"
-  device_class: connectivity
-  #value_template: "{{ value_json.UPSStatus }}"
-  value_template: >-
-    {% if value_json.UPSStatus == 'On Line' %}
-      On
-    {% endif %}
+# - platform: mqtt
+#   name: WDPR4100 UPS Status
+#   state_topic: "home/nas"
+#   device_class: connectivity
+#   #value_template: "{{ value_json.UPSStatus }}"
+#   value_template: >-
+#     {% if value_json.UPSStatus == 'On Line' %}
+#       On
+#     {% endif %}

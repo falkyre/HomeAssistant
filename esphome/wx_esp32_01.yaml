@@ -1,0 +1,90 @@
+esphome:
+  name: wx_esp32_01
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ssid: "lightningG"
+  password: "69deedbeef"
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: 'On3cl!ck_18'
+
+ota:
+  password: 'On3cl!ck_18'
+
+  
+time:
+  - platform: homeassistant
+    id: time
+    
+sensor:
+  - platform: homeassistant
+    id: outside_temperature
+    entity_id: sensor.acurite5n1_temperature
+    internal: true
+
+  - platform: homeassistant
+    id: outside_humidity
+    entity_id: sensor.acurite5n1_humidity
+    internal: true
+
+binary_sensor:
+  - platform: homeassistant
+    entity_id: group.door_sensors
+    name: "Doors"
+    id: alarm_state
+    internal: true
+
+esp32_ble_beacon:
+  type: iBeacon
+  uuid: '86ff26ea-c777-4674-bd88-7861cd87539e'
+
+status_led:
+  pin:
+    number: 16
+    inverted: True
+  id: statusled
+
+i2c:
+  sda: 5
+  scl: 4
+
+font:
+  - file: 'slkscr.ttf'
+    id: font1
+    size: 10
+
+  - file: 'BebasNeue-Regular.ttf'
+    id: font2
+    size: 48
+
+  - file: 'arial.ttf'
+    id: font3
+    size: 14
+    
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    lambda: |-
+      // Print "Mitt Smarta Hus" in top center.
+      //it.printf(64, 0, id(font1), TextAlign::TOP_CENTER, "WX_ESP32_01");
+      // Print "Alarm State: <state>" in top center
+      it.printf(64, 0, id(font1), TextAlign::TOP_CENTER, "DOORS: %s", id(alarm_state).state ? "OPENED" : "CLOSED");
+
+      // Print time in HH:MM format
+      it.strftime(0, 60, id(font2), TextAlign::BASELINE_LEFT, "%H:%M", id(time).now());
+
+      // Print outside temperature (from homeassistant sensor)
+      if (id(outside_temperature).has_state()) {
+        it.printf(127, 23, id(font3), TextAlign::TOP_RIGHT , "%.1f°", id(outside_temperature).state);
+      }
+
+      // Print outside humidity (from homeassistant sensor)
+      if (id(outside_humidity).has_state()) {
+        it.printf(127, 60, id(font3), TextAlign::BASELINE_RIGHT , "%.0f%%", id(outside_humidity).state);
+      }

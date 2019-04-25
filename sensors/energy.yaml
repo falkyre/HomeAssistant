@@ -6,10 +6,8 @@
   name: energy_spent_freezer
   unit_prefix: k
   round: 2
-  icon: mdi:char-histogram
 - platform: integration
   source: sensor.sonoff_10003cc46c_power
   name: energy_spent_washer
   unit_prefix: k
   round: 2
-  icon: mdi:char-histogram

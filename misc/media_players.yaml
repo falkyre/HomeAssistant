@@ -28,7 +28,6 @@
 # @link https://home-assistant.io/components/media_player.plex/
 #
 - platform: plex
-  name: Plex
   entity_namespace: plex
   include_non_clients: true
   scan_interval: 5
@@ -36,13 +35,6 @@
   use_custom_entity_ids: false
   use_episode_art: true
   
-
-- platform: ps4
-  host: 192.168.100.102
-  name: PS4 Sean
-- platform: ps4
-  host: 192.168.100.130
-  name: PS4 Bryce
 
 - platform: spotify
   client_id: !secret spotify_client
