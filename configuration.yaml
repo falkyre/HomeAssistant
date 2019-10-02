@@ -107,7 +107,7 @@ lovelace:
 #    - https://raw.githubusercontent.com/kuuji/button-card/master/tracker.json
 
 hacs:
-  token: 64f7d8d8a98c596d289ff315d12ad3cbfe57fe42    
+  token: !secret hacs_token   
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   #base_url: https://falkyre.duckdns.org:8123
