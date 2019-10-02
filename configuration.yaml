@@ -97,15 +97,17 @@ lovelace:
 # 
 # lovelace custom_updater components
 #
-custom_updater:
-  show_installable: false
-  track:
-    - cards
-    - components
-  card_urls:
-    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
-    - https://raw.githubusercontent.com/kuuji/button-card/master/tracker.json
-    
+#custom_updater:
+#  show_installable: false
+#  track:
+#    - cards
+#    - components
+#  card_urls:
+#    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
+#    - https://raw.githubusercontent.com/kuuji/button-card/master/tracker.json
+
+hacs:
+  token: 64f7d8d8a98c596d289ff315d12ad3cbfe57fe42    
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   #base_url: https://falkyre.duckdns.org:8123
@@ -279,15 +281,15 @@ sonoff:
   grace_period: 600
   api_region: 'us'
    
-sabnzbd:
-  api_key: !secret sabnzbd_api_key
-  host: 192.168.100.69
-  port: 8085
-  sensors:
-    - current_status
-    - speed
-    - queue_remaining
-    - queue_count
+# sabnzbd:
+#   api_key: !secret sabnzbd_api_key
+#   host: 192.168.100.69
+#   port: 8085
+#   sensors:
+#     - current_status
+#     - speed
+#     - queue_remaining
+#     - queue_count
   
 #
 # ZWave integration
@@ -312,15 +314,21 @@ zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
 
+mqtt:
+  broker: 192.168.100.88
+  port: 1883
+  client_id: home_assistant_1
+  discovery: true
+  discovery_prefix: homeassistant
 #
 # Side Panels
 #
 
 panel_iframe:
   grafana:
-    title: 04 - Grafana
+    title: Grafana
     icon: mdi:chart-timeline
-    url: http://192.168.100.157:3000
+    url: http://192.168.100.88:3000
 panel_custom:
   - name: zwavegraph2
     sidebar_title: Z-Wave Graph

@@ -55,3 +55,4 @@
     # Google colors
     google-red-500: '#b58e31'
     google-green-500: '#2980b9'
+    card-background-color: "var(--paper-card-background-color)"

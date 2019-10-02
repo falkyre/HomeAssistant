@@ -20,17 +20,17 @@ ota:
   
 time:
   - platform: homeassistant
-    id: time
+    id: ha_time
     
 sensor:
   - platform: homeassistant
     id: outside_temperature
-    entity_id: sensor.acurite5n1_temperature
+    entity_id: sensor.temperature
     internal: true
 
   - platform: homeassistant
     id: outside_humidity
-    entity_id: sensor.acurite5n1_humidity
+    entity_id: sensor.humidity
     internal: true
 
 binary_sensor:
@@ -77,7 +77,7 @@ display:
       it.printf(64, 0, id(font1), TextAlign::TOP_CENTER, "DOORS: %s", id(alarm_state).state ? "OPENED" : "CLOSED");
 
       // Print time in HH:MM format
-      it.strftime(0, 60, id(font2), TextAlign::BASELINE_LEFT, "%H:%M", id(time).now());
+      it.strftime(0, 60, id(font2), TextAlign::BASELINE_LEFT, "%H:%M", id(ha_time).now());
 
       // Print outside temperature (from homeassistant sensor)
       if (id(outside_temperature).has_state()) {

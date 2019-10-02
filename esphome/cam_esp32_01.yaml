@@ -1,0 +1,92 @@
+esphome:
+  name: cam_esp32_01
+  platform: ESP32
+  board: esp-wrover-kit
+
+wifi:
+  ssid: "lightningG"
+  password: "69deedbeef"
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "0n3cl!ck_18"
+
+ota:
+  password: "0n3cl!ck_18"
+
+time:
+  - platform: homeassistant
+    id: ha_time
+    
+sensor:
+  - platform: homeassistant
+    id: outside_temperature
+    entity_id: sensor.acurite5n1_temperature
+    internal: true
+
+  - platform: homeassistant
+    id: outside_humidity
+    entity_id: sensor.acurite5n1_humidity
+    internal: true
+    
+ 
+esp32_camera:
+  name: My Camera
+  external_clock:
+    pin: GPIO32
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO13
+    scl: GPIO12
+  data_pins: [GPIO5, GPIO14, GPIO4, GPIO15, GPIO18, GPIO23, GPIO36, GPIO39]
+  vsync_pin: GPIO27
+  href_pin: GPIO25
+  pixel_clock_pin: GPIO19
+  resolution: 640x480
+
+i2c:
+  sda: 21
+  scl: 22
+
+font:
+  - file: 'slkscr.ttf'
+    id: font1
+    size: 10
+
+  - file: 'BebasNeue-Regular.ttf'
+    id: font2
+    size: 48
+
+  - file: 'arial.ttf'
+    id: font3
+    size: 14
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    address: 0x3C
+    rotation: 180
+    lambda: |-
+      // Print "Mitt Smarta Hus" in top center.
+      it.printf(64, 0, id(font1), TextAlign::TOP_CENTER, "CAM_ESP32_01");
+  
+      // Print time in HH:MM format
+      it.strftime(0, 60, id(font2), TextAlign::BASELINE_LEFT, "%H:%M", id(ha_time).now());
+
+      // Print outside temperature (from homeassistant sensor)
+      if (id(outside_temperature).has_state()) {
+        it.printf(127, 23, id(font3), TextAlign::TOP_RIGHT , "%.1f°", id(outside_temperature).state);
+      }
+
+      // Print outside humidity (from homeassistant sensor)
+      if (id(outside_humidity).has_state()) {
+        it.printf(127, 60, id(font3), TextAlign::BASELINE_RIGHT , "%.0f%%", id(outside_humidity).state);
+      }
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO33
+    name: "PIR Sensor"
+    device_class: motion

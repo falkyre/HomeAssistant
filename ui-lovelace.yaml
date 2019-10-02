@@ -58,6 +58,13 @@ views:
         show_header_toggle: false
         title: Last Phone Call
         type: entities
+        show_header_toggle: false
+      - entities:
+          - entity: sensor.winnipeg_jets
+          - entity: sensor.away_team
+          - entity: sensor.home_team
+          - entity: sensor.last_goal
+        type: entities
     icon: 'mdi:home-assistant'
     path: default_view
     theme: normal
@@ -75,24 +82,24 @@ views:
     icon: 'mdi:cctv'
     path: camera_group
     title: Cameras
-  - badges: []
-    cards:
-      - entities:
-          - sensor.speedtest_download
-          - sensor.speedtest_upload
-          - sensor.speedtest_ping
-        title: Internet Speed
-        type: entities
-      - entities:
-          - sensor.sabnzbd_left
-          - sensor.sabnzbd_queue_count
-          - sensor.sabnzbd_speed
-          - sensor.sabnzbd_status
-        title: SABnzbd
-        type: entities
-    icon: 'mdi:google-chrome'
-    path: internet_view
-    title: Internet
+  # - badges: []
+  #   cards:
+  #     - entities:
+  #         - sensor.speedtest_download
+  #         - sensor.speedtest_upload
+  #         - sensor.speedtest_ping
+  #       title: Internet Speed
+  #       type: entities
+  #     - entities:
+  #         - sensor.sabnzbd_left
+  #         - sensor.sabnzbd_queue_count
+  #         - sensor.sabnzbd_speed
+  #         - sensor.sabnzbd_status
+  #       title: SABnzbd
+  #       type: entities
+  #   icon: 'mdi:google-chrome'
+  #   path: internet_view
+  #   title: Internet
   - badges:
       - device_tracker.bryce
       - device_tracker.danielle
@@ -164,8 +171,8 @@ views:
           - entity: media_player.den_tv
           - entity: media_player.recast
           - entity: media_player.mancave4k
-          - entity: media_player.ps4_sean
-          - entity: media_player.ps4_bryce
+          # - entity: media_player.ps4_sean
+          # - entity: media_player.ps4_bryce
           - entity: media_player.spotify
           - entity: media_player.kodi_kodimancavelocal
           - entity: remote.harmony_hub
@@ -215,10 +222,10 @@ views:
           - entity: media_player.kodi_kodimancavelocal
             type: custom:mini-media-player
             group: true
-      - entity: media_player.ps4_sean
-        type: media-control
-      - entity: media_player.ps4_bryce
-        type: media-control
+      # - entity: media_player.ps4_sean
+      #   type: media-control
+      # - entity: media_player.ps4_bryce
+      #   type: media-control
       
     icon: 'mdi:remote'
     title: Media Players
@@ -321,13 +328,13 @@ views:
           include:
             - entity_id: sensor.nas_hostname
             - entity_id: sensor.nas_*
-      - entities:
-          - sensor.speedtest_ping
-          - sensor.speedtest_upload
-          - sensor.speedtest_download
-        show_header_toggle: true
-        title: Network
-        type: entities
+      # - entities:
+      #     - sensor.speedtest_ping
+      #     - sensor.speedtest_upload
+      #     - sensor.speedtest_download
+      #   show_header_toggle: true
+      #   title: Network
+      #   type: entities
 
       - type: custom:monster-card
         card:

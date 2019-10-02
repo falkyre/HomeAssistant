@@ -69,3 +69,4 @@ paper-slider-container-color: 'hsl(var(--huesat) 28%)'
 paper-slider-secondary-color: 'hsl(var(--huesat) 90%)'
 paper-slider-disabled-active-color: 'hsl(var(--base-hue), 80%, 25%)'
 paper-slider-disabled-secondary-color: 'hsl(var(--base-hue), 80%, 25%)'
+card-background-color: "var(--paper-card-background-color)"

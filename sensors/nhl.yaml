@@ -1,0 +1,19 @@
+- platform: nhl_api
+  team_id: 52
+  name: Winnipeg Jets
+- platform: template
+  sensors:
+    away_team:
+      friendly_name_template: '{{ states.sensor.winnipeg_jets.attributes.away_name }}'
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.away_score }}'
+      entity_picture_template: '{{ states.sensor.winnipeg_jets.attributes.away_logo }}'
+    home_team:
+      friendly_name_template: '{{ states.sensor.winnipeg_jets.attributes.home_name }}'
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.home_score }}'
+      entity_picture_template: '{{ states.sensor.winnipeg_jets.attributes.home_logo }}'
+    last_goal:
+      icon_template: mdi:hockey-puck
+      friendly_name_template: 'Last Play'
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.description }}'
+    winnipeg_scores:
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.goal_tracked_team }}'

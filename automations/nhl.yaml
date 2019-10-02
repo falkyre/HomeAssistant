@@ -1,0 +1,37 @@
+- id: reset_score
+  alias: reset_score
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: sensor.winnipeg_jets
+    from: "Scheduled"
+    to: "Pre-Game"
+  action:
+  - service: input_number.set_value
+    entity_id: input_number.home_score
+    data:
+      value: 0
+  - service: input_number.set_value
+    entity_id: input_number.away_score
+    data:
+      value: 0
+
+- id: winnipeg_scores
+  alias: winnipeg_scores
+  initial_state: false
+  trigger:
+  - platform: state
+    entity_id: sensor.winnipeg_scores
+  condition:
+  - condition: state
+    entity_id: sensor.winnipeg_scores
+    state: 'true'
+  action:
+  - service: light.lifx_effect_pulse
+    data:
+        entity_id: group.lifx_lights
+        brightness: 200
+        period: 1
+        cycles: 5
+        mode: ping
+        color_name: red

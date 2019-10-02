@@ -1,22 +1,22 @@
 - platform: mqtt
   name: acurite5n1_winddir
-  state_topic: "home/Acurite_5n1_sensor/1104"
+  state_topic: "rtl_433/doppler/devices/Acurite-5n1/A/1104/wind_dir_deg"
   unit_of_measurement: "°"
   value_template: "{{ value_json.wind_dir_deg }}"
 - platform: mqtt
   name: acurite5n1_temperature
-  state_topic: "home/Acurite_5n1_sensor/1104"
+  state_topic: "rtl_433/doppler/devices/Acurite-5n1/A/1104/temperature_C"
   device_class: temperature
   unit_of_measurement: "°C"
   value_template: "{{ value_json.temperature_C }}"
 - platform: mqtt
   name: acurite5n1_humidity
-  state_topic: "home/Acurite_5n1_sensor/1104"
+  state_topic: "rtl_433/doppler/devices/Acurite-5n1/A/1104/humidity"
   unit_of_measurement: "%"
   device_class: humidity
   value_template: "{{ value_json.humidity }}"
 - platform: mqtt
   name: acurite5n1_windspeed
-  state_topic: "home/Acurite_5n1_sensor/1104"
+  state_topic: "rtl_433/doppler/devices/Acurite-5n1/A/1104/wind_avg_km_h"
   unit_of_measurement: "kph"
   value_template: "{{ value_json.wind_speed_kph }}"

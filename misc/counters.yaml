@@ -20,3 +20,11 @@ door_notify:
   icon: mdi:door-open
   initial: 10
   step: 1
+
+input_number:
+  away_score:
+    min: 0
+    max: 100
+  home_score:
+    min: 0
+    max: 100
