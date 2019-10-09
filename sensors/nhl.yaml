@@ -14,6 +14,6 @@
     last_goal:
       icon_template: mdi:hockey-puck
       friendly_name_template: 'Last Play'
-      value_template: '{{ states.sensor.winnipeg_jets.attributes.description }}'
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.last_goal }}'
     winnipeg_scores:
       value_template: '{{ states.sensor.winnipeg_jets.attributes.goal_tracked_team }}'

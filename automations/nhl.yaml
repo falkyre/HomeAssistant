@@ -18,20 +18,26 @@
 
 - id: winnipeg_scores
   alias: winnipeg_scores
-  initial_state: false
   trigger:
-  - platform: state
-    entity_id: sensor.winnipeg_scores
+    platform: event
+    event_type: nhl_goal
+    event_data:
+      team_id: "52"  
   condition:
-  - condition: state
-    entity_id: sensor.winnipeg_scores
-    state: 'true'
+  - condition: time
+    after: '08:00:00'
+    before: '22:00:00'
   action:
   - service: light.lifx_effect_pulse
     data:
         entity_id: group.lifx_lights
         brightness: 200
-        period: 1
-        cycles: 5
-        mode: ping
+        period: 2
+        cycles: 7
+        mode: strobe
         color_name: red
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.den_speaker
+      media_content_id: "http://192.168.100.88:8123/local/sounds/JetsGoal.mp3"
+      media_content_type: 'music'

@@ -8,7 +8,6 @@ https://github.com/JayBlackedOut/hass-nhlapi/blob/master/README.md
 import logging
 from datetime import timedelta, datetime as dt
 from pynhl import Schedule, Scoring
-import requests
 import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
@@ -19,7 +18,7 @@ from homeassistant.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
-__version__ = '0.4.0'
+__version__ = '0.5.0'
 
 CONF_ID = 'team_id'
 CONF_NAME = 'name'
@@ -29,7 +28,7 @@ DEFAULT_NAME = 'NHL Sensor'
 LOGO_URL = 'https://www-league.nhlstatic.com/images/logos/'\
     'teams-current-primary-light/{}.svg'
 
-SCAN_INTERVAL = timedelta(seconds=10)
+SCAN_INTERVAL = timedelta(seconds=5)
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_ID, default=0): cv.positive_int,
@@ -88,7 +87,7 @@ class NHLSensor(Entity):
         # Localize the UTC time values.
         dttm = dt.strptime(dates['next_game_datetime'], '%Y-%m-%dT%H:%M:%SZ')
         dttm_local = dt_util.as_local(dttm)
-        time = {'game_time': dttm_local.strftime('%-I:%M%p')}
+        time = {'next_game_time': dttm_local.strftime('%-I:%M%p')}
         # If next game is scheduled Today or Tomorrow,
         # return "Today" or "Tomorrow". Else, return
         # the actual date of the next game.
@@ -98,17 +97,16 @@ class NHLSensor(Entity):
             now.strftime("%Y-%m-%d"): "Today,",
             (now + timedelta(days=1)).strftime("%Y-%m-%d"): "Tomorrow,"
         }
-        date = {
-            'game_date': pick.get(dttm_local.strftime("%Y-%m-%d"),
-                                  next_game_date),
-            'next_game_date': next_game_date
-        }
+        game_date = pick.get(dttm_local.strftime("%Y-%m-%d"), next_game_date)
         # Merge all attributes to a single dict.
-        all_attr = {**games, **plays, **time, **date}
+        all_attr = {**games, **plays, **time, 'next_game_date': next_game_date}
         # Set sensor state to game state.
         # Display next game date and time if none today.
-        next_date_time = date['game_date'] + " " + time['game_time']
-        self._state = (plays.get('game_state', next_date_time))
+        next_date_time = game_date + " " + time['next_game_time']
+        if plays.get('game_state') == "Scheduled":
+            self._state = next_date_time
+        else:
+            self._state = plays.get('game_state', next_date_time)
         # Set sensor state attributes.
         self._state_attributes = all_attr
         # Set away team logo url as attribute 'away_logo'.
@@ -122,3 +120,32 @@ class NHLSensor(Entity):
             self._state_attributes['goal_tracked_team'] = True
         else:
             self._state_attributes['goal_tracked_team'] = False
+        # Fire the goal event handler.
+        goal_team_id = self._state_attributes.get('goal_team_id', None)
+        goal_event_id = self._state_attributes.get('goal_event_id', None)
+        goal_event_handler(goal_team_id, goal_event_id, self.hass)
+        # Clear the event list at game end.
+        if self._state == "Game Over":
+            event_list(0, True)
+
+
+def event_list(event_id=0, clear=False, lst=[]):
+    lst.append(event_id)
+    lst = list(set(lst))
+    if clear:
+        lst.clear()
+    return lst
+
+
+def goal_event_handler(goal_team_id, goal_event_id, hass):
+    """Handle firing of the goal event."""
+    team_id = str(goal_team_id)
+    event_id = str(goal_event_id)
+    # If the event hasn't yet been fired for this goal, fire it.
+    # Else, add the event to the list anyway, in case the list is new.
+    if event_list() != [0] and \
+            event_id not in event_list():
+        hass.bus.fire('nhl_goal', {"team_id": team_id})
+        event_list(event_id)
+    else:
+        event_list(event_id)
