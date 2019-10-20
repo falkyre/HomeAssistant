@@ -109,3 +109,7 @@
     {% set datestamp = timestamp | timestamp_custom('%Y%m%d%H', false) + minutes %}
 
     http://dd.weather.gc.ca/radar/PRECIPET/GIF/{{location}}/{{datestamp}}_{{location}}_PRECIPET_SNOW.gif
+
+- platform: environment_canada
+  station: XWL
+  loop:  true

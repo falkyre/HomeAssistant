@@ -1,19 +1,19 @@
 title: Home Assistant
 
 resources:
-  - url: /local/tracker-card.js?v=1.2.6
-    type: js
-  - url: /local/mini-media-player-bundle.js?v=1.0.2
+  - url: /community_plugin/mini-media-player/mini-media-player-bundle.js
     type: module
-  - url: /local/button-card.js?v=0.0.6
+  - url: /community_plugin/button-card/button-card.js
     type: module
-  - url: /local/ext-weblink.js?v=0.3.2
+  - url: /community_plugin/ext-weblink/ext-weblink.js
     type: js
-  - url: /local/monster-card.js?v=0.2.3
+  - url: /community_plugin/monster-card/monster-card.js
     type: js
   - url: /local/lovelace-fullykiosk.js
     type: js
   - url: /local/kiosk-config.js
+    type: js
+  - url: /community_plugin/upcoming-media-card/upcoming-media-card.js
     type: js
 
 views:
@@ -36,6 +36,7 @@ views:
       - sensor.hallway_nest_protect_battery_health
       - sun.sun
       - updater.updater
+      - sensor.hacs
     cards:
       - entity: climate.main
         type: thermostat
@@ -55,7 +56,6 @@ views:
       - entities:
           - entity: sensor.callerid
           - entity: sensor.callerid_recv
-        show_header_toggle: false
         title: Last Phone Call
         type: entities
         show_header_toggle: false
@@ -77,6 +77,8 @@ views:
           - camera.garage
           - camera.backyard
           - camera.basement
+          - camera.oakbluff_front
+          - camera.oakbluff_patio
         title: Camera
         type: entities
     icon: 'mdi:cctv'
@@ -226,6 +228,12 @@ views:
       #   type: media-control
       # - entity: media_player.ps4_bryce
       #   type: media-control
+      - type: custom:upcoming-media-card
+        entity: sensor.sonarr_upcoming_media
+        title: Upcoming TV
+      - type: custom:upcoming-media-card
+        entity: sensor.radarr_upcoming_media
+        title: Upcoming Movies
       
     icon: 'mdi:remote'
     title: Media Players
@@ -343,11 +351,6 @@ views:
         filter:
           include:
             - entity_id: sensor.*battery
-      - type: custom:tracker-card
-        title:
-        trackers:
-          - sensor.custom_card_tracker
-          - sensor.custom_component_tracker
     icon: 'mdi:desktop-classic'
     theme: normal
     title: System

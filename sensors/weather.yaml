@@ -699,3 +699,7 @@
           unknown
         {% endif %}
 
+
+- platform: environment_canada
+  station:  MB/s0000193
+
