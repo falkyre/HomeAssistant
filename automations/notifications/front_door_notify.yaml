@@ -23,7 +23,7 @@
 
   action:
     # Flash some smart lights, in case one didn't hear a door opening/closing.
-    - service: light.lifx_effect_pulse
+    - service: lifx.effect_pulse
       data:
         entity_id: group.lifx_lights
         brightness: 120
@@ -51,3 +51,4 @@
       data:
         message: "Front Door Opened"
         data: {"icon":"https://goo.gl/xeetdy"}
+    

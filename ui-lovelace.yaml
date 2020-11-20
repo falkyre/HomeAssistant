@@ -1,19 +1,15 @@
 title: Home Assistant
 
 resources:
-  - url: /community_plugin/mini-media-player/mini-media-player-bundle.js
+  - url: /local/community/mini-media-player/mini-media-player-bundle.js
     type: module
-  - url: /community_plugin/button-card/button-card.js
+  - url: /local/community/button-card/button-card.js
     type: module
-  - url: /community_plugin/ext-weblink/ext-weblink.js
+  - url: /local/community/ext-weblink/ext-weblink.js
     type: js
-  - url: /community_plugin/monster-card/monster-card.js
-    type: js
-  - url: /local/lovelace-fullykiosk.js
-    type: js
-  - url: /local/kiosk-config.js
-    type: js
-  - url: /community_plugin/upcoming-media-card/upcoming-media-card.js
+  - url: /local/community/lovelace-auto-entities/auto-entities.js
+    type: module
+  - url: /local/community/upcoming-media-card/upcoming-media-card.js
     type: js
 
 views:
@@ -35,13 +31,12 @@ views:
       - sensor.main_thermostat_temperature
       - sensor.hallway_nest_protect_battery_health
       - sun.sun
-      - updater.updater
       - sensor.hacs
     cards:
       - entity: climate.main
         type: thermostat
       - entities:
-          - cover.garage
+          - cover.garage_2
         title: Cover
         type: entities
       - entities:
@@ -167,18 +162,14 @@ views:
     title: Z-Wave
   - badges: []
     cards:
-      - entities:
-          - entity: media_player.castit
-          - entity: media_player.den_speaker
-          - entity: media_player.den_tv
-          - entity: media_player.recast
-          - entity: media_player.mancave4k
-          # - entity: media_player.ps4_sean
-          # - entity: media_player.ps4_bryce
-          - entity: media_player.spotify
-          - entity: media_player.kodi_kodimancavelocal
-          - entity: remote.harmony_hub
-        type: entities
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          title: Media Players
+        filter:
+          include:
+            - domain: media_player
       - type: custom:mini-media-player
         entity: media_player.spotify
         icon: mdi:spotify
@@ -240,17 +231,16 @@ views:
   - badges:
       - group.all_lights
       - group.all_switches 
+  
     cards:
-      - entities:
-          - entity: light.07200118b4e62d21cb06
-          - entity: light.07200118bcddc2e54b1b
-          - entity: light.60818528dc4f2235ce22
-          - entity: light.mancavetv
-          - entity: light.mancavecouch
-          - entity: light.mancavedoor
-          - entity: light.mancavestairs
-        title: Lights
-        type: entities
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          title: Lights
+        filter:
+          include:
+            - domain: light
       - cards:
           - type: "custom:button-card"
             entity: switch.sonoff_1000119693
@@ -320,7 +310,7 @@ views:
         show_header_toggle: true
         title: System
         type: entities
-      - type: custom:monster-card
+      - type: custom:auto-entities
         card:
           type: entities
           title: Printer
@@ -328,7 +318,7 @@ views:
           include:
             - entity_id: sensor.printer_name
             - entity_id: sensor.printer*
-      - type: custom:monster-card
+      - type: custom:auto-entities
         card:
           type: entities
           title: NAS
@@ -344,7 +334,7 @@ views:
       #   title: Network
       #   type: entities
 
-      - type: custom:monster-card
+      - type: custom:auto-entities
         card:
           type: entities
           title: Battery Levels

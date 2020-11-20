@@ -17,7 +17,7 @@ from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import CONF_API_KEY, CONF_HOST, CONF_PORT, CONF_SSL
 from homeassistant.helpers.entity import Entity
 
-__version__ = '0.2.8'
+__version__ = '0.3.2'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -116,8 +116,9 @@ class RadarrUpcomingMediaSensor(Entity):
                 else:
                     card_item['rating'] = ''
                 if 'images' in movie:
-                    card_item['poster'] = movie['images'][0]
-                    if '.jpg' in movie['images'][1]:
+                    if len(movie['images']):
+                        card_item['poster'] = movie['images'][0]
+                    if len(movie['images']) > 1 and '.jpg' in movie['images'][1]:
                         card_item['fanart'] = movie['images'][1]
                     else:
                         card_item['fanart'] = ''
@@ -125,7 +126,7 @@ class RadarrUpcomingMediaSensor(Entity):
                     continue
                 self.card_json.append(card_item)
                 self.change_detected = False
-        attributes['data'] = json.dumps(self.card_json)
+        attributes['data'] = self.card_json
         return attributes
 
     def update(self):
@@ -177,13 +178,13 @@ class RadarrUpcomingMediaSensor(Entity):
                         movie['images'][0] = image_url % (
                             '500', tmdb_json['poster_path'])
                     except:
-                        movie['images'][0] = ''
+                        continue
                     try:
                         movie['images'][1] = image_url % (
                             '780', tmdb_json['backdrop_path'])
                     except:
-                        movie['images'][1] = ''
-                    if days_until(movie['inCinemas'], self._tz) > -1:
+                        pass
+                    if 'inCinemas' in movie and days_until(movie['inCinemas'], self._tz) > -1:
                         movie['path'] = movie['inCinemas']
                     elif 'physicalRelease' in movie:
                         movie['path'] = movie['physicalRelease']

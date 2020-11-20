@@ -26,6 +26,9 @@ lifx_lights:
     - light.mancavedoor
     - light.mancavestairs
     - light.mancavetv
+    - light.mancavehall1
+    - light.mancavehall2
+    - light.officetile
 
 motion_sensors:
   name: Motion sensors

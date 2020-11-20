@@ -1,0 +1,5 @@
+ups:
+  name: UPS Status
+  entities:
+    - sensor.cp1000_status
+    - sensor.cp850_status

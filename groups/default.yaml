@@ -2,7 +2,7 @@
 # View
 #
 default_view:
-  view: yes
+  #view: yes
   icon: mdi:home-assistant
   entities:
     - group.notifications
@@ -39,7 +39,7 @@ now:
 
 presence:
   name: Presence
-  control: hidden
+  #control: hidden
   entities:
     - device_tracker.bryce
     - device_tracker.danielle
@@ -48,7 +48,7 @@ presence:
 
 security:
   name: Security Status
-  control: hidden
+  #control: hidden
   entities:
     - sensor.door_status
     - sensor.leak_status
@@ -58,3 +58,4 @@ wallpaper:
   entities:
     - camera.bing_wallpaper
     - sensor.bing_wallpaper
+

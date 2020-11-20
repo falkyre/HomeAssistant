@@ -28,7 +28,7 @@
     after: '08:00:00'
     before: '22:00:00'
   action:
-  - service: light.lifx_effect_pulse
+  - service: lifx.effect_pulse
     data:
         entity_id: group.lifx_lights
         brightness: 200

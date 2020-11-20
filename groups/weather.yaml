@@ -2,7 +2,7 @@
 # View
 #
 weather_view:
-  view: yes
+  #view: yes
   name: Weather
   icon: mdi:weather-partlycloudy
   entities:
@@ -17,7 +17,7 @@ weather_view:
 
 radar_satellite:
   name: Maps
-  control: hidden
+  #control: hidden
   entities:
     - camera.environment_canada_rain
     - camera.environment_canada_snow

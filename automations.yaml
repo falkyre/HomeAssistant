@@ -1,1 +1,161 @@
-[]
+- id: '1601852421648'
+  alias: UPS Offline
+  description: ''
+  trigger: []
+  condition:
+  - condition: state
+    entity_id: sensor.cp1000_status
+    state: unavailable
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: sensor.cp850_status
+      state: unavailable
+  action:
+  - service: notify.mobile
+    data:
+      message: A UPS has become unavailble or gone offline
+  - service: persistent_notification.create
+    data:
+      message: A UPS has become unavailable or gone offline
+      title: UPS Status
+  mode: single
+- id: '1601864809419'
+  alias: Update Notify
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.updater
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile
+    data:
+      message: Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version')
+        }}  is now available.
+  mode: single
+- id: '1601833864547'
+  alias: Garage Door Notify - mobile
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: f1bf4d5523f44d9bb7e8e82a91d41dcb
+    entity_id: binary_sensor.garage_door
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - delay: '5'
+  - service: camera.snapshot
+    data:
+      filename: /config/www/snaps/backyard.jpg
+    entity_id: camera.backyard
+  - service: notify.mobile
+    data:
+      message: Garage Door Opened
+      data:
+        clickAction: /lovelace-lights/cameras
+        image: /local/snaps/backyard.jpg
+        attachment:
+          url: https://ha.osty.ca/local/snaps/backyard.jpg
+          content-type: jpg
+          hide-thumbnail: false
+  mode: single
+- id: '1601833214011'
+  alias: Front Door - notify mobile
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 8c5bf0c1797a49478b71d1261a935c98
+    entity_id: binary_sensor.front_door
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - delay: '5'
+  - service: camera.snapshot
+    data:
+      filename: /config/www/snaps/livingroom.jpg
+    entity_id: camera.living_room
+  - service: notify.mobile
+    data:
+      message: Front Door Opened
+      data:
+        clickAction: /lovelace-lights/cameras
+        image: /local/snaps/livingroom.jpg
+        attachment:
+          url: https://ha.osty.ca/local/snaps/livingroom.jpg
+          content-type: jpg
+          hide-thumbnail: false
+  mode: single
+- id: '1603806113082'
+  alias: Garage -  notify mobile
+  description: Notification with image when garage is opened
+  trigger:
+  - platform: device
+    device_id: 83924f10115e44f9bf61a0e042e2028e
+    domain: cover
+    entity_id: cover.garage
+    type: opened
+  condition: []
+  action:
+  - delay: '10'
+  - service: camera.snapshot
+    data:
+      filename: /config/www/snaps/garage.jpg
+    entity_id: camera.garage
+  - service: notify.mobile
+    data:
+      message: Garage Opened
+      data:
+        clickAction: /lovelace-lights/cameras
+        image: /local/snaps/garage.jpg
+        attachment:
+          url: https://ha.osty.ca/local/snaps/garage.jpg
+          content-type: jpg
+          hide-thumbnail: false
+  mode: single
+- id: '1604353851365'
+  alias: Patio Door - notify mobile
+  description: ''
+  trigger:
+  - platform: device
+    domain: binary_sensor
+    entity_id: binary_sensor.patio_door_sensor
+    device_id: 864673f2883e90702ede2e2d739bbc23
+    type: opened
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+  condition: []
+  action:
+  - service: notify.mobile
+    data:
+      message: Patio Door Opened
+      data:
+        clickAction: /lovelace-lights/cameras
+  mode: single
+- id: '1605834529219'
+  alias: Home Phone CallerID notify
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: home/CallerID/name
+  condition: []
+  action:
+  - service: notify.mobile
+    data:
+      message: 'Call from "{{ trigger.payload }}"
+
+        '
+  mode: single

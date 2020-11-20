@@ -27,15 +27,15 @@
 # @link https://www.plex.tv/
 # @link https://home-assistant.io/components/media_player.plex/
 #
-- platform: plex
-  entity_namespace: plex
-#  include_non_clients: true
-  scan_interval: 5
-  show_all_controls: false
-#  use_custom_entity_ids: false
-  use_episode_art: true
+# - platform: plex
+#   entity_namespace: plex
+# #  include_non_clients: true
+#   scan_interval: 5
+#   show_all_controls: false
+# #  use_custom_entity_ids: false
+#   use_episode_art: true
   
 
-- platform: spotify
-  client_id: !secret spotify_client
-  client_secret: !secret spotify_secret
+# - platform: spotify
+#   client_id: !secret spotify_client
+#   client_secret: !secret spotify_secret

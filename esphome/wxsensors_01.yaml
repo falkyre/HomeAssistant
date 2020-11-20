@@ -1,0 +1,23 @@
+esphome:
+  name: wxsensors_01
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: "lightningG"
+  password: "69deedbeef"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Wxsensors 01 Fallback Hotspot"
+    password: "rLl6AMNktDvo"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:

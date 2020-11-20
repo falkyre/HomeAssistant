@@ -50,3 +50,22 @@
 #     {% if value_json.UPSStatus == 'On Line' %}
 #       On
 #     {% endif %}
+- platform: workday
+  country: CA
+  province: MB
+  
+- platform: smartweather
+  monitored_conditions:
+    - raining
+    - freezing
+    - lightning
+
+- platform: template
+  sensors:
+    motion_garagewx:
+      friendly_name: GarageWx Camera
+      device_class: motion
+      value_template: "{{ is_state('camera.garagewx', 'motion') }}"
+      delay_off: 
+          seconds: 30
+  

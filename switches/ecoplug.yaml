@@ -1,0 +1,2 @@
+- platform: ecoplug
+  scan_interval: 10

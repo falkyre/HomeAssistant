@@ -1,16 +1,16 @@
 #
 # View
 #
-configuration_view:
-  view: yes
-  name: Configuration
-  icon: mdi:settings
-  entities:
-    - group.configuration
-    - group.automations
-    - group.automations_devices
-    - group.automations_notifications
-    # - group.counters
+# configuration_view:
+#   view: yes
+#   name: Configuration
+#   icon: mdi:settings
+#   entities:
+#     - group.configuration
+#     - group.automations
+#     - group.automations_devices
+#     - group.automations_notifications
+#     # - group.counters
 
 
 #
@@ -19,20 +19,20 @@ configuration_view:
 
 automations:
   name: Automations
-  control: hidden
+  #control: hidden
   entities:
     - automation.theme_auto
 
 automations_devices:
   name: Devices Automations
-  control: hidden
+  #control: hidden
   entities:
     - automation.kiosk_auto
     - automation.kiosk_low_power
 
 automations_notifications:
   name: Notifications Automations
-  control: hidden
+  #control: hidden
   entities:
     - automation.daily_greeting
     - automation.door_notify
@@ -43,7 +43,7 @@ automations_notifications:
 
 configuration:
   name: Configuration Switches
-  control: hidden
+  #control: hidden
   entities:
     - input_boolean.door_test
     - sensor.door_status

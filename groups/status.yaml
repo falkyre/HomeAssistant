@@ -2,7 +2,7 @@
 # View
 #
 status_view:
-  view: yes
+  #view: yes
   name: Status
   icon: mdi:server
   entities:

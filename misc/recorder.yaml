@@ -16,13 +16,6 @@ include:
     - binary_sensor.garage_door
     - binary_sensor.furnancepump_leak
     
-    - sensor.acurite5n1_humidity
-    - sensor.acurite5n1_temperature
-    - sensor.acurite5n1_windspeed
-
-    - sensor.speedtest_ping
-    - sensor.speedtest_download
-    - sensor.speedtest_upload
 
     - sensor.door_status
     - sensor.leak_status
@@ -36,6 +29,9 @@ include:
     - sensor.sonoff_10003cc46c_voltage
     - sensor.energy_spent_washer
     - sensor.energy_spent_freezer
+
+  entity_globs:
+    - sensor.smartweather_*
 exclude:
   domains:
     - switch

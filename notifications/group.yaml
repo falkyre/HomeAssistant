@@ -21,4 +21,14 @@
   name: Text
   services:
     - service: join
-      
+
+
+- platform: group
+  name: Mobile
+  services:
+    - service: mobile_app_galaxy_s10
+    - service: mobile_app_galaxys10
+    - service: mobile_app_kfauwi
+    - service: mobile_app_seans_iphone
+    - service: mobile_app_wedge
+    - service: mobile_app_shield_android_tv

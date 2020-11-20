@@ -10,11 +10,15 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: !secret homeassistant_time_zone
+  external_url: https://ha.osty.ca
+  internal_url: http://192.168.100.88:8123
   # Customization file
   customize_glob: !include customize_glob.yaml
   customize: !include customize.yaml
   whitelist_external_dirs:
     - !secret homeassistant_whitelist_config
+
+mobile_app:
 
 # Show links to resources in log and frontend
 #introduction:
@@ -34,14 +38,14 @@ logger:
 #
 frontend:
   # javascript_version: latest
-  extra_html_url:
-    - /local/custom_ui/state-card-custom-ui.html
-    - /local/custom_ui/state-card-hline.html
-    - /local/custom_ui/state-card-value_only.html
-  extra_html_url_es5:
-    - /local/custom_ui/state-card-custom-ui-es5.html
-    - /local/custom_ui/state-card-hline.html
-    - /local/custom_ui/state-card-value_only.html
+  # extra_html_url:
+  #   - /local/custom_ui/state-card-custom-ui.html
+  #   - /local/custom_ui/state-card-hline.html
+  #   - /local/custom_ui/state-card-value_only.html
+  # extra_html_url_es5:
+  #   - /local/custom_ui/state-card-custom-ui-es5.html
+  #   - /local/custom_ui/state-card-hline.html
+  #   - /local/custom_ui/state-card-value_only.html
   themes: !include_dir_named themes/
 
 #
@@ -49,7 +53,8 @@ frontend:
 #
 # @link https://home-assistant.io/components/automation/
 #
-automation: !include_dir_merge_list automations/
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automations
 
 
 #
@@ -74,7 +79,7 @@ camera: !include_dir_merge_list cameras/
 #
 # @link https://github.com/daemondazz/homeassistant-displays
 #
-display: !include misc/displays.yaml
+#display: !include misc/displays.yaml
 
 
 # Enables configuration UI
@@ -92,7 +97,20 @@ config:
 # lovelace - set storage to ui-lovelace.yaml so we can use custom components
 #
 lovelace:
-  mode: yaml
+  #mode: yaml
+  resources:
+    - url: /local/community/mini-media-player/mini-media-player-bundle.js
+      type: module
+    - url: /local/community/button-card/button-card.js
+      type: module
+    - url: /local/community/ext-weblink/ext-weblink.js
+      type: js
+    - url: /local/community/lovelace-auto-entities/auto-entities.js
+      type: module
+    - url: /local/community/upcoming-media-card/upcoming-media-card.js
+      type: js
+    - url: /local/community/mini-graph-card/mini-graph-card-bundle.js
+      type: module
 
 # 
 # lovelace custom_updater components
@@ -238,20 +256,23 @@ shell_command: !include misc/shell_commands.yaml
 #
 # @link https://home-assistant.io/components/device_tracker/
 #
-device_tracker: !include misc/device_trackers.yaml  
+#device_tracker: !include misc/device_trackers.yaml  
     
 nest:
-  structure:
-    - Home
   client_id:  !secret nest_clientid
   client_secret: !secret nest_secret
+  project_id: !secret nest_projectid
+  subscriber_id: !secret nest_subscriberid
 
 cover:
   - platform: myq
     username: !secret myc_user
     password: !secret myc_pass
-    type: chamberlain
     
+
+weather:
+  - platform: environment_canada
+  
 #weather:
 #    - platform: darksky
 #      api_key: !secret darksky_api
@@ -269,17 +290,21 @@ media_player: !include misc/media_players.yaml
 #
 switch: !include_dir_merge_list switches/
 
-tuya:
-  username: !secret tuya_user
-  password: !secret tuya_pass
-  country_code: +1
+#tuya:
+#  username: !secret tuya_user
+#  password: !secret tuya_pass
+#  country_code: +1
 
 sonoff:
-  email: !secret sonoff_username
+  username: !secret sonoff_username
   password: !secret sonoff_password
-  scan_interval: 60
-  grace_period: 600
-  api_region: 'us'
+  #mode: cloud
+  reload: always  # update device list every time HA starts
+  force_update: [tpower]
+  sensors: [power, current, voltage]
+  #scan_interval: 60
+  #grace_period: 600
+  #api_region: 'us'
    
 # sabnzbd:
 #   api_key: !secret sabnzbd_api_key
@@ -315,23 +340,34 @@ zwave:
   network_key: !secret zwave_network_key
 
 mqtt:
-  broker: 192.168.100.88
+  broker: 192.168.100.3
   port: 1883
+  #username: !secret mqtt_username
+  #password: !secret mqtt_password
   client_id: home_assistant_1
   discovery: true
   discovery_prefix: homeassistant
+
+# smartweather:
+#   station_id: 27496
+#   api_key: 70090a31-cbff-42d7-bbfa-43e32410dda7
+
+
 #
 # Side Panels
 #
 
-panel_iframe:
-  grafana:
-    title: Grafana
-    icon: mdi:chart-timeline
-    url: http://192.168.100.88:3000
+
 panel_custom:
-  - name: zwavegraph2
+  - name: zwave-graph-panel
+    url_path: zwave-graph
     sidebar_title: Z-Wave Graph
-    sidebar_icon: mdi:access-point-network
-    url_path: zwave
-    
+    sidebar_icon: mdi:z-wave
+    module_url: /local/zwavegraph3.js
+    config:
+      # ranker - pick one: network-simplex, tight-tree, longest-path
+      ranker: network-simplex
+      # edge_visibility - pick one: relevant, all
+      edge_visibility: relevant
+      # grouping - pick one: z-wave, ungrouped
+      grouping: z-wave    
