@@ -1,4 +1,4 @@
-  - platform: environment_canada
+#  - platform: environment_canada
 #
 # Dark Sky weather
 #
@@ -29,7 +29,6 @@
 #     - precip_probability
 #     - dew_point
 
-
 #
 # Outside temperature and humidity
 #
@@ -52,7 +51,6 @@
 #       unit_of_measurement: '%'
 #       value_template: >-
 #         {{ states('sensor.dark_sky_humidity') | round }}
-
 
 # #
 # # Friedly weather report
@@ -118,7 +116,6 @@
 #         {% else %}
 #           {{ summary }}
 #         {% endif %}
-
 
 # #
 # # Chances of precipitation
@@ -207,7 +204,6 @@
 #           no precipitation
 #         {% endif %}
 
-
 # #
 # # Friendly low temperatures
 # #
@@ -253,7 +249,6 @@
 #         {% set temp = states('sensor.dark_sky_overnight_low_temperature_2') | round %}
 
 #         low: {{ temp }}˚
-
 
 # #
 # # Friendly icon equivalents
@@ -343,7 +338,6 @@
 #           unknown
 #         {% endif %}
 
-
 # #
 # # Wind speed
 # #
@@ -425,7 +419,6 @@
 #         {% elif speed < 0 %}
 #           unknown
 #         {% endif %}
-
 
 # #
 # # Wind direction
@@ -604,7 +597,6 @@
 #           unknown
 #         {% endif %}
 
-
 # #
 # # Wind direction - from PWS
 # #
@@ -699,7 +691,6 @@
 #         {% else %}
 #           unknown
 #         {% endif %}
-
 
 # - platform: environment_canada
 #   station:  MB/s0000193

@@ -1,0 +1,80 @@
+2021-12-07 12:22:43 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration smartweather which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_2) [homeassistant.loader] We found a custom integration radarr_upcoming_media which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_2) [homeassistant.loader] We found a custom integration sonoff which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_4) [homeassistant.loader] We found a custom integration blitzortung which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration scheduler which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_4) [homeassistant.loader] We found a custom integration reolink_dev which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration wyzeapi which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_4) [homeassistant.loader] We found a custom integration smartthinq_sensors which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration sonarr_upcoming_media which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_4) [homeassistant.loader] We found a custom integration fontawesome which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (SyncWorker_3) [homeassistant.loader] We found a custom integration ecoplug which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 ERROR (SyncWorker_3) [homeassistant.loader] The custom integration 'ecoplug' does not have a version key in the manifest file and was blocked from loading. See https://developers.home-assistant.io/blog/2021/01/29/custom-integration-changes#versions for more details
+2021-12-07 12:22:43 WARNING (SyncWorker_5) [homeassistant.loader] We found a custom integration nhl_api which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-07 12:22:43 WARNING (MainThread) [homeassistant.config] Key whitelist_external_dirs has been replaced with allowlist_external_dirs. Please update your config
+2021-12-07 12:22:43 ERROR (MainThread) [homeassistant.config] Invalid config for [lovelace]: value must be one of ['css', 'html', 'js', 'module'] for dictionary value @ data['lovelace']['resources'][6]['type']. Got 'modulels'. (See /config/configuration.yaml, line 97). Please check the docs at https://www.home-assistant.io/integrations/lovelace
+2021-12-07 12:22:43 ERROR (MainThread) [homeassistant.setup] Setup failed for lovelace: Invalid config.
+2021-12-07 12:22:44 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of frontend. Setup failed for dependencies: lovelace
+2021-12-07 12:22:44 ERROR (MainThread) [homeassistant.setup] Setup failed for frontend: Could not set up all dependencies.
+2021-12-07 12:22:48 WARNING (MainThread) [homeassistant.components.updater] Analytics reporting with the option 'include_used_components' is deprecated and you should remove that from your configuration. The analytics part of this integration has moved to the new 'analytics' integration
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of hacs. Setup failed for dependencies: frontend, lovelace
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Setup failed for hacs: Could not set up all dependencies.
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of fontawesome. Setup failed for dependencies: frontend
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Setup failed for fontawesome: Could not set up all dependencies.
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of map. Setup failed for dependencies: frontend
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Setup failed for map: Could not set up all dependencies.
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of logbook. Setup failed for dependencies: frontend
+2021-12-07 12:22:49 ERROR (MainThread) [homeassistant.setup] Setup failed for logbook: Could not set up all dependencies.
+2021-12-07 12:22:51 ERROR (MainThread) [homeassistant.components.cover] The myq platform for the cover integration does not support platform setup. Please remove it from your config.
+2021-12-07 12:22:51 WARNING (MainThread) [homeassistant.components.environment_canada] Environment Canada YAML configuration is deprecated; your YAML configuration has been imported into the UI and can be safely removed
+2021-12-07 12:22:51 WARNING (MainThread) [homeassistant.config_entries] Config entry 'CP850@localhost:3493' for nut integration not ready yet: Error fetching UPS state; Retrying in background
+2021-12-07 12:22:51 WARNING (MainThread) [homeassistant.config_entries] Config entry 'CP1000@localhost:3493' for nut integration not ready yet: Error fetching UPS state; Retrying in background
+2021-12-07 12:22:51 WARNING (MainThread) [custom_components.reolink_dev.base] Port 80 is used, USE_HTTPS set back to False
+2021-12-07 12:22:51 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'strptime' got invalid input 'unknown' when rendering template '{% set date = states('sensor.date') %} {% set datetime = strptime(date, '%Y-%m-%d') %} {{ datetime.strftime('%A') }}' but no default was specified. Currently 'strptime' will return 'unknown', however this template will fail to render in Home Assistant core 2022.1
+2021-12-07 12:22:51 ERROR (MainThread) [homeassistant.helpers.template] Template variable error: 'str object' has no attribute 'strftime' when rendering '{% set date = states('sensor.date') %} {% set datetime = strptime(date, '%Y-%m-%d') %} {{ datetime.strftime('%A') }}'
+2021-12-07 12:22:51 ERROR (MainThread) [homeassistant.helpers.template] Template variable error: 'None' has no attribute 'attributes' when rendering '{{ states.sensor.winnipeg_jets.attributes.get("away_name", "") }}'
+2021-12-07 12:22:51 ERROR (MainThread) [homeassistant.helpers.template] Template variable error: 'None' has no attribute 'attributes' when rendering '{{ states.sensor.winnipeg_jets.attributes.get("home_name", "") }}'
+2021-12-07 12:22:52 ERROR (MainThread) [homeassistant.components.camera] Platform esphome does not generate unique IDs. ID cam_esp32_01cameramy_camera already exists - ignoring camera.my_camera
+2021-12-07 12:22:52 ERROR (MainThread) [homeassistant.components.binary_sensor] Platform esphome does not generate unique IDs. ID cam_esp32_01binary_sensorpir_sensor already exists - ignoring binary_sensor.pir_sensor
+2021-12-07 12:22:52 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for 192.168.100.223 @ 192.168.100.223: Error connecting to ('192.168.100.223', 6053): [Errno 111] Connect call failed ('192.168.100.223', 6053)
+2021-12-07 12:22:54 ERROR (MainThread) [homeassistant.components.sensor] Error while setting up plex platform for sensor
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 249, in _async_setup_platform
+    await asyncio.shield(task)
+  File "/usr/src/homeassistant/homeassistant/components/plex/sensor.py", line 53, in async_setup_entry
+    plexserver = hass.data[PLEX_DOMAIN][SERVERS][server_id]
+KeyError: 'b2905f969d0482459ce1a8d071a92216562f0a1f'
+2021-12-07 12:22:54 ERROR (MainThread) [homeassistant.components.media_player] Error while setting up plex platform for media_player
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 249, in _async_setup_platform
+    await asyncio.shield(task)
+  File "/usr/src/homeassistant/homeassistant/components/plex/media_player.py", line 76, in async_setup_entry
+    hass.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
+KeyError: 'b2905f969d0482459ce1a8d071a92216562f0a1f'
+2021-12-07 12:22:54 ERROR (MainThread) [homeassistant.components.binary_sensor] The smartweather platform for the binary_sensor integration does not support platform setup. Please remove it from your config.
+2021-12-07 12:22:55 WARNING (MainThread) [aioesphomeapi.reconnect_logic] Can't connect to ESPHome API for 192.168.100.240 @ 192.168.100.240: Error connecting to ('192.168.100.240', 6053): [Errno 113] Connect call failed ('192.168.100.240', 6053)
+2021-12-07 12:22:59 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Canon MF642C/643C/644C (cd:7f:92) (4)' for ipp integration not ready yet: Invalid response from API: Timeout occurred while connecting to IPP server.; Retrying in background
+2021-12-07 12:23:06 WARNING (MainThread) [homeassistant.bootstrap] Detected that frontend did not load. Activating safe mode
+2021-12-07 12:24:13 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:24:13 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:24:14 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:24:14 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:24:14 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:24:14 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.131.32
+2021-12-07 12:24:15 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:24:15 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.131.32
+2021-12-07 12:24:42 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 10d934721483cccb4956ab9eda09a9011f7dc1de2fd8c96ced24ebbd24abe81c from 192.168.100.12
+2021-12-07 12:24:42 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 55feed54059fa711f28562e2aceb8740b7e63ba59c1c40d83facda291b9de045 from 192.168.100.12
+2021-12-07 12:24:46 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 10d934721483cccb4956ab9eda09a9011f7dc1de2fd8c96ced24ebbd24abe81c from 192.168.100.12
+2021-12-07 12:24:46 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 55feed54059fa711f28562e2aceb8740b7e63ba59c1c40d83facda291b9de045 from 192.168.100.12
+2021-12-07 12:24:49 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 10d934721483cccb4956ab9eda09a9011f7dc1de2fd8c96ced24ebbd24abe81c from 192.168.100.12
+2021-12-07 12:24:49 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 55feed54059fa711f28562e2aceb8740b7e63ba59c1c40d83facda291b9de045 from 192.168.100.12
+2021-12-07 12:24:53 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 10d934721483cccb4956ab9eda09a9011f7dc1de2fd8c96ced24ebbd24abe81c from 192.168.100.12
+2021-12-07 12:24:53 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 55feed54059fa711f28562e2aceb8740b7e63ba59c1c40d83facda291b9de045 from 192.168.100.12
+2021-12-07 12:24:58 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 4b28efcfd542f85d58455e485456fab6730c7cccdb94cf199391b199bba7fa17 from 172.70.127.24
+2021-12-07 12:25:19 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 10d934721483cccb4956ab9eda09a9011f7dc1de2fd8c96ced24ebbd24abe81c from 192.168.100.12
+2021-12-07 12:25:19 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 55feed54059fa711f28562e2aceb8740b7e63ba59c1c40d83facda291b9de045 from 192.168.100.12
+2021-12-07 12:25:23 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 10d934721483cccb4956ab9eda09a9011f7dc1de2fd8c96ced24ebbd24abe81c from 192.168.100.12
+2021-12-07 12:25:23 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 55feed54059fa711f28562e2aceb8740b7e63ba59c1c40d83facda291b9de045 from 192.168.100.12
+2021-12-07 12:25:58 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /homeassistant/restart request Server disconnected

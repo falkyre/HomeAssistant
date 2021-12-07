@@ -35,7 +35,6 @@
       {% endfor %}
     {% endif %}
 
-
 #
 # NASA's Astronomy Picture of the Day
 #
@@ -74,7 +73,6 @@
       {%- endif %} {{ value_json.title }}
     {% endif %}
 
-
 #
 # Environment Canada radar location
 #
@@ -82,9 +80,9 @@
 #
 # @see /cameras/environment_canada.yaml
 #
-- platform: template
-  sensors:
-    environment_canada_radar:
-      friendly_name: Environment Canada Radar
-      value_template: !secret environment_canada_radar
+# - platform: template
+#   sensors:
+#     environment_canada_radar:
+#       friendly_name: Environment Canada Radar
+#       value_template: !secret environment_canada_radar
 

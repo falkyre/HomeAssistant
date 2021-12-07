@@ -1,41 +1,33 @@
 """ Config Flow to configure SmartWeather Integration. """
 import logging
+import voluptuous as vol
 
 from pysmartweatherio import (
+    FORECAST_TYPE_DAILY,
+    FORECAST_TYPES,
     SmartWeather,
-    SmartWeatherError,
     InvalidApiKey,
-    RequestError,
     ResultError,
 )
 
-import voluptuous as vol
-
-from homeassistant import config_entries
 from homeassistant.const import (
     CONF_ID,
     CONF_API_KEY,
     CONF_SCAN_INTERVAL,
 )
-
 from homeassistant.helpers import aiohttp_client
-from homeassistant import config_entries, core
-import homeassistant.helpers.config_validation as cv
+from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.util import slugify
 
 from .const import (
-    DOMAIN,
     DEFAULT_SCAN_INTERVAL,
     DEFAULT_FORECAST_INTERVAL,
+    DOMAIN,
     CONF_STATION_ID,
     CONF_WIND_UNIT,
     CONF_ADD_SENSORS,
     CONF_FORECAST_TYPE,
     CONF_FORECAST_INTERVAL,
-    FORECAST_TYPE_DAILY,
-    FORECAST_TYPE_HOURLY,
-    FORECAST_TYPES,
     UNIT_WIND_MS,
     WIND_UNITS,
 )
@@ -75,10 +67,6 @@ class SmartWeatherFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         try:
             unique_id = await smartweather.get_station_name()
-            # unique_id = slugify(unique_id).capitalize()
-            # underscore_pos = unique_id.find("_")
-            # if underscore_pos > 0:
-            #     unique_id = unique_id.split("_")[0]
         except InvalidApiKey:
             errors["base"] = "api_error"
             return await self._show_setup_form(errors)
@@ -88,13 +76,16 @@ class SmartWeatherFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         entries = self._async_current_entries()
         for entry in entries:
-            if entry.data[CONF_ID] == unique_id:
+            if (
+                f"{entry.data[CONF_ID]}"
+                == f"{unique_id}_{user_input[CONF_FORECAST_TYPE]}"
+            ):
                 return self.async_abort(reason="station_exists")
 
         return self.async_create_entry(
-            title=unique_id,
+            title=f"{unique_id} ({user_input[CONF_FORECAST_TYPE].capitalize()})",
             data={
-                CONF_ID: unique_id,
+                CONF_ID: f"{unique_id}_{user_input[CONF_FORECAST_TYPE]}",
                 CONF_API_KEY: user_input[CONF_API_KEY],
                 CONF_STATION_ID: user_input[CONF_STATION_ID],
                 CONF_FORECAST_TYPE: user_input[CONF_FORECAST_TYPE],

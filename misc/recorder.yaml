@@ -5,7 +5,6 @@
 #
 # @link https://home-assistant.io/components/recorder/
 #
-purge_interval: 2
 purge_keep_days: 5
 include:
   domains:
@@ -15,12 +14,11 @@ include:
     - binary_sensor.front_door
     - binary_sensor.garage_door
     - binary_sensor.furnancepump_leak
-    
 
     - sensor.door_status
     - sensor.leak_status
     - sensor.motion_status
-    
+
     - sensor.sonoff_100033210b_current
     - sensor.sonoff_100033210b_power
     - sensor.sonoff_100033210b_voltage
@@ -32,6 +30,7 @@ include:
 
   entity_globs:
     - sensor.smartweather_*
+    - binary_sensor.z_wave*
 exclude:
   domains:
     - switch

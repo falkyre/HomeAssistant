@@ -1,16 +1,12 @@
 """Base Entity definition for SmartWeather Integration."""
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import Entity, DeviceInfo
 import homeassistant.helpers.device_registry as dr
-from typing import Dict, List
-from homeassistant.const import (
-    ATTR_ATTRIBUTION,
-    ATTR_FRIENDLY_NAME,
-)
+from homeassistant.const import ATTR_ATTRIBUTION
+
 from .const import (
     DOMAIN,
-    ATTR_BRAND,
     ATTR_SMARTWEATHER_STATION_ID,
-    ATTR_UPDATED,
+    CONF_FORECAST_TYPE,
     CONF_STATION_ID,
     DEFAULT_BRAND,
     DEFAULT_ATTRIBUTION,
@@ -21,18 +17,23 @@ from .const import (
 class SmartWeatherEntity(Entity):
     """Base class for SmartWeather Entities."""
 
-    def __init__(self, coordinator, entries, entity, server, fcst_coordinator):
+    def __init__(
+        self, coordinator, entries, entity, server, fcst_coordinator, device_coordinator
+    ):
         """Initialize the SmartWeather Entity."""
         super().__init__()
         self.coordinator = coordinator
         self.fcst_coordinator = fcst_coordinator
+        self.device_coordinator = device_coordinator
         self.entries = entries
         self.server = server
 
         self._entity = entity
         self._platform_serial = self.server["serial_number"]
-        self._platform_id = self.server["station_type"]
-        self._device_key = f"{self.entries[CONF_STATION_ID]}"
+        self._platform_id = server["station_type"]
+        self._device_key = (
+            f"{self.entries[CONF_STATION_ID]}_{self.entries[CONF_FORECAST_TYPE]}"
+        )
         if self._entity == DEVICE_TYPE_WEATHER:
             self._unique_id = self._device_key
         else:
@@ -53,17 +54,18 @@ class SmartWeatherEntity(Entity):
         """Return Forecast Data Array."""
         if self.fcst_coordinator is None:
             return None
-        else:
-            return self.fcst_coordinator.data[0]
+
+        return self.fcst_coordinator.data[0]
 
     @property
-    def device_info(self):
-        return {
-            "connections": {(dr.CONNECTION_NETWORK_MAC, self._device_key)},
-            "manufacturer": DEFAULT_BRAND,
-            "model": self._platform_id,
-            "via_device": (DOMAIN, self._device_key),
-        }
+    def device_info(self) -> DeviceInfo:
+        return DeviceInfo(
+            connections={(dr.CONNECTION_NETWORK_MAC, self._device_key)},
+            manufacturer=DEFAULT_BRAND,
+            model=self._platform_id,
+            via_device=(DOMAIN, self._device_key),
+            configuration_url=f"https://tempestwx.com/station/{self.entries[CONF_STATION_ID]}/grid",
+        )
 
     @property
     def available(self):
@@ -71,8 +73,8 @@ class SmartWeatherEntity(Entity):
         return self.coordinator.last_update_success
 
     @property
-    def device_state_attributes(self) -> Dict:
-        """Return SmartWeather specific attributes."""
+    def extra_state_attributes(self):
+        """Return common attributes"""
         return {
             ATTR_ATTRIBUTION: DEFAULT_ATTRIBUTION,
             ATTR_SMARTWEATHER_STATION_ID: self._device_key,
@@ -87,3 +89,8 @@ class SmartWeatherEntity(Entity):
         self.async_on_remove(
             self.fcst_coordinator.async_add_listener(self.async_write_ha_state)
         )
+
+        if self.device_coordinator is not None:
+            self.async_on_remove(
+                self.device_coordinator.async_add_listener(self.async_write_ha_state)
+            )

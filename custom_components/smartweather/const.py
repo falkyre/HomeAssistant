@@ -4,23 +4,15 @@ import logging
 from pysmartweatherio import (
     UNIT_WIND_MS,
     UNIT_WIND_KMH,
-    UNIT_TYPE_TEMP,
-    UNIT_TYPE_WIND,
-    UNIT_TYPE_RAIN,
-    UNIT_TYPE_PRESSURE,
-    UNIT_TYPE_DISTANCE,
-    FORECAST_TYPE_DAILY,
-    FORECAST_TYPE_HOURLY,
-    FORECAST_TYPES,
 )
-
-from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
-from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
 
 DOMAIN = "smartweather"
 
 ATTR_SMARTWEATHER_STATION_NAME = "station_name"
 ATTR_SMARTWEATHER_STATION_ID = "station_id"
+ATTR_DEVICE_TYPE = "device_type"
+ATTR_TEMP_HIGH_TODAY = "temp_high_today"
+ATTR_TEMP_LOW_TODAY = "temp_low_today"
 ATTR_UPDATED = "updated"
 ATTR_BRAND = "Brand"
 ATTR_CURRENT_ICON = "current_icon"
@@ -46,34 +38,31 @@ DEFAULT_BRAND = "WeatherFlow"
 DEFAULT_ATTRIBUTION = "Powered by a WeatherFlow Smart Weather Station"
 DEFAULT_SCAN_INTERVAL = 60
 DEFAULT_FORECAST_INTERVAL = 5
+DEFAULT_DEVICE_INTERVAL = 60
 
 DEVICE_TYPE_WEATHER = "weather"
 
 LOGGER = logging.getLogger(__package__)
 
 CONDITION_CLASSES = {
-    "clear-night": ["cc-clear-night", "clear-night"],
-    "cloudy": ["cc-cloudy", "cloudy"],
-    "exceptional": [],
-    "fog": ["cc-fog", "fog"],
-    "hail": ["cc-hail", "hail"],
-    "lightning": ["cc-thunderstorm", "thunderstorm"],
-    "lightning-rainy": [200, 201, 202],
+    "clear-night": ["clear-night"],
+    "cloudy": ["cloudy"],
+    "exceptional": ["cloudy"],
+    "fog": ["foggy"],
+    "hail": ["hail"],
+    "lightning": ["thunderstorm"],
+    "lightning-rainy": ["possibly-thunderstorm-day", "possibly-thunderstorm-night"],
     "partlycloudy": [
-        "cc-partly-cloudy-day",
-        "cc-partly-cloudy-night",
         "partly-cloudy-day",
         "partly-cloudy-night",
+    ],
+    "rainy": [
+        "rainy",
         "possibly-rainy-day",
         "possibly-rainy-night",
-        "cc-possibly-rainy-day",
-        "cc-possibly-rainy-night",
     ],
-    "pouring": ["cc-thunderstorm", "thunderstorm"],
-    "rainy": ["rainy", "chance-rain", "cc-rainy", "cc-chance-rain",],
-    "snowy": [600, 601, 602, 621, 622, 623],
-    "snowy-rainy": [610, 611, 612],
-    "sunny": ["cc-clear-day", "clear-day"],
-    "windy": [],
-    "windy-variant": [],
+    "snowy": ["snow", "possibly-snow-day", "possibly-snow-night"],
+    "snowy-rainy": ["sleet", "possibly-sleet-day", "possibly-sleet-night"],
+    "sunny": ["clear-day"],
+    "windy": ["windy"],
 }

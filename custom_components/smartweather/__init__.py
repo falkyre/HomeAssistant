@@ -1,34 +1,30 @@
 """WeatherFlow SmartWeather Integration for Home Assistant"""
 import logging
-from datetime import timedelta, datetime
-import voluptuous as vol
 import asyncio
+from datetime import timedelta, datetime
+from aiohttp.client_exceptions import ServerDisconnectedError
 
 from pysmartweatherio import (
     SmartWeather,
-    SmartWeatherError,
     InvalidApiKey,
     RequestError,
     ResultError,
+    FORECAST_TYPE_DAILY,
+    UNIT_WIND_MS,
 )
 
 from homeassistant.const import (
-    CONF_ID,
     CONF_API_KEY,
     CONF_SCAN_INTERVAL,
 )
 
 import homeassistant.helpers.device_registry as dr
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from aiohttp.client_exceptions import ServerDisconnectedError
-from homeassistant.helpers.dispatcher import (
-    async_dispatcher_connect,
-    async_dispatcher_send,
-)
-from homeassistant.helpers.event import async_track_time_interval
-from homeassistant.helpers.typing import ConfigType, HomeAssistantType
+
+from homeassistant.helpers.typing import ConfigType
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
@@ -38,25 +34,23 @@ from .const import (
     CONF_WIND_UNIT,
     CONF_FORECAST_TYPE,
     CONF_FORECAST_INTERVAL,
+    DEFAULT_DEVICE_INTERVAL,
     DEFAULT_SCAN_INTERVAL,
     DEFAULT_FORECAST_INTERVAL,
     DEFAULT_BRAND,
     SMARTWEATHER_PLATFORMS,
-    FORECAST_TYPE_DAILY,
-    FORECAST_TYPE_HOURLY,
-    UNIT_WIND_MS,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(hass: HomeAssistantType, config: ConfigType) -> bool:
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up configured SmartWeather."""
     # We allow setup only through config flow type of config
     return True
 
 
-async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up SmartWeather platforms as config entry."""
 
     if not entry.options:
@@ -101,6 +95,14 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool
         ),
     )
 
+    device_coordinator = DataUpdateCoordinator(
+        hass,
+        _LOGGER,
+        name=DOMAIN,
+        update_method=smartweather.get_device_data,
+        update_interval=timedelta(minutes=DEFAULT_DEVICE_INTERVAL),
+    )
+
     fcst_type = entry.options.get(CONF_FORECAST_TYPE, FORECAST_TYPE_DAILY)
     if fcst_type == FORECAST_TYPE_DAILY:
         # Update Forecast with Daily data
@@ -131,6 +133,7 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool
 
     try:
         station_info = await smartweather.get_station_hardware()
+        station_data = station_info[0]
     except InvalidApiKey:
         _LOGGER.error(
             "Could not Authorize against Weatherflow Server. Please reinstall integration."
@@ -140,22 +143,24 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool
         _LOGGER.warning(str(err))
         raise ConfigEntryNotReady
     except RequestError as err:
-        _LOGGER.error(f"Error occured: {err}")
+        _LOGGER.error("Error occured: %s", err)
         return
 
     # Fetch initial data so we have data when entities subscribe
     await coordinator.async_refresh()
+    await device_coordinator.async_refresh()
     await fcst_coordinator.async_refresh()
     hass.data[DOMAIN][entry.entry_id] = {
         "coordinator": coordinator,
+        "device_coordinator": device_coordinator,
         "fcst_coordinator": fcst_coordinator,
         "smw": smartweather,
-        "station": station_info,
+        "station": station_data,
         "fcst_type": fcst_type,
     }
 
     await _async_get_or_create_smartweather_device_in_registry(
-        hass, entry, station_info
+        hass, entry, station_data
     )
 
     for platform in SMARTWEATHER_PLATFORMS:
@@ -170,27 +175,28 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool
 
 
 async def _async_get_or_create_smartweather_device_in_registry(
-    hass: HomeAssistantType, entry: ConfigEntry, svr
+    hass: HomeAssistant, entry: ConfigEntry, svr
 ) -> None:
     device_registry = await dr.async_get_registry(hass)
-    device_key = f"{entry.data[CONF_STATION_ID]}"
+    device_key = f"{entry.data[CONF_STATION_ID]}_{entry.data[CONF_FORECAST_TYPE]}"
+    _LOGGER.debug("DEVICE KEY: %s", device_key)
     device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         connections={(dr.CONNECTION_NETWORK_MAC, device_key)},
         identifiers={(DOMAIN, device_key)},
         manufacturer=DEFAULT_BRAND,
-        name=svr["station_name"],
+        name=f"{svr['station_name']} ({entry.data[CONF_FORECAST_TYPE].capitalize()})",
         model=svr["station_type"],
         sw_version=svr["firmware_revision"],
     )
 
 
-async def async_update_options(hass: HomeAssistantType, entry: ConfigEntry):
+async def async_update_options(hass: HomeAssistant, entry: ConfigEntry):
     """Update options."""
     await hass.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry(hass: HomeAssistantType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload Unifi Protect config entry."""
     unload_ok = all(
         await asyncio.gather(

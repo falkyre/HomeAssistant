@@ -46,7 +46,7 @@ frontend:
   #   - /local/custom_ui/state-card-custom-ui-es5.html
   #   - /local/custom_ui/state-card-hline.html
   #   - /local/custom_ui/state-card-value_only.html
-  themes: !include_dir_named themes/
+  themes: !include_dir_named themes
 
 #
 # Automations
@@ -56,14 +56,12 @@ frontend:
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 
-
 #
 # Binary sensors
 #
 # @link https://home-assistant.io/components/binary_sensor/
 #
 binary_sensor: !include misc/binary_sensors.yaml
-
 
 #
 # Cameras
@@ -80,7 +78,6 @@ camera: !include_dir_merge_list cameras/
 # @link https://github.com/daemondazz/homeassistant-displays
 #
 #display: !include misc/displays.yaml
-
 
 # Enables configuration UI
 config:
@@ -104,15 +101,16 @@ lovelace:
     - url: /local/community/button-card/button-card.js
       type: module
     - url: /local/community/ext-weblink/ext-weblink.js
-      type: js
+      type: module
     - url: /local/community/lovelace-auto-entities/auto-entities.js
       type: module
     - url: /local/community/upcoming-media-card/upcoming-media-card.js
-      type: js
+      type: module
     - url: /local/community/mini-graph-card/mini-graph-card-bundle.js
       type: module
-
-# 
+    - type: module
+      url: "/local//community_plugin/harmony-card/harmony-card.js"
+#
 # lovelace custom_updater components
 #
 #custom_updater:
@@ -124,15 +122,18 @@ lovelace:
 #    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
 #    - https://raw.githubusercontent.com/kuuji/button-card/master/tracker.json
 
-hacs:
-  token: !secret hacs_token   
+#hacs:
+#  token: !secret hacs_token
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
   #base_url: https://falkyre.duckdns.org:8123
   #ssl_certificate: /ssl/fullchain.pem
   #ssl_key: /ssl/privkey.pem
   #api_password: !secret http_pass
-  
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.100.3
+
 # Checks for available updates
 # Note: This component will send some information about your system to
 # the developers to assist with development of Home Assistant.
@@ -159,7 +160,6 @@ conversation:
 #
 recorder: !include misc/recorder.yaml
 
-  
 # Enables support for tracking state changes over time
 history:
 
@@ -186,7 +186,6 @@ input_boolean: !include misc/input_booleans.yaml
 #
 input_select: !include misc/input_selects.yaml
 
-
 #
 # Variables
 #
@@ -194,7 +193,7 @@ input_select: !include misc/input_selects.yaml
 #
 # @link https://github.com/rogro82/hass-variables
 #
-variable: !include misc/variables.yaml
+#variable: !include misc/variables.yaml
 
 #
 # Zones
@@ -203,21 +202,18 @@ variable: !include misc/variables.yaml
 #
 zone: !include misc/zones.yaml
 
-
 #cast:
 #  media_player:
 #    - host: 192.168.100.104
 #    - host: 192.168.100.151
 #    - host: 192.168.100.109
-    
+
 #
 # Sensors
 #
 # @link https://home-assistant.io/components/sensor/
 #
 sensor: !include_dir_merge_list sensors/
-
-
 
 # Text to speech
 tts:
@@ -256,10 +252,10 @@ shell_command: !include misc/shell_commands.yaml
 #
 # @link https://home-assistant.io/components/device_tracker/
 #
-#device_tracker: !include misc/device_trackers.yaml  
-    
+#device_tracker: !include misc/device_trackers.yaml
+
 nest:
-  client_id:  !secret nest_clientid
+  client_id: !secret nest_clientid
   client_secret: !secret nest_secret
   project_id: !secret nest_projectid
   subscriber_id: !secret nest_subscriberid
@@ -268,11 +264,10 @@ cover:
   - platform: myq
     username: !secret myc_user
     password: !secret myc_pass
-    
 
-weather:
-  - platform: environment_canada
-  
+# weather:
+#   - platform: environment_canada
+
 #weather:
 #    - platform: darksky
 #      api_key: !secret darksky_api
@@ -299,13 +294,13 @@ sonoff:
   username: !secret sonoff_username
   password: !secret sonoff_password
   #mode: cloud
-  reload: always  # update device list every time HA starts
+  reload: always # update device list every time HA starts
   force_update: [tpower]
   sensors: [power, current, voltage]
   #scan_interval: 60
   #grace_period: 600
   #api_region: 'us'
-   
+
 # sabnzbd:
 #   api_key: !secret sabnzbd_api_key
 #   host: 192.168.100.69
@@ -315,7 +310,7 @@ sonoff:
 #     - speed
 #     - queue_remaining
 #     - queue_count
-  
+
 #
 # ZWave integration
 #
@@ -335,9 +330,9 @@ joaoapps_join:
 
 notify: !include_dir_merge_list notifications/
 
-zwave:
-  usb_path: /dev/ttyACM0
-  network_key: !secret zwave_network_key
+#zwave:
+#  usb_path: /dev/ttyACM0
+#  network_key: !secret zwave_network_key
 
 mqtt:
   broker: 192.168.100.3
@@ -347,27 +342,24 @@ mqtt:
   client_id: home_assistant_1
   discovery: true
   discovery_prefix: homeassistant
-
 # smartweather:
 #   station_id: 27496
 #   api_key: 70090a31-cbff-42d7-bbfa-43e32410dda7
-
 
 #
 # Side Panels
 #
 
-
-panel_custom:
-  - name: zwave-graph-panel
-    url_path: zwave-graph
-    sidebar_title: Z-Wave Graph
-    sidebar_icon: mdi:z-wave
-    module_url: /local/zwavegraph3.js
-    config:
-      # ranker - pick one: network-simplex, tight-tree, longest-path
-      ranker: network-simplex
-      # edge_visibility - pick one: relevant, all
-      edge_visibility: relevant
-      # grouping - pick one: z-wave, ungrouped
-      grouping: z-wave    
+# panel_custom:
+#   - name: zwave-graph-panel
+#     url_path: zwave-graph
+#     sidebar_title: Z-Wave Graph
+#     sidebar_icon: mdi:z-wave
+#     module_url: /local/zwavegraph3.js
+#     config:
+#       # ranker - pick one: network-simplex, tight-tree, longest-path
+#       ranker: network-simplex
+#       # edge_visibility - pick one: relevant, all
+#       edge_visibility: relevant
+#       # grouping - pick one: z-wave, ungrouped
+#       grouping: z-wave

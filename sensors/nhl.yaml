@@ -4,16 +4,16 @@
 - platform: template
   sensors:
     away_team:
-      friendly_name_template: '{{ states.sensor.winnipeg_jets.attributes.away_name }}'
-      value_template: '{{ states.sensor.winnipeg_jets.attributes.away_score }}'
-      entity_picture_template: '{{ states.sensor.winnipeg_jets.attributes.away_logo }}'
+      friendly_name_template: '{{ states.sensor.winnipeg_jets.attributes.get("away_name", "") }}'
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.get("away_score", "") }}'
+      entity_picture_template: '{{ states.sensor.winnipeg_jets.attributes.get("away_logo", "") }}'
     home_team:
-      friendly_name_template: '{{ states.sensor.winnipeg_jets.attributes.home_name }}'
-      value_template: '{{ states.sensor.winnipeg_jets.attributes.home_score }}'
-      entity_picture_template: '{{ states.sensor.winnipeg_jets.attributes.home_logo }}'
+      friendly_name_template: '{{ states.sensor.winnipeg_jets.attributes.get("home_name", "") }}'
+      value_template: '{{ states.sensor.winnipeg_jets.attributes.get("home_score", "") }}'
+      entity_picture_template: '{{ states.sensor.winnipeg_jets.attributes.get("home_logo", "") }}'
     last_goal:
       icon_template: mdi:hockey-puck
-      friendly_name_template: 'Last Play'
-      value_template: '{{ states.sensor.winnipeg_jets.attributes.last_goal }}'
+      friendly_name_template: "Last Play"
+      value_template: "{{ states.sensor.winnipeg_jets.attributes.last_goal }}"
     winnipeg_scores:
-      value_template: '{{ states.sensor.winnipeg_jets.attributes.goal_tracked_team }}'
+      value_template: "{{ states.sensor.winnipeg_jets.attributes.goal_tracked_team }}"

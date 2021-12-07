@@ -1,38 +1,38 @@
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=231373602&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=231373602&user=icu&pwd=
-    name: Oakbluff Patio
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=910713284&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=910713284&user=icu&pwd=
-    name: Oakbluff Front
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=921650163&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=921650163&user=icu&pwd=
-    name: Garage-Weather
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=761237969&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=761237969&user=icu&pwd=
-    name: Backyard
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=1013929548&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=1013929548&user=icu&pwd=
-    name: Garage
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=784827467&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=784827467&user=icu&pwd=
-    name: Living Room
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=1005860495&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=1005860495&user=icu&pwd=
-    name: Office
-  - platform: mjpeg
-    mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=2133160954&user=icu&pwd=
-    still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=2133160954&user=icu&pwd=
-    name: Basement
-  - platform: reolink_dev
-    host: 192.168.100.12
-    username: admin
-    password: !secret reolink_pass
-    name: GarageWx
-  - platform: environment_canada
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=231373602&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=231373602&user=icu&pwd=
+  name: Oakbluff Patio
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=910713284&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=910713284&user=icu&pwd=
+  name: Oakbluff Front
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=921650163&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=921650163&user=icu&pwd=
+  name: Garage-Weather
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=761237969&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=761237969&user=icu&pwd=
+  name: Backyard
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=1013929548&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=1013929548&user=icu&pwd=
+  name: Garage
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=784827467&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=784827467&user=icu&pwd=
+  name: Living Room
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=1005860495&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=1005860495&user=icu&pwd=
+  name: Office
+- platform: mjpeg
+  mjpeg_url: http://192.168.100.29:8083/axis-cgi/mjpg/video.cgi?cameraId=2133160954&user=icu&pwd=
+  still_image_url: http://192.168.100.29:8083/axis-cgi/jpg/image.cgi?cameraId=2133160954&user=icu&pwd=
+  name: Basement
+# - platform: reolink_dev
+#   host: 192.168.100.12
+#   username: admin
+#   password: !secret reolink_pass
+#   name: GarageWx
+- platform: environment_canada

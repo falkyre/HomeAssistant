@@ -1,39 +1,38 @@
 #
 # View
 #
-weather_view:
-  #view: yes
-  name: Weather
-  icon: mdi:weather-partlycloudy
-  entities:
-    - group.weather
-    - group.radar_satellite
-    - group.weather_forecast
+# weather_view:
+#   #view: yes
+#   name: Weather
+#   icon: mdi:weather-partlycloudy
+#   entities:
+#     - group.weather
+#     - group.radar_satellite
+#     - group.weather_forecast
 
+# #
+# # Groups
+# #
 
-#
-# Groups
-#
+# radar_satellite:
+#   name: Maps
+#   #control: hidden
+#   entities:
+#     - camera.environment_canada_rain
+#     - camera.environment_canada_snow
+#     - camera.noaa_geocolor
+#     - camera.noaa_water_vapour
 
-radar_satellite:
-  name: Maps
-  #control: hidden
-  entities:
-    - camera.environment_canada_rain
-    - camera.environment_canada_snow
-    - camera.noaa_geocolor
-    - camera.noaa_water_vapour
+# weather:
+#   name: " "
+#   entities:
+#     - sensor.dark_sky_summary
+#     - sensor.weather_details
+#     - sensor.outside_humidity
+#     - sensor.wind_speed
+#     - sensor.dark_sky_hourly_summary
 
-weather:
-  name: " "
-  entities:
-    - sensor.dark_sky_summary
-    - sensor.weather_details
-    - sensor.outside_humidity
-    - sensor.wind_speed
-    - sensor.dark_sky_hourly_summary
-
-weather_forecast:
-  name: Weekly Forecast
-  entities:
-    - sensor.dark_sky_daily_summary
+# weather_forecast:
+#   name: Weekly Forecast
+#   entities:
+#     - sensor.dark_sky_daily_summary

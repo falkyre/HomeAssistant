@@ -102,12 +102,12 @@ updater.updater:
     : null;'
 camera.bing_wallpaper:
   hide_control: true
-camera.environment_canada_rain:
-  friendly_name: 'Radar: Rain'
-  hide_control: true
-camera.environment_canada_snow:
-  friendly_name: 'Radar: Snow'
-  hide_control: true
+# camera.environment_canada_rain:
+#   friendly_name: 'Radar: Rain'
+#   hide_control: true
+# camera.environment_canada_snow:
+#   friendly_name: 'Radar: Snow'
+#   hide_control: true
 camera.noaa_geocolor:
   friendly_name: 'Satellite: Geocolor'
   hide_control: true

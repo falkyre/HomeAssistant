@@ -39,18 +39,18 @@
   alias: Garage Door Notify - mobile
   description: ''
   trigger:
-  - type: opened
+  - type: not_opened
     platform: device
-    device_id: f1bf4d5523f44d9bb7e8e82a91d41dcb
-    entity_id: binary_sensor.garage_door
+    device_id: 5bc88bb5cc2ee021207428ffcf78d503
+    entity_id: binary_sensor.z_wave_garagedoor_is_open
     domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
   condition: []
   action:
-  - delay: '5'
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
   - service: camera.snapshot
     data:
       filename: /config/www/snaps/backyard.jpg
@@ -65,6 +65,9 @@
           url: https://ha.osty.ca/local/snaps/backyard.jpg
           content-type: jpg
           hide-thumbnail: false
+  - service: notify.mobile_app_s21
+    data:
+      message: Garage Door Opened
   mode: single
 - id: '1601833214011'
   alias: Front Door - notify mobile
@@ -72,16 +75,16 @@
   trigger:
   - type: opened
     platform: device
-    device_id: 8c5bf0c1797a49478b71d1261a935c98
-    entity_id: binary_sensor.front_door
+    device_id: faed500f858492f47974f64cf651ea5a
+    entity_id: binary_sensor.z_wave_frontdoor_is_open
     domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
   condition: []
   action:
-  - delay: '5'
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
   - service: camera.snapshot
     data:
       filename: /config/www/snaps/livingroom.jpg
@@ -96,6 +99,9 @@
           url: https://ha.osty.ca/local/snaps/livingroom.jpg
           content-type: jpg
           hide-thumbnail: false
+  - service: notify.mobile_app_s21
+    data:
+      message: Front Door Opened
   mode: single
 - id: '1603806113082'
   alias: Garage -  notify mobile
@@ -123,20 +129,24 @@
           url: https://ha.osty.ca/local/snaps/garage.jpg
           content-type: jpg
           hide-thumbnail: false
+  - service: notify.mobile_app_s21
+    data:
+      message: Garage Opened
   mode: single
 - id: '1604353851365'
   alias: Patio Door - notify mobile
   description: ''
   trigger:
-  - platform: device
+  - type: opened
+    platform: device
+    device_id: 4b378d43b2eeb6916aacf77f4eb772d4
+    entity_id: binary_sensor.z_wave_patiodoor_is_open
     domain: binary_sensor
-    entity_id: binary_sensor.patio_door_sensor
-    device_id: 864673f2883e90702ede2e2d739bbc23
-    type: opened
     for:
       hours: 0
       minutes: 0
-      seconds: 2
+      seconds: 10
+      milliseconds: 0
   condition: []
   action:
   - service: notify.mobile
@@ -144,18 +154,41 @@
       message: Patio Door Opened
       data:
         clickAction: /lovelace-lights/cameras
+  - service: notify.mobile_app_s21
+    data:
+      data:
+        clickAction: /lovelace-lights/cameras
+      message: Patio Door Opened
   mode: single
 - id: '1605834529219'
   alias: Home Phone CallerID notify
   description: ''
   trigger:
   - platform: mqtt
-    topic: home/CallerID/name
+    topic: home/CallerID
   condition: []
   action:
-  - service: notify.mobile
-    data:
-      message: 'Call from "{{ trigger.payload }}"
-
-        '
+  - service: persistent_notification.create
+    data_template:
+      title: Call from
+      message: '{{ trigger.payload }}'
   mode: single
+- id: '1608132152356'
+  alias: Home Assistant update notification
+  description: ''
+  use_blueprint:
+    path: Klumper/update_notification.yaml
+    input:
+      delay: '5'
+      updater: binary_sensor.updater
+      notify_device: e9d6fdd9443c48c4b57791a48d27451d
+      is_ios: false
+- id: '1608132710316'
+  alias: Home Assistant update notification iPhone
+  description: ''
+  use_blueprint:
+    path: Klumper/update_notification.yaml
+    input:
+      delay: 5
+      updater: binary_sensor.updater
+      notify_device: f22456453ee3472bbaf97aa8ec115b31

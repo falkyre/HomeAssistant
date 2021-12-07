@@ -1,6 +1,6 @@
 """Support for the SmartWeather weather service."""
 import logging
-from typing import Dict, List
+from typing import List
 from homeassistant.components.weather import (
     ATTR_FORECAST_CONDITION,
     ATTR_FORECAST_PRECIPITATION,
@@ -10,9 +10,7 @@ from homeassistant.components.weather import (
     ATTR_FORECAST_TIME,
     ATTR_FORECAST_WIND_BEARING,
     ATTR_FORECAST_WIND_SPEED,
-    ATTR_WEATHER_ATTRIBUTION,
     ATTR_WEATHER_HUMIDITY,
-    ATTR_WEATHER_OZONE,
     ATTR_WEATHER_PRESSURE,
     ATTR_WEATHER_TEMPERATURE,
     ATTR_WEATHER_WIND_BEARING,
@@ -22,28 +20,22 @@ from homeassistant.components.weather import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     CONF_ID,
-    LENGTH_METERS,
-    LENGTH_MILES,
-    LENGTH_KILOMETERS,
-    PRESSURE_HPA,
-    PRESSURE_INHG,
     TEMP_CELSIUS,
 )
-from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.core import HomeAssistant
 from homeassistant.util.dt import utc_from_timestamp
-import homeassistant.helpers.device_registry as dr
+from homeassistant.util.temperature import celsius_to_fahrenheit
+
+from pysmartweatherio import FORECAST_TYPE_DAILY
 from .const import (
     DOMAIN,
-    ATTR_UPDATED,
     ATTR_CURRENT_ICON,
     ATTR_FCST_UV,
+    ATTR_TEMP_HIGH_TODAY,
+    ATTR_TEMP_LOW_TODAY,
     DEFAULT_ATTRIBUTION,
     DEVICE_TYPE_WEATHER,
-    FORECAST_TYPE_DAILY,
-    FORECAST_TYPE_HOURLY,
     CONDITION_CLASSES,
-    CONF_STATION_ID,
-    CONF_FORECAST_TYPE,
 )
 from .entity import SmartWeatherEntity
 
@@ -51,7 +43,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    hass: HomeAssistantType, entry: ConfigEntry, async_add_entities
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Add a weather entity from station_id."""
 
@@ -102,7 +94,9 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
         fcst_type,
     ) -> None:
         """Initialize the SmartWeather weather entity."""
-        super().__init__(coordinator, entries, device_type, server, fcst_coordinator)
+        super().__init__(
+            coordinator, entries, device_type, server, fcst_coordinator, None
+        )
         self._name = f"{DOMAIN.capitalize()} {entries[CONF_ID]}"
         self._unit_system = unit_system
         self._forecast_type = fcst_type
@@ -116,12 +110,6 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
     def temperature(self) -> int:
         """Return the temperature."""
         if self._current is not None:
-            # Current Temperature is in Fahrenheit if Units is Imperial
-            # we need to convert back to C, as HA also is converting
-            # if self._unit_system == "imperial":
-            #     return (self._current.air_temperature - 32) / 1.8
-            # else:
-            #     return self._current.air_temperature
             return self._current.air_temperature
 
         return None
@@ -170,7 +158,9 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
     def pressure(self) -> int:
         """Return the pressure."""
         if self._current is not None:
-            return round(self._current.station_pressure, 2)
+            if self._unit_system == "imperial":
+                return round(self._current.sea_level_pressure, 3)
+            return round(self._current.sea_level_pressure, 2)
         return None
 
     @property
@@ -196,14 +186,33 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
         )
 
     @property
+    def temp_high_today(self) -> float:
+        """Return Todays High Temp Forecast."""
+        if self._forecast is not None:
+            if self._unit_system == "imperial":
+                return celsius_to_fahrenheit(self._forecast.temp_high_today)
+            return self._forecast.temp_high_today
+        return None
+
+    @property
+    def temp_low_today(self) -> float:
+        """Return Todays Low Temp Forecast."""
+        if self._forecast is not None:
+            if self._unit_system == "imperial":
+                return celsius_to_fahrenheit(self._forecast.temp_low_today)
+            return self._forecast.temp_low_today
+        return None
+
+    @property
     def attribution(self) -> str:
         """Return the attribution."""
         return DEFAULT_ATTRIBUTION
 
     @property
-    def device_state_attributes(self) -> Dict:
-        """Return SmartWeather specific attributes."""
+    def extra_state_attributes(self):
+        """Return the sensor state attributes."""
         return {
+            **super().extra_state_attributes,
             ATTR_CURRENT_ICON: self.current_condition,
             ATTR_FCST_UV: self.uv,
             ATTR_WEATHER_HUMIDITY: self.humidity,
@@ -211,6 +220,8 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
             ATTR_WEATHER_TEMPERATURE: self.temperature,
             ATTR_WEATHER_WIND_BEARING: self.wind_bearing,
             ATTR_WEATHER_WIND_SPEED: self.wind_speed,
+            ATTR_TEMP_HIGH_TODAY: self.temp_high_today,
+            ATTR_TEMP_LOW_TODAY: self.temp_low_today,
         }
 
     @property
@@ -223,7 +234,8 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
 
         for forecast in self.fcst_coordinator.data:
             condition = next(
-                (k for k, v in CONDITION_CLASSES.items() if forecast.icon in v), None,
+                (k for k, v in CONDITION_CLASSES.items() if forecast.icon in v),
+                None,
             )
 
             if self._forecast_type == FORECAST_TYPE_DAILY:
@@ -234,12 +246,13 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
                         ).isoformat(),
                         ATTR_FORECAST_TEMP: forecast.temp_high,
                         ATTR_FORECAST_TEMP_LOW: forecast.temp_low,
-                        ATTR_FORECAST_PRECIPITATION: round(forecast.precip, 1),
+                        ATTR_FORECAST_PRECIPITATION: round(forecast.precip, 1)
+                        if forecast.precip is not None
+                        else None,
                         ATTR_FORECAST_PRECIPITATION_PROBABILITY: forecast.precip_probability,
                         ATTR_FORECAST_CONDITION: condition,
                         ATTR_FORECAST_WIND_SPEED: forecast.wind_avg,
                         ATTR_FORECAST_WIND_BEARING: forecast.wind_bearing,
-                        "icon": forecast.icon,  # REMOVE when we know all icons
                     }
                 )
             else:
@@ -249,12 +262,13 @@ class SmartWeatherWeather(SmartWeatherEntity, WeatherEntity):
                             forecast.epochtime
                         ).isoformat(),
                         ATTR_FORECAST_TEMP: forecast.temperature,
-                        ATTR_FORECAST_PRECIPITATION: round(forecast.precip, 1),
+                        ATTR_FORECAST_PRECIPITATION: round(forecast.precip, 1)
+                        if forecast.precip is not None
+                        else None,
                         ATTR_FORECAST_PRECIPITATION_PROBABILITY: forecast.precip_probability,
                         ATTR_FORECAST_CONDITION: condition,
                         ATTR_FORECAST_WIND_SPEED: forecast.wind_avg,
                         ATTR_FORECAST_WIND_BEARING: forecast.wind_bearing,
-                        "icon": forecast.icon,  # REMOVE when we know all icons
                     }
                 )
 
