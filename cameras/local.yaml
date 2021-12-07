@@ -35,4 +35,4 @@
 #   username: admin
 #   password: !secret reolink_pass
 #   name: GarageWx
-- platform: environment_canada
+# - platform: environment_canada

@@ -108,8 +108,8 @@ lovelace:
       type: module
     - url: /local/community/mini-graph-card/mini-graph-card-bundle.js
       type: module
-    - type: module
-      url: "/local//community_plugin/harmony-card/harmony-card.js"
+    - url: /local//community/harmony-card/harmony-card.js
+      type: module
 #
 # lovelace custom_updater components
 #
